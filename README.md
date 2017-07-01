@@ -24,5 +24,11 @@ We wanted to create an app which allowed any one to connect with random people w
 * #### Robyn
 * #### EL
 
+### Frameworks/Database used
+* React JS
+* Redux
+* Node JS
+* MongoDB
+
 ## Link to app
 ## [Go to Vype Home Page](https://www.google.com)
