@@ -16,8 +16,10 @@ export class Footer extends Component { // eslint-disable-line react/prefer-stat
   render() {
 
     return (
-      <div className="row login">
-        footer
+      <div className="row footer">
+        <div className="col-md-12 footerBar">
+          Here is footer it is good things
+        </div>
       </div>
     );
   }
