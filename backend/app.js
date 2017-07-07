@@ -12,8 +12,8 @@ var expressValidator = require('express-validator');
 var lessMiddleware = require('less-middleware');
 var methodOverride = require('method-override');
 
-// const passportSocketIo = require('passport.socketio');
-// const MongoStore = require('connect-mongo')(session);
+const passportSocketIo = require('passport.socketio');
+const MongoStore = require('connect-mongo')(session);
 
 /**
  * Load environment variables from .env file.
@@ -58,8 +58,41 @@ app.use(expressValidator());
 // Serve static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Setup Sessions
-app.use(session({secret: 'iloveui'}));
+/**
+ * Session configuration.
+ */
+ const sessionStore = new MongoStore({
+   url: process.env.MONGODB_URI || process.env.MONGOLAB_URI,
+   autoReconnect: true,
+   clear_interval: 3600
+ });
+
+app.use(session({
+  key: 'connect.sid',
+  resave: true,
+  saveUninitialized: true,
+  secret: process.env.SESSION_SECRET,
+  store: sessionStore,
+  cookieParser: cookieParser
+}));
+// passport.socketio connect.
+io.use(passportSocketIo.authorize({
+  cookieParser: cookieParser,
+  key: 'connect.sid',
+  secret: process.env.SESSION_SECRET,
+  store: sessionStore,
+  passport: passport,
+  success: onAuthorizeSuccess,
+  fail: onAuthorizeFail
+}));
+function onAuthorizeFail(d, m, e, accept) {
+  console.log('Connection Failed to socket.io ', e, m);
+  accept(null, false);
+}
+function onAuthorizeSuccess(d, accept) {
+  console.log('Successful connection to socket.io');
+  accept(null, true);
+}
 app.use(passport.initialize());
 app.use(passport.session());
 
