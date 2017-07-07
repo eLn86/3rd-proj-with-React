@@ -1,5 +1,5 @@
 // Import passport strategies
-var facebookStrategy = require('passport-facebook').Strategy;
+const facebookStrategy = require('passport-facebook').Strategy;
 
 // Import validator
 var validator = require('validator');
