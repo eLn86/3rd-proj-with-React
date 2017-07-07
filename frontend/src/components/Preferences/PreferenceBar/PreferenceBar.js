@@ -9,6 +9,17 @@ export class PreferenceBar extends Component { // eslint-disable-line react/pref
 
   constructor(props){
     super(props)
+    this.state = {
+      array: [],
+      word: "",
+    }
+  }
+
+  testInput = (event) => {
+    this.setState({
+      word:event.target.value
+    })
+    console.log("butt");
   }
 
   componentDidMount(){
@@ -17,6 +28,13 @@ export class PreferenceBar extends Component { // eslint-disable-line react/pref
       el: document.querySelector('.preferenceBarInput')
     });
 
+    tf.on('addToken', (err, token) => {
+
+      this.setState({
+        array: this.state.array.concat([token.name])
+      })
+      console.log(this.state.array);
+    })
   }
 
 
