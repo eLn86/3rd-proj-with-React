@@ -10,9 +10,11 @@ export class PreferenceTrending extends Component { // eslint-disable-line react
   render() {
 
     return (
+
       <div className= "col-md-12 preferenceTrending" >
         This is the preferences trending
       </div>
+
     );
   }
 }
