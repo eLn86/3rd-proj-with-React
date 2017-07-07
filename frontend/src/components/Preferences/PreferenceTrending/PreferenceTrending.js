@@ -10,7 +10,7 @@ export class PreferenceTrending extends Component { // eslint-disable-line react
   render() {
 
     return (
-      <div/>
+      
     );
   }
 }

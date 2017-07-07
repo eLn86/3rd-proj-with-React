@@ -5931,6 +5931,10 @@ to-fast-properties@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/to-fast-properties/-/to-fast-properties-1.0.3.tgz#b83571fa4d8c25b82e231b06e3a3055de4ca1a47"
 
+tokenfield@^0.7.6:
+  version "0.7.6"
+  resolved "https://registry.yarnpkg.com/tokenfield/-/tokenfield-0.7.6.tgz#cb24ec0f7f84c1197284ebf9becbef3331719fde"
+
 toposort@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/toposort/-/toposort-1.0.3.tgz#f02cd8a74bd8be2fc0e98611c3bacb95a171869c"

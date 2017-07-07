@@ -25,6 +25,7 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
     return (
       <div className="container-fluid login">
+        <Header />
 
         <div className= "col-md-12 preferenceContainer">
           <div className= "col-md-12 preferenceContainer">
