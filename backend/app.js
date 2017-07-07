@@ -12,21 +12,31 @@ var expressValidator = require('express-validator');
 var lessMiddleware = require('less-middleware');
 var methodOverride = require('method-override');
 
-// Routers
-var index = require('./routes/index');
+const passportSocketIo = require('passport.socketio');
+const MongoStore = require('connect-mongo')(session);
 
+/**
+ * Load environment variables from .env file.
+ */
+const dotenv = require('dotenv');
+dotenv.load({ path: '.env' });
 
 //import the mongodb native drivers.
 const mongodb = require('mongodb');
 
-const localMongoURL = 'mongodb://localhost/vype';
-
-// Init app
+/**
+ *  Create Express, Socket.io server.
+ */
 const app = express();
 const debug = Debug('backend:app');
 
-// Connect Mongoose
-mongoose.connect(localMongoURL, { useMongoClient: true })
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+
+/**
+ *  Mongoose Connection.
+ */
+mongoose.connect(process.env.MONGODB_URI || process.env.MONGOLAB_URI, { useMongoClient: true })
 mongoose.connection.on('error', (err) => {
   console.error(err);
   console.log('%s MongoDB connection error. Please make sure MongoDB is running.', chalk.red('✗'));
@@ -34,6 +44,7 @@ mongoose.connection.on('error', (err) => {
 });
 
 // view engine setup
+app.set('port', process.env.PORT || 3001);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
@@ -57,8 +68,6 @@ require('./config/passport')(passport);
 // Flash
 app.use(flash());
 
-app.use('/', index);
-
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   const err = new Error('Not Found');
@@ -81,6 +90,22 @@ app.use((err, req, res, next) => {
 process.on('uncaughtException', (err) => {
   debug('Caught exception: %j', err);
   process.exit(1);
+});
+
+/**
+ * Router
+ */
+var index = require('./routes/index');
+app.use('/', index);
+
+const socketIO = require('./routes/websockets')(io);
+
+
+/**
+ * Start Express server.
+ */
+server.listen(app.get('port'), () => {
+  console.log('App is running at http://localhost:%d'); 
 });
 
 export default app;
