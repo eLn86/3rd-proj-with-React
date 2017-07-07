@@ -1,9 +1,27 @@
-.startBtnContainer {
-  position:absolute;
-  display: block;
-  margin:0 auto;
-
+.componentContainer {
+  position: fixed;
+  top: 50%;
   left: 50%;
-  bottom: 50%;
-  
+  /* bring your own prefixes */
+  transform: translate(-10%, -50%);
+}
+
+.startBtnContainer {
+
+
+
+
+}
+
+.preferenceContainer {
+  width:200px;
+  height:50px;
+  border: 1px solid black;
+}
+
+.preferenceTrending {
+  width:200px;
+  height:50px;
+  border: 1px solid black;
+
 }
