@@ -10,6 +10,12 @@ import { initStore } from './store/Store';
 
 const store = initStore();
 
+
+store.subscribe( () => {
+
+})
+
+
 ReactDOM.render(<Provider store={store}>
                 <App />
                 </Provider>,
