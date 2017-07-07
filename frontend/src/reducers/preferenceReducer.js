@@ -1,12 +1,26 @@
-const preferences = (state = [], action) => {
+import { setPreferences, getPreferences } from '../API/preferenceAPI';
 
-  console.log(action);
+// will change later to grab from server. for now it is empty array
+const initialPreferences = getPreferences();
+
+const preferences = (state = initialPreferences, action) =>{
+
+  console.log(action.type);
+  console.log(initialPreferences);
 
   switch (action.type) {
-    case "CREATE_PREFERENCE":
+    case 'ADD_PREFERENCE':
+      return [
+        ...state,
+        action.preference
+      ]
+
       break;
 
     default:
-      return state;
+      return state
+
   }
 }
+
+export default preferences;
