@@ -18,7 +18,7 @@ export class LoginBtn extends Component { // eslint-disable-line react/prefer-st
   render() {
 
     return (
-      <div className="row login-btn">
+      <div className="row loginBtn">
 
         <a className="btn btn-social btn-facebook">
         <span className="fa fa-facebook"></span>
