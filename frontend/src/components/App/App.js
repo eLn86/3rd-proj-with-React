@@ -8,13 +8,14 @@ import {
 } from 'react-router-dom';
 
 import Login from '../Login/Login';
+import Home from '../Home/Home'
 
 class App extends Component {
   render() {
     return (
       <Router>
         <Switch>
-          <Route exact path="/" component={Login}/>
+          <Route exact path="/" component={Home}/>
         </Switch>
       </Router>
     );
