@@ -1,13 +1,15 @@
-const express = require('express');
-const session = require('express-session');
-const passport = require('passport');
+// Import dependencies
+import express from 'express';
+import session from 'express-session';
+import passport from 'passport';
 
+// Import router
 const router = express.Router();
 
 /**
  * Controllers, configs
  */
-const passportConfig = require('../config/passport');
+import passportConfig from '../config/passport';
 
 
 /**
@@ -39,4 +41,5 @@ router.get('/facebook/callback', passport.authenticate('facebook', { failureRedi
 //   res.redirect(req.session.returnTo || '/');
 // });
 
+// Export router for shared access
 module.exports = router;
