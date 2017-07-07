@@ -12,8 +12,8 @@ var expressValidator = require('express-validator');
 var lessMiddleware = require('less-middleware');
 var methodOverride = require('method-override');
 
-// const passportSocketIo = require('passport.socketio');
-// const MongoStore = require('connect-mongo')(session);
+const passportSocketIo = require('passport.socketio');
+const MongoStore = require('connect-mongo')(session);
 
 /**
  * Load environment variables from .env file.
@@ -58,8 +58,61 @@ app.use(expressValidator());
 // Serve static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Setup Sessions
-app.use(session({secret: 'iloveui'}));
+/**
+ * Session configuration.
+ */
+ const sessionStore = new MongoStore({
+   url: process.env.MONGODB_URI || process.env.MONGOLAB_URI,
+   autoReconnect: true,
+   clear_interval: 3600
+ });
+
+/**
+ * User Session
+ */
+app.use(session({
+  key: 'connect.sid',
+  resave: true,
+  saveUninitialized: true,
+  secret: process.env.SESSION_SECRET,
+  store: sessionStore,
+  cookieParser: cookieParser
+}));
+
+/**
+ * Connect to passportSocketIO
+ */
+io.use(passportSocketIo.authorize({
+  cookieParser: cookieParser,
+  key: 'connect.sid',
+  secret: process.env.SESSION_SECRET,
+  store: sessionStore,
+  passport: passport,
+  success: onAuthorizeSuccess,
+  fail: onAuthorizeFail
+}));
+
+/**
+ * Function: onAuthorizeFail
+ * Purpose: if authorization fails, console log error message
+ * Used in: io.use(passportSocketIo.authorize()) function
+ */
+function onAuthorizeFail(d, m, e, accept) {
+  console.log('Connection Failed to socket.io ', e, m);
+  accept(null, false);
+}
+
+/**
+ * Function: onAuthorizeSuccess
+ * Purpose: if authorization succeeds, console log success message
+ * Used in: io.use(passportSocketIo.authorize()) function
+ */
+function onAuthorizeSuccess(d, accept) {
+  console.log('Successful connection to socket.io');
+  accept(null, true);
+}
+
+// Initialize passport and session for passport logins
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -76,6 +129,7 @@ app.use(flash());
 var index = require('./routes/index');
 app.use('/', index);
 
+// import socket IO route
 const socketIO = require('./routes/websockets')(io);
 
 
