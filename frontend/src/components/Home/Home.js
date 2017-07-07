@@ -24,20 +24,25 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
   render() {
 
     return (
-      <div className="container-fluid login">
-        <Header />
 
-        <div className= "col-md-12 preferenceContainer">
-          <div className= "col-md-12 preferenceContainer">
-            <PreferenceBar/>
+      <div className="row container-fluid container">
+
+
+        <Header/>
+        <div className= "col-md-12 componentContainer">
+
+          <div className= "col-sm-12 preferenceContainer">
+              <PreferenceBar/>
           </div>
-          <div className= "col-md-12 preferenceContainer">
+
+          <div className= "col-sm-12 preferenceTrendingContainer">
             <PreferenceTrending/>
           </div>
-        </div>
 
-        <div className= "col-md-12 startBtnContainer">
-          <StartBtn/>
+          <div className= "col-sm-12 startBtnContainer">
+            <StartBtn/>
+          </div>
+
         </div>
 
         <Footer/>
