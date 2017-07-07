@@ -5,7 +5,7 @@ import './Header.css';
 
 
 /**
- * Login
+ * Header
  */
 export class Header extends Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -16,16 +16,16 @@ export class Header extends Component { // eslint-disable-line react/prefer-stat
   render() {
 
     return (
-      <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="#">Tea Time</a>
+      <nav className="navbar navbar-inverse row">
+        <div className="container-fluid">
+          <div className="navbar-header">
+            <a className="navbar-brand" href="#">Tea Time</a>
           </div>
-          <ul class="nav navbar-nav">
+          <ul className="nav navbar-nav">
             <li><a href="#">Preferences</a></li>
           </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Login</a></li>
+          <ul className="nav navbar-nav navbar-right">
+            <li><a href="#"><span className="glyphicon glyphicon-log-out"></span> Logout</a></li>
           </ul>
         </div>
       </nav>

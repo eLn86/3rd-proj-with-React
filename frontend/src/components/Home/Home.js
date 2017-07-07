@@ -24,7 +24,9 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
   render() {
 
     return (
+
       <div className="row container-fluid container">
+
 
         <Header/>
         <div className= "col-md-12 componentContainer">

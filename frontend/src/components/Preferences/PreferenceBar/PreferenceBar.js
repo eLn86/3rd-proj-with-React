@@ -1,6 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
+// Tokenfield module
+import tokenfield from 'tokenfield';
+
 export class PreferenceBar extends Component { // eslint-disable-line react/prefer-stateless-function
 
   constructor(props){
@@ -10,7 +13,9 @@ export class PreferenceBar extends Component { // eslint-disable-line react/pref
   render() {
 
     return (
-      <div/>
+      <div>
+        <input type="text" class="form-control" placeholder="Input Preferences"/>
+      </div>
     );
   }
 }
