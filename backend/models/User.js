@@ -10,7 +10,8 @@ var userSchema = mongoose.Schema({
       email: String,
       name: String,
       photo: String,
-    }
+    },
+    interests: Array
 });
 
 // User Schema methods ======================

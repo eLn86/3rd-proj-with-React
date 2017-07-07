@@ -1,4 +1,3 @@
-require('dotenv').config({silent: true});
 var express = require('express');
 var Debug = require('debug');
 var path = require('path');
@@ -18,11 +17,7 @@ const MongoStore = require('connect-mongo')(session);
 /**
  * Load environment variables from .env file.
  */
-const dotenv = require('dotenv');
-dotenv.load({ path: '.env' });
-
-//import the mongodb native drivers.
-const mongodb = require('mongodb');
+require('dotenv').config({silent: true});
 
 /**
  *  Create Express, Socket.io server.
@@ -43,8 +38,10 @@ mongoose.connection.on('error', (err) => {
   process.exit();
 });
 
-// view engine setup
+// Port setup
 app.set('port', process.env.PORT || 3001);
+
+// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
@@ -116,9 +113,6 @@ function onAuthorizeSuccess(d, accept) {
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Setup local strategy
-require('./config/passport')(passport);
-
 // Flash
 app.use(flash());
 
@@ -126,7 +120,9 @@ app.use(flash());
 /**
  * Routers.
  */
-var index = require('./routes/index');
+const index = require('./routes/index');
+const authRoute = require('./routes/auth');
+app.use('/auth', authRoute);
 app.use('/', index);
 
 // import socket IO route
@@ -152,7 +148,7 @@ app.use((err, req, res, next) => {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  //res.render('error');
 });
 
 // Handle uncaughtException
@@ -166,7 +162,7 @@ process.on('uncaughtException', (err) => {
  * Start Express server.
  */
 server.listen(app.get('port'), () => {
-  console.log('App is running at http://localhost:%d'); 
+  console.log('App is running at http://localhost:' + app.get('port')); 
 });
 
 export default app;
