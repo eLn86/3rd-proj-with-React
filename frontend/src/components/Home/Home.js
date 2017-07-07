@@ -2,8 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 // Children Components
-import Footer from '../Partials/Footer/Footer';
 import Header from '../Partials/Header/Header';
+import Footer from '../Partials/Footer/Footer';
+
 
 import PreferenceBar from '../Preferences/PreferenceBar/PreferenceBar';
 import PreferenceTrending from '../Preferences/PreferenceTrending/PreferenceTrending';
