@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 // Children Components
 import Footer from '../Partials/Footer/Footer';
-import LoginBtn from '../LoginBtn/LoginBtn';
+import LoginBtn from './LoginBtn/LoginBtn';
 
 import './Login.css';
 
