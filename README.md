@@ -1,4 +1,4 @@
-# Vype
+# Tea Time
 A video chat social app that allows you to meet other people with similar interests!
 
 ----
