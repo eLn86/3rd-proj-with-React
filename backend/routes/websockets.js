@@ -3,6 +3,8 @@
  * @param  {[type]} io [description]
  * @return {[type]}    [description]
  */
+
+// Export socket io functions
 module.exports = (io) => {
 
   io.on('connection', (socket) => {

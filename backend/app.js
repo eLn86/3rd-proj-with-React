@@ -1,17 +1,21 @@
-var express = require('express');
-var Debug = require('debug');
-var path = require('path');
-var mongoose = require('mongoose');
-var passport = require('passport');
-var flash = require('express-flash');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var session = require('express-session');
-var expressValidator = require('express-validator');
-var lessMiddleware = require('less-middleware');
-var methodOverride = require('method-override');
+// Import Middleware and dependencies
+import express from 'express';
+import Debug from 'debug';
+import path from 'path';
+import mongoose from 'mongoose';
+import passport from 'passport';
+import flash from 'express-flash';
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
+import session from 'express-session';
+import expressValidator from 'express-validator';
+import lessMiddleware from 'less-middleware';
+import methodOverride from 'method-override';
 
-const passportSocketIo = require('passport.socketio');
+// Import Socket IO
+import passportSocketIo from 'passport.socketio';
+
+// Import MongoStore
 const MongoStore = require('connect-mongo')(session);
 
 /**
