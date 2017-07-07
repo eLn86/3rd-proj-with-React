@@ -1,4 +1,3 @@
-require('dotenv').config({silent: true});
 var express = require('express');
 var Debug = require('debug');
 var path = require('path');
@@ -18,11 +17,7 @@ const MongoStore = require('connect-mongo')(session);
 /**
  * Load environment variables from .env file.
  */
-const dotenv = require('dotenv');
-dotenv.load({ path: '.env' });
-
-//import the mongodb native drivers.
-const mongodb = require('mongodb');
+require('dotenv').config({silent: true});
 
 /**
  *  Create Express, Socket.io server.
@@ -43,8 +38,10 @@ mongoose.connection.on('error', (err) => {
   process.exit();
 });
 
-// view engine setup
+// Port setup
 app.set('port', process.env.PORT || 3001);
+
+// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
@@ -67,6 +64,7 @@ app.use(express.static(path.join(__dirname, 'public')));
    clear_interval: 3600
  });
 
+// session
 app.use(session({
   key: 'connect.sid',
   resave: true,
@@ -85,6 +83,7 @@ io.use(passportSocketIo.authorize({
   success: onAuthorizeSuccess,
   fail: onAuthorizeFail
 }));
+// error handling functions of passport.socketio module
 function onAuthorizeFail(d, m, e, accept) {
   console.log('Connection Failed to socket.io ', e, m);
   accept(null, false);
@@ -93,11 +92,10 @@ function onAuthorizeSuccess(d, accept) {
   console.log('Successful connection to socket.io');
   accept(null, true);
 }
+
+// Passport init
 app.use(passport.initialize());
 app.use(passport.session());
-
-// Setup local strategy
-require('./config/passport')(passport);
 
 // Flash
 app.use(flash());
@@ -106,7 +104,9 @@ app.use(flash());
 /**
  * Routers.
  */
-var index = require('./routes/index');
+const index = require('./routes/index');
+const authRoute = require('./routes/auth');
+app.use('/auth', authRoute);
 app.use('/', index);
 
 const socketIO = require('./routes/websockets')(io);
@@ -145,7 +145,7 @@ process.on('uncaughtException', (err) => {
  * Start Express server.
  */
 server.listen(app.get('port'), () => {
-  console.log('App is running at http://localhost:%d'); 
+  console.log('App is running at http://localhost:' + app.get('port')); 
 });
 
 export default app;
