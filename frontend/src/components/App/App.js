@@ -1,16 +1,30 @@
 import React, { Component } from 'react';
 import './App.css';
 
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+} from 'react-router-dom';
+
+import Login from '../Login/Login';
+
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <h2>Welcome to Vype</h2>
-        </div>
-      </div>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={Login}/>
+        </Switch>
+      </Router>
     );
   }
 }
+
+// <Route exact path="/home" component={Home}/>
+// <Route exact path="/room/:id" component={Room}/>
+// <Route exact path="/exit" component={Exit}/>
+// <Route exact path="/profile" component={Profile}/>
+// <Route exact path="/logout" component={Logout}/>
 
 export default App;
