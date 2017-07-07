@@ -64,7 +64,9 @@ app.use(express.static(path.join(__dirname, 'public')));
    clear_interval: 3600
  });
 
-// session
+/**
+ * User Session
+ */
 app.use(session({
   key: 'connect.sid',
   resave: true,
@@ -73,7 +75,10 @@ app.use(session({
   store: sessionStore,
   cookieParser: cookieParser
 }));
-// passport.socketio connect.
+
+/**
+ * Connect to passportSocketIO
+ */
 io.use(passportSocketIo.authorize({
   cookieParser: cookieParser,
   key: 'connect.sid',
@@ -83,17 +88,28 @@ io.use(passportSocketIo.authorize({
   success: onAuthorizeSuccess,
   fail: onAuthorizeFail
 }));
-// error handling functions of passport.socketio module
+
+/**
+ * Function: onAuthorizeFail
+ * Purpose: if authorization fails, console log error message
+ * Used in: io.use(passportSocketIo.authorize()) function
+ */
 function onAuthorizeFail(d, m, e, accept) {
   console.log('Connection Failed to socket.io ', e, m);
   accept(null, false);
 }
+
+/**
+ * Function: onAuthorizeSuccess
+ * Purpose: if authorization succeeds, console log success message
+ * Used in: io.use(passportSocketIo.authorize()) function
+ */
 function onAuthorizeSuccess(d, accept) {
   console.log('Successful connection to socket.io');
   accept(null, true);
 }
 
-// Passport init
+// Initialize passport and session for passport logins
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -109,6 +125,7 @@ const authRoute = require('./routes/auth');
 app.use('/auth', authRoute);
 app.use('/', index);
 
+// import socket IO route
 const socketIO = require('./routes/websockets')(io);
 
 
