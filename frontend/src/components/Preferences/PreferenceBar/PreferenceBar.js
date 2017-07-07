@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import './PreferenceBar.css';
 
+import { addPreference } from '../../../actions/preferenceActions';
+
 // Tokenfield module
 import Tokenfield from 'tokenfield';
 
@@ -10,31 +12,25 @@ export class PreferenceBar extends Component { // eslint-disable-line react/pref
   constructor(props){
     super(props)
     this.state = {
-      array: [],
-      word: "",
+      preferences: []
     }
-  }
-
-  testInput = (event) => {
-    this.setState({
-      word:event.target.value
-    })
-    console.log("butt");
   }
 
   componentDidMount(){
 
+    // Init tokenfield object (tf)
     var tf = new Tokenfield({
       el: document.querySelector('.preferenceBarInput')
     });
 
+    // EVENT LISTENERS
     tf.on('addToken', (err, token) => {
-
-      this.setState({
-        array: this.state.array.concat([token.name])
-      })
-      console.log(this.state.array);
+      this.props.addPreference(token.name);
+      console.log(this.props.preferences);
     })
+
+  
+
   }
 
 
@@ -50,13 +46,15 @@ export class PreferenceBar extends Component { // eslint-disable-line react/pref
 
 const mapStateToProps = (state) => {
     return {
-
+      preferences: state.preferences
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    // nothing to see here...
+    addPreference: (preference) => {
+      dispatch(addPreference(preference))
+    }
   }
 }
 
