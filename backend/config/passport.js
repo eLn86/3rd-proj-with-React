@@ -1,9 +1,13 @@
 /**
- * This page is for Auth, comment outted strategies are for later usage.
+ * This page is for Authentication
  */
 const passport = require('passport');
 
 const FacebookStrategy = require('passport-facebook').Strategy;
+
+/**
+ * Commented out other strategies for later use
+ */
 // const TwitterStrategy = require('passport-twitter').Strategy;
 // const GitHubStrategy = require('passport-github').Strategy;
 // const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
@@ -13,10 +17,18 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 
 const User = require('../models/User');
 
+/**
+ * Function: serializeUser()
+ * Purpose: Encrypt the user data for log in
+ */
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
+/**
+ * Function: deserializeUser()
+ * Purpose: Decrypt the user data for processing 
+ */
 passport.deserializeUser((id, done) => {
   User.findById(id, (err, user) => {
     done(err, user);
