@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import './PreferenceBar.css';
 
-import { addPreference } from '../../../actions/preferenceActions';
+import { addPreference, deletePreference } from '../../../actions/preferenceActions';
 
 // Tokenfield module
 import Tokenfield from 'tokenfield';
@@ -11,26 +11,33 @@ export class PreferenceBar extends Component { // eslint-disable-line react/pref
 
   constructor(props){
     super(props)
+
     this.state = {
-      preferences: []
     }
+
+  }
+
+  // create preferences in the correct format to render in tokenfield
+  createTokens = () => {
+    return this.props.preferences.map((preference, index) => {
+      return {id: index, name: preference}
+    })
   }
 
   componentDidMount(){
 
-    // Init tokenfield object (tf)
     var tf = new Tokenfield({
-      el: document.querySelector('.preferenceBarInput')
+      el: document.querySelector('.preferenceBarInput'),
+      setItems: this.createTokens()
     });
 
-    // EVENT LISTENERS
     tf.on('addToken', (err, token) => {
-      this.props.addPreference(token.name);
-      console.log(this.props.preferences);
+      this.props.addPreference(token.name)
     })
 
-  
-
+    tf.on('removeToken', (err, token) => {
+      this.props.deletePreference(token.name)
+    })
   }
 
 
@@ -53,8 +60,11 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addPreference: (preference) => {
-      dispatch(addPreference(preference))
-    }
+        dispatch(addPreference(preference))
+      },
+    deletePreference: (preference) => {
+        dispatch(deletePreference(preference))
+      }
   }
 }
 

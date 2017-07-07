@@ -14,7 +14,12 @@ const preferences = (state = initialPreferences, action) =>{
         ...state,
         action.preference
       ]
+      break;
 
+    case 'DELETE_PREFERENCE':
+      return state.filter((preference) => {
+        return (preference != action.preference)
+      })
       break;
 
     default:
