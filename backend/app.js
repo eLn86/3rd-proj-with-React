@@ -12,8 +12,8 @@ var expressValidator = require('express-validator');
 var lessMiddleware = require('less-middleware');
 var methodOverride = require('method-override');
 
-const passportSocketIo = require('passport.socketio');
-const MongoStore = require('connect-mongo')(session);
+// const passportSocketIo = require('passport.socketio');
+// const MongoStore = require('connect-mongo')(session);
 
 /**
  * Load environment variables from .env file.
@@ -62,11 +62,26 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({secret: 'iloveui'}));
 app.use(passport.initialize());
 app.use(passport.session());
+
 // Setup local strategy
 require('./config/passport')(passport);
 
 // Flash
 app.use(flash());
+
+
+/**
+ * Routers.
+ */
+var index = require('./routes/index');
+app.use('/', index);
+
+const socketIO = require('./routes/websockets')(io);
+
+
+/**
+ * Error Handlers.
+ */
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -91,14 +106,6 @@ process.on('uncaughtException', (err) => {
   debug('Caught exception: %j', err);
   process.exit(1);
 });
-
-/**
- * Router
- */
-var index = require('./routes/index');
-app.use('/', index);
-
-const socketIO = require('./routes/websockets')(io);
 
 
 /**
