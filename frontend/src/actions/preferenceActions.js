@@ -4,3 +4,10 @@ export const addPreference = (preference) => {
     preference
   }
 }
+
+export const deletePreference = (preference) => {
+  return {
+    type: 'DELETE_PREFERENCE',
+    preference
+  }
+}
