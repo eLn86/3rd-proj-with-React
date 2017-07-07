@@ -17,6 +17,11 @@ router.get('/facebook', passport.authenticate('facebook', { scope: ['email', 'pu
 router.get('/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/' }), (req, res) => {
   res.redirect(req.session.returnTo || '/');
 });
+
+
+/**
+ * Commented out routes for other social media authentications
+ */
 // router.get('/github', passport.authenticate('github'));
 // router.get('/github/callback', passport.authenticate('github', { failureRedirect: '/' }), (req, res) => {
 //   res.redirect(req.session.returnTo || '/');
