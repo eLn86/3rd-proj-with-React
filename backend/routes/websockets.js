@@ -10,10 +10,10 @@ module.exports = (io) => {
   const usersList = [];
 
   io.on('connection', (socket) => {
-    // User Connection Notificatino
+    // User Connection Notification
     console.log('==> User Connected : ', socket.id);
 
-    // This is for test purpose of communication between front-back
+    // This is for test purpose of communication between front-backend
     socket.on('show connection', (msg) => {
       console.log('this is from client');
       console.log(msg);
@@ -21,7 +21,7 @@ module.exports = (io) => {
     })
 
     /**
-     * Actuall Code should be wrtten below.
+     * Actual Code should be wrtten below.
      */
 
     let user = {};
