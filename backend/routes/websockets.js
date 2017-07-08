@@ -38,7 +38,7 @@ module.exports = (io) => {
     }
 
     // Send the latest userList array to all clients.
-    socket.emit('update userList', usersList);
+    io.emit('update userList', usersList);
 
     /**
      * Disconnect

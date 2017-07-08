@@ -16,4 +16,6 @@
 .chatInput {
   position: absolute;
   bottom: 0;
+  margin-left: -15px;
+  margin-right: 15px;
 }
