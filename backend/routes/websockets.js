@@ -1,29 +1,23 @@
 /**
  * This file is for routing websocket requst.
- * @param  {[type]} io [description]
- * @return {[type]}    [description]
  */
 
 // Export socket io functions
 module.exports = (io) => {
 
+  // Concurrent Users array.
   const usersList = [];
+  // Current active rooms array.
+  const roomsList = [];
+
+  /**
+   * Socket Connection Events.
+   */
 
   io.on('connection', (socket) => {
     // User Connection Notification
     console.log('==> User Connected : ', socket.id);
 
-    // This is for test purpose of communication between front-backend
-    socket.on('show connection', (msg) => {
-      console.log('this is from client');
-      console.log(msg);
-      io.emit('show client', socket.id);
-    })
-
-    /**
-     * Actual Code should be wrtten below.
-     */
-    
     // Initialise empty user object which is to be manipulated with socket
     let user = {};
 
@@ -34,11 +28,12 @@ module.exports = (io) => {
       user.id = socket.request.user.id;
       user.socketId = socket.id;
       user.picture = socket.request.user.profile.picture;
+      // Push the user object to usersList array.
       usersList.push(user);
     }
 
     // Send the latest userList array to all clients.
-    socket.emit('update userList', usersList);
+    io.emit('update userList', usersList);
 
     /**
      * Disconnect
@@ -49,11 +44,9 @@ module.exports = (io) => {
       // Delete disconnected user from the usersList.
       usersList.forEach((e, i) => {
         // If element name and id is equals to the user name and id who left the room, remove the user from the user array
-        if (e.name === user.name && e.id === user.id) {
-          usersList.splice(i, 1);
-        }
+        if (e.id === user.id) usersList.splice(i, 1);
       });
-      console.log(usersList);
+
       // Send the latest userList array to all clients.
       io.emit('update userList', usersList);
     });

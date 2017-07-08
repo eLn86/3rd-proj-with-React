@@ -1,6 +1,5 @@
 // Import dependencies
 import express from 'express';
-import session from 'express-session';
 import passport from 'passport';
 
 // Import router
@@ -11,16 +10,17 @@ const router = express.Router();
  */
 import passportConfig from '../config/passport';
 
-
 /**
  * OAuth authentication routes. (Sign in)
  */
-router.get('/facebook', passport.authenticate('facebook', { scope: ['email', 'public_profile'] }));
-router.get('/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/' }), (req, res) => {
-  console.log('here');
-  res.redirect(req.session.returnTo || '/');
+router.get('/facebook', passport.authenticate('facebook', {
+  scope: ['email', 'public_profile']
+}));
+router.get('/facebook/callback', passport.authenticate('facebook', {
+  failureRedirect: '/',
+  successRedirect: '/home'
+  })
 });
-
 
 /**
  * Commented out routes for other social media authentications
