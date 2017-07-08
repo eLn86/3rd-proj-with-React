@@ -4,9 +4,10 @@ import express from 'express';
 const router = express.Router();
 
 // Import Controllers
-const homeController = require('../controllers/homeController');
+import homeController from '../controllers/homeController';
 
 /* GET index page. */
 router.get('/', homeController.renderIndexPage);     //URL - http://localhost:3000/
 
+// Export router for shared access
 module.exports = router;

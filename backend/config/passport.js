@@ -1,9 +1,9 @@
 /**
  * This page is for Authentication
  */
-const passport = require('passport');
+import passport from 'passport';
 
-const FacebookStrategy = require('passport-facebook').Strategy;
+import {Strategy as FacebookStrategy} from 'passport-facebook';
 
 /**
  * Commented out other strategies for later use
@@ -15,7 +15,7 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 // const OAuthStrategy = require('passport-oauth').OAuthStrategy;
 // const OAuth2Strategy = require('passport-oauth').OAuth2Strategy;
 
-const User = require('../models/User');
+import User from '../models/User';
 
 /**
  * Function: serializeUser()
@@ -27,7 +27,7 @@ passport.serializeUser((user, done) => {
 
 /**
  * Function: deserializeUser()
- * Purpose: Decrypt the user data for processing 
+ * Purpose: Decrypt the user data for processing
  */
 passport.deserializeUser((id, done) => {
   User.findById(id, (err, user) => {

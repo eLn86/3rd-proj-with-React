@@ -1,8 +1,8 @@
-var mongoose = require('mongoose');
-var bcrypt   = require('bcrypt-nodejs');
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt-nodejs';
 
 // define the schema for user
-var userSchema = mongoose.Schema({
+const userSchema = mongoose.Schema({
 
   facebook: {
 		  id: String,
