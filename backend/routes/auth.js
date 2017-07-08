@@ -20,7 +20,7 @@ router.get('/facebook/callback', passport.authenticate('facebook', {
   failureRedirect: '/',
   successRedirect: '/home'
   })
-});
+);
 
 /**
  * Commented out routes for other social media authentications
