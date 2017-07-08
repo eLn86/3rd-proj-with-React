@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
+// Import static files
 import './App.css';
 
+// Import Actions
 import {updateUserList} from '../../actions/userActions';
 
 import {
@@ -10,10 +13,12 @@ import {
   Switch,
 } from 'react-router-dom';
 
+// Import components
 import Login from '../Login/Login';
 import Home from '../Home/Home';
 import Room from '../Room/Room';
 
+// Import socket io
 import io from 'socket.io-client';
 
 const socket = io('/');
@@ -38,6 +43,7 @@ class App extends Component {
     }
   }
 
+  // Fire off update user list action when socket is mounted in App
   componentDidMount(){
     socket.on('update userList', (userArray) => {
       this.props.updateUserList(userArray);
