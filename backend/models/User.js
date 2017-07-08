@@ -11,7 +11,7 @@ const userSchema = mongoose.Schema({
     name: String,
     picture: String
   },
-  interests: Array
+  preferences: Array
 });
 
 // User Schema methods ======================
