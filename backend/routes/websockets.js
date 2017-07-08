@@ -23,7 +23,8 @@ module.exports = (io) => {
     /**
      * Actual Code should be wrtten below.
      */
-
+    
+    // Initialise empty user object which is to be manipulated with socket
     let user = {};
 
     // If socket is connected with passport, push new user obj to arry
@@ -39,11 +40,23 @@ module.exports = (io) => {
     // Send the latest userList array to all clients.
     socket.emit('update userList', usersList);
 
+    /**
+     * Disconnect
+     */
+    socket.on('disconnect', (socket) => {
+      console.log('==> User Diconnected');
 
-  });
+      // Delete disconnected user from the usersList.
+      usersList.forEach((e, i) => {
+        // If element name and id is equals to the user name and id who left the room, remove the user from the user array
+        if (e.name === user.name && e.id === user.id) {
+          usersList.splice(i, 1);
+        }
+      });
+      console.log(usersList);
+      // Send the latest userList array to all clients.
+      io.emit('update userList', usersList);
+    });
 
-  io.on('disconnect', (socket) => {
-    console.log('==> User Diconnected');
-  });
-
-};
+  }); // connection ends here
+}; // module ends here
