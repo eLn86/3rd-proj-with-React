@@ -9,7 +9,8 @@ import {
 } from 'react-router-dom';
 
 import Login from '../Login/Login';
-import Home from '../Home/Home'
+import Home from '../Home/Home';
+import Room from '../Room/Room';
 
 class App extends Component {
   constructor(props) {
@@ -26,6 +27,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={Login}/>
           <Route exact path="/home" component={Home}/>
+          <Route exact path="/room" component={Room}/>
         </Switch>
       </Router>
     );

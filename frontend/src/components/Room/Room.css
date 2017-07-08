@@ -1,0 +1,19 @@
+.leftCol {
+  border: 1px solid black;
+  height: 600px;
+}
+
+.midCol {
+  border: 1px solid black;
+  height: 600px;
+}
+
+.rightCol {
+  border: 1px solid black;
+  height: 600px;
+}
+
+.chatInput {
+  position: absolute;
+  bottom: 0;
+}
