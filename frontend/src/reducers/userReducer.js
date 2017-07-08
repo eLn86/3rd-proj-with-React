@@ -8,6 +8,7 @@ const users = (state = [], action) => {
   case "UPDATE_USER_LIST":
       console.log(action.userArray);
 
+  //from EL: Don't understand why you have to return a cloned action.userArray, please change this comment when you find out
       return [
         ...action.userArray
       ]
