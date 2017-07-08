@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './App.css';
 
+import {updateUserList} from '../../actions/userActions';
+
 import {
   BrowserRouter as Router,
   Route,
@@ -26,9 +28,6 @@ setInterval(() => {
   socket.emit('show connection', msg);
 }, 10000);
 
-socket.on('update userList', (arr) => {
-  console.log(arr);
-})
 
 
 class App extends Component {
@@ -36,8 +35,16 @@ class App extends Component {
     super(props);
 
     this.state = {
+      users: []
     }
   }
+
+  componentDidMount(){
+    socket.on('update userList', (userArray) => {
+      this.props.updateUserList(userArray);
+    })
+  }
+
 
   render() {
     return (
@@ -66,7 +73,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
+    updateUserList: (userArray) => {
+        dispatch(updateUserList(userArray))
+      },
   }
 }
 

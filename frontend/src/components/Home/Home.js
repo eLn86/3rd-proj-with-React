@@ -22,15 +22,24 @@ import './Home.css';
 export class Home extends Component { // eslint-disable-line react/prefer-stateless-function
 
   constructor(props){
-    super(props)
+    super(props);
+    this.state = {
+      users:this.props.users,
+    }
   }
+/*
+   componentDidMount() {
+     console.log(this.props.users);
+   }
+   */
 
-  // componentDidMount() {
-  //   socket.emit('msg', {ref: 'hello'});
-  //   socket.on('hello', (data) => {
-  //     console.log(data);
-  //   })
-  // }
+   componentDidUpdate(){
+     if(this.state.users != this.props.users){
+       this.setState({
+         users:this.props.users,
+       })
+     }
+   }
 
   render() {
 
@@ -65,8 +74,9 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 }
 
 const mapStateToProps = (state) => {
-    return {
 
+    return {
+      users: state.users
     }
 }
 

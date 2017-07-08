@@ -1,12 +1,17 @@
+const users = (state = [], action) => {
 
-
-const user = (state = [], action) => {
-
-  console.log(action);
+  console.log(state);
 
   switch (action.type) {
-    case "CREATE_USER":
+
+  case "UPDATE_USER_LIST":
+      console.log(action.userArray);
+
+      return [
+        ...action.userArray
+      ]
       break;
+
     case "READ_USER":
       break;
     case "UPDATE_USER":
@@ -20,3 +25,5 @@ const user = (state = [], action) => {
       return state;
   }
 }
+
+export default users;
