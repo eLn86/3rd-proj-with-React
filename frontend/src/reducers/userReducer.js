@@ -6,6 +6,7 @@ const initialUsers = getUsers();
 const users = (state = initialUsers, action) => {
 
   switch (action.type) {
+
     case "UPDATE_USER_LIST":
       console.log(action.type);
       return [

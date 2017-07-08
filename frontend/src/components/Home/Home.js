@@ -1,14 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-// Children Components
-import Header from '../Partials/Header/Header';
-import Footer from '../Partials/Footer/Footer';
-
 import PreferenceBar from '../Preferences/PreferenceBar/PreferenceBar';
 import PreferenceTrending from '../Preferences/PreferenceTrending/PreferenceTrending';
 import StartBtn from './StartBtn/StartBtn';
 
+// Child components
+import Header from '../Partials/Header/Header';
+import Footer from '../Partials/Footer/Footer';
+
+// Import static files
 import './Home.css';
 
 
@@ -22,6 +23,7 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
     super(props);
   }
 
+
    renderUserList = () => {
      return this.props.users.map((user, index) => {
        return (
@@ -31,6 +33,7 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
         </div>
        )
      })
+
    }
 
   render() {
