@@ -117,17 +117,27 @@ function onAuthorizeSuccess(d, accept) {
 app.use(passport.initialize());
 app.use(passport.session());
 
+// app.use(function(req, res, next){
+//   console.log( "Method: " + req.method +" Path: " + req.url)
+//   next();
+// });
 // Flash
 app.use(flash());
 
+// app.use(function(req, res, next) {
+//   console.log('CRS');
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 
 /**
  * Routers.
  */
 const index = require('./routes/index');
 const authRoute = require('./routes/auth');
-app.use('/auth', authRoute);
 app.use('/', index);
+app.use('/auth', authRoute);
 
 // import socket IO route
 const socketIO = require('./routes/websockets')(io);

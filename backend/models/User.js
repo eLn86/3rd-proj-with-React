@@ -4,14 +4,14 @@ import bcrypt from 'bcrypt-nodejs';
 // define the schema for user
 const userSchema = mongoose.Schema({
 
-  facebook: {
-		  id: String,
-      token: String,
-      email: String,
-      name: String,
-      photo: String,
-    },
-    interests: Array
+  facebook: String,
+  tokens: Array,
+
+  profile: {
+    name: String,
+    picture: String
+  },
+  interests: Array
 });
 
 // User Schema methods ======================

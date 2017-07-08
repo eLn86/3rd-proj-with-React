@@ -4,12 +4,12 @@
   "private": true,
   "proxy": {
     "/socket.io": {
-      "target": "ws://localhost:3001",
+      "target": "http://localhost:3001",
       "ws": true
     },
     "/auth": {
       "target": "http://localhost:3001",
-      "ws": false
+      "ws": true
     }
   },
   "dependencies": {
