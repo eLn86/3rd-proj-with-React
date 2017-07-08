@@ -5,15 +5,12 @@ import { connect } from 'react-redux';
 import Header from '../Partials/Header/Header';
 import Footer from '../Partials/Footer/Footer';
 
-
 import PreferenceBar from '../Preferences/PreferenceBar/PreferenceBar';
 import PreferenceTrending from '../Preferences/PreferenceTrending/PreferenceTrending';
 import StartBtn from './StartBtn/StartBtn';
 
 import './Home.css';
 
-//const io = require('socket.io-client');
-//const socket = io();
 
 
 /**
@@ -23,15 +20,12 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
   constructor(props){
     super(props);
-    this.state = {
-      users: this.props.users,
-    }
   }
 
    renderUserList = () => {
-     return this.props.users.map((user) => {
+     return this.props.users.map((user, index) => {
        return (
-        <div>
+        <div key={index}>
           <div className="col-md-6">{user.name}</div>
           <div className="col-md-6">{user.socketId}</div>
         </div>
@@ -40,11 +34,10 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
    }
 
   render() {
-
+    console.log(this.props.users);
     return (
 
       <div className="row container-fluid">
-
 
         <Header/>
 

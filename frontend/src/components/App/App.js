@@ -23,10 +23,10 @@ socket.on('show client', (id) => {
   console.log(id);
 })
 
-const msg = 'hello world';
-setInterval(() => {
-  socket.emit('show connection', msg);
-}, 10000);
+// const msg = 'hello world';
+// setInterval(() => {
+//   socket.emit('show connection', msg);
+// }, 1000000);
 
 
 
@@ -39,8 +39,9 @@ class App extends Component {
   }
 
   componentDidMount(){
-    // updates user reducer on socket event 
+    // updates user reducer on socket event
     socket.on('update userList', (userArray) => {
+      console.log('New Arrival: ' + userArray.length);
       this.props.updateUserList(userArray);
     })
   }
