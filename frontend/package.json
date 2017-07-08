@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "proxy": {
-    "/socket.io": {
+    "/auth": {
       "target": "http://localhost:3001",
       "ws": true
     },
-    "/auth": {
+    "/socket.io": {
       "target": "http://localhost:3001",
       "ws": true
     }
