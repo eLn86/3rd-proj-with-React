@@ -27,17 +27,19 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
       users:this.props.users,
     }
   }
-/*
+
    componentDidMount() {
      console.log(this.props.users);
    }
-   */
+
 
    componentDidUpdate(){
      if(this.state.users != this.props.users){
+
+       console.log(this.state.users);
        this.setState({
          users:this.props.users,
-       })
+       }, console.log(this.props.users))
      }
    }
 
