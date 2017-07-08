@@ -6,6 +6,8 @@ import registerServiceWorker from './registerServiceWorker';
 
 import { setPreferences, getPreferences } from './API/preferenceAPI';
 
+import { setUsers, getUsers } from './API/userAPI';
+
 // Redux
 import { Provider } from 'react-redux';
 import { initStore } from './store/Store';
@@ -17,6 +19,7 @@ store.subscribe( () => {
   // This stuff happens everytime to store is updated
   const state = store.getState();
   setPreferences(state.preferences);
+  setUsers(state.users);
 })
 
 

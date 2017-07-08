@@ -87,7 +87,6 @@ passport.use(new FacebookStrategy({
           user.tokens.push({ kind: 'facebook', accessToken });
           user.profile.name = `${profile.name.givenName} ${profile.name.familyName}`;
           user.profile.picture = `https://graph.facebook.com/${profile.id}/picture?type=large`;
-          user.profile.location = (profile._json.location) ? profile._json.location.name : '';
           user.save((err) => {
             done(err, user);
           });

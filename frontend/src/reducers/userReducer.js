@@ -1,14 +1,14 @@
+import { setUsers, getUsers } from '../API/userAPI';
 
-const users = (state = [], action) => {
+// will change later to grab from server. for now it is empty array
+const initialUsers = getUsers();
 
-  console.log(state);
+const users = (state = initialUsers, action) => {
 
   switch (action.type) {
 
-  case "UPDATE_USER_LIST":
-      console.log(action.userArray);
-
-  //from EL: Don't understand why you have to return a cloned action.userArray, please change this comment when you find out
+    case "UPDATE_USER_LIST":
+      console.log(action.type);
       return [
         ...action.userArray
       ]

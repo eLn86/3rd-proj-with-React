@@ -1,5 +1,18 @@
-.footerBar {
-  position:absolute;
-  bottom:0;
-  border: 3px solid black;
+.footerRow {
+  display: flex;
+  width: 100vw;
+  height: 4vh;
+  background: linear-gradient(white, grey); /* Standard syntax */
+}
+
+.footerLeftCol {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center
+}
+
+.footerRightCol {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center
 }
