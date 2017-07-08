@@ -29,10 +29,11 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
     }
   }
 
+  /*
    componentDidMount() {
      console.log(this.props.users);
    }
-
+  */
 
   // When state is updated, check if the users in the state is equal to the overall state in store. If not equal, set the component state to that of the store's state
    componentDidUpdate(){
