@@ -4,7 +4,7 @@ A video chat social app that allows you to meet other people with similar intere
 ----
 
 ### Motivation
-We wanted to create an app which allowed any one to connect with random people who had similar interests and engage in video chat, an idea inspired from Chat Roulette
+We wanted to create an app which allowed any one to connect with random people who had similar interests and engage in video chat, an idea inspired from appear.in 
 
 ### API References
 * [WebRTC](https://webrtc.org/) for Real-Time Communications
@@ -31,4 +31,4 @@ We wanted to create an app which allowed any one to connect with random people w
 * MongoDB
 
 ## Link to app
-## [Go to Vype Home Page](https://www.google.com)
+## [Go to Tea Time Home Page](https://www.google.com)

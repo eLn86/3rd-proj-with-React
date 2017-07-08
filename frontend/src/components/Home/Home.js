@@ -12,6 +12,9 @@ import StartBtn from './StartBtn/StartBtn';
 
 import './Home.css';
 
+//const io = require('socket.io-client');
+//const socket = io();
+
 
 /**
  * Login
@@ -21,6 +24,13 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
   constructor(props){
     super(props)
   }
+
+  // componentDidMount() {
+  //   socket.emit('msg', {ref: 'hello'});
+  //   socket.on('hello', (data) => {
+  //     console.log(data);
+  //   })
+  // }
 
   render() {
 

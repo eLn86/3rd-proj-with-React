@@ -25,16 +25,18 @@ export class PreferenceBar extends Component { // eslint-disable-line react/pref
   }
 
   componentDidMount(){
-
+    // creates token field for preference inputs. renders existing preferences
     var tf = new Tokenfield({
       el: document.querySelector('.preferenceBarInput'),
       setItems: this.createTokens()
     });
 
+    // action caller: add preference to store
     tf.on('addToken', (err, token) => {
       this.props.addPreference(token.name)
     })
 
+    // action caller: delete preference from store
     tf.on('removeToken', (err, token) => {
       this.props.deletePreference(token.name)
     })
@@ -51,12 +53,14 @@ export class PreferenceBar extends Component { // eslint-disable-line react/pref
   }
 }
 
+// grab current preferences from redux state
 const mapStateToProps = (state) => {
     return {
       preferences: state.preferences
     }
 }
 
+// dispatch actions
 const mapDispatchToProps = (dispatch) => {
   return {
     addPreference: (preference) => {
