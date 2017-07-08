@@ -34,7 +34,6 @@ class App extends Component {
   componentDidMount(){
     // updates user reducer on socket event
     socket.on('update userList', (userArray) => {
-      console.log('New Arrival: ' + userArray.length);
       this.props.updateUserList(userArray);
     })
   }
