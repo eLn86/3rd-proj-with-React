@@ -1,4 +1,9 @@
-const users = (state = [], action) => {
+import { setUsers, getUsers } from '../API/userAPI';
+
+// will change later to grab from server. for now it is empty array
+const initialUsers = getUsers();
+
+const users = (state = initialUsers, action) => {
 
   switch (action.type) {
 
