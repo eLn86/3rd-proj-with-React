@@ -1,0 +1,17 @@
+.startScreenHeaderRow {
+  display: flex;
+  height: 6vh;
+  padding: 10px;
+  border-bottom: 2px solid grey;
+  box-shadow: 5px 5px 5px #888888;
+}
+
+.startScreenHeaderCol {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.brand-image-with-text {
+  height: 60px;
+}
