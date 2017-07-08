@@ -14,8 +14,8 @@ import Login from '../Login/Login';
 import Home from '../Home/Home';
 import Room from '../Room/Room';
 
+// Import Socket Client
 import io from 'socket.io-client';
-
 const socket = io('/');
 
 socket.on('show client', (id) => {
@@ -35,11 +35,11 @@ class App extends Component {
     super(props);
 
     this.state = {
-      users: []
     }
   }
 
   componentDidMount(){
+    // updates user reducer on socket event 
     socket.on('update userList', (userArray) => {
       this.props.updateUserList(userArray);
     })

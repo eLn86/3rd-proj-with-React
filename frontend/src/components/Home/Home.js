@@ -24,21 +24,19 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
   constructor(props){
     super(props);
     this.state = {
-      users:this.props.users,
+      users: this.props.users,
     }
   }
-/*
-   componentDidMount() {
-     console.log(this.props.users);
-   }
-   */
 
-   componentDidUpdate(){
-     if(this.state.users != this.props.users){
-       this.setState({
-         users:this.props.users,
-       })
-     }
+   renderUserList = () => {
+     return this.props.users.map((user) => {
+       return (
+        <div>
+          <div className="col-md-6">{user.name}</div>
+          <div className="col-md-6">{user.socketId}</div>
+        </div>
+       )
+     })
    }
 
   render() {
@@ -60,6 +58,11 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
             <PreferenceTrending/>
           </div>
 
+          <div className="userList">
+            <div> User List </div>
+            {this.renderUserList()}
+          </div>
+
           <div className= "col-sm-12 startBtnContainer">
             <StartBtn/>
           </div>
@@ -74,7 +77,6 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 }
 
 const mapStateToProps = (state) => {
-
     return {
       users: state.users
     }

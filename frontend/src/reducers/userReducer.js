@@ -1,12 +1,8 @@
 const users = (state = [], action) => {
 
-  console.log(state);
-
   switch (action.type) {
-
-  case "UPDATE_USER_LIST":
-      console.log(action.userArray);
-
+    case "UPDATE_USER_LIST":
+      console.log(action.type);
       return [
         ...action.userArray
       ]
