@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
+// Import static files
 import './App.css';
+
+// Import Actions
+import {updateUserList} from '../../actions/userActions';
 
 import {
   BrowserRouter as Router,
@@ -8,10 +13,12 @@ import {
   Switch,
 } from 'react-router-dom';
 
+// Import components
 import Login from '../Login/Login';
 import Home from '../Home/Home';
 import Room from '../Room/Room';
 
+// Import socket io
 import io from 'socket.io-client';
 
 const socket = io('/');
@@ -26,17 +33,23 @@ setInterval(() => {
   socket.emit('show connection', msg);
 }, 10000);
 
-socket.on('update userList', (arr) => {
-  console.log(arr);
-})
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      users: []
     }
   }
+
+  // Fire off update user list action when socket is mounted in App
+  componentDidMount(){
+    socket.on('update userList', (userArray) => {
+      this.props.updateUserList(userArray);
+    })
+  }
+
 
   render() {
     return (
@@ -65,7 +78,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
+    updateUserList: (userArray) => {
+        dispatch(updateUserList(userArray))
+      },
   }
 }
 

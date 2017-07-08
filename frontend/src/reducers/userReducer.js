@@ -1,10 +1,19 @@
-const user = (state = [], action) => {
 
-  console.log(action);
+const users = (state = [], action) => {
+
+  console.log(state);
 
   switch (action.type) {
-    case "CREATE_USER":
+
+  case "UPDATE_USER_LIST":
+      console.log(action.userArray);
+
+  //from EL: Don't understand why you have to return a cloned action.userArray, please change this comment when you find out
+      return [
+        ...action.userArray
+      ]
       break;
+
     case "READ_USER":
       break;
     case "UPDATE_USER":
@@ -18,3 +27,5 @@ const user = (state = [], action) => {
       return state;
   }
 }
+
+export default users;

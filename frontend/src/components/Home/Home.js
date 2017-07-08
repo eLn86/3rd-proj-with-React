@@ -1,15 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-// Children Components
-import Header from '../Partials/Header/Header';
-import Footer from '../Partials/Footer/Footer';
-
-
+// Import components
 import PreferenceBar from '../Preferences/PreferenceBar/PreferenceBar';
 import PreferenceTrending from '../Preferences/PreferenceTrending/PreferenceTrending';
 import StartBtn from './StartBtn/StartBtn';
 
+// Child components
+import Header from '../Partials/Header/Header';
+import Footer from '../Partials/Footer/Footer';
+
+// Import static files
 import './Home.css';
 
 //const io = require('socket.io-client');
@@ -22,15 +23,25 @@ import './Home.css';
 export class Home extends Component { // eslint-disable-line react/prefer-stateless-function
 
   constructor(props){
-    super(props)
+    super(props);
+    this.state = {
+      users:this.props.users,
+    }
   }
+/*
+   componentDidMount() {
+     console.log(this.props.users);
+   }
+   */
 
-  // componentDidMount() {
-  //   socket.emit('msg', {ref: 'hello'});
-  //   socket.on('hello', (data) => {
-  //     console.log(data);
-  //   })
-  // }
+  // When state is updated, check if the users in the state is equal to the overall state in store. If not equal, set the component state to that of the store's state
+   componentDidUpdate(){
+     if(this.state.users != this.props.users){
+       this.setState({
+         users:this.props.users
+       })
+     }
+   }
 
   render() {
 
@@ -65,8 +76,9 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 }
 
 const mapStateToProps = (state) => {
-    return {
 
+    return {
+      users: state.users
     }
 }
 
