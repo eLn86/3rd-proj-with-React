@@ -22,21 +22,6 @@ import Room from '../Room/Room';
 import io from 'socket.io-client';
 const socket = io('/');
 
-<<<<<<< HEAD
-=======
-socket.on('show client', (id) => {
-  console.log('This is from server, socket is connected well.');
-  console.log(id);
-})
-
-// const msg = 'hello world';
-// setInterval(() => {
-//   socket.emit('show connection', msg);
-// }, 1000000);
-
-
-
->>>>>>> 20eddde54db00b97b1af2e532d3b9a57626213c4
 class App extends Component {
   constructor(props) {
     super(props);
