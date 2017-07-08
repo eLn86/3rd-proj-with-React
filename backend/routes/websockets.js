@@ -23,7 +23,7 @@ module.exports = (io) => {
     /**
      * Actual Code should be wrtten below.
      */
-    
+
     // Initialise empty user object which is to be manipulated with socket
     let user = {};
 
