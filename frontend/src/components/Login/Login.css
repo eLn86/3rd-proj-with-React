@@ -1,3 +1,4 @@
 .login {
-  display: flex;
+  display: block;
+  width: 100vw;
 }

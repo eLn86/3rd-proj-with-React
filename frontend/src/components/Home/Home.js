@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-// Import components
 import PreferenceBar from '../Preferences/PreferenceBar/PreferenceBar';
 import PreferenceTrending from '../Preferences/PreferenceTrending/PreferenceTrending';
 import StartBtn from './StartBtn/StartBtn';
@@ -13,8 +12,6 @@ import Footer from '../Partials/Footer/Footer';
 // Import static files
 import './Home.css';
 
-//const io = require('socket.io-client');
-//const socket = io();
 
 
 /**
@@ -24,31 +21,26 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
   constructor(props){
     super(props);
-    this.state = {
-      users:this.props.users,
-    }
   }
-/*
-   componentDidMount() {
-     console.log(this.props.users);
-   }
-   */
 
-  // When state is updated, check if the users in the state is equal to the overall state in store. If not equal, set the component state to that of the store's state
-   componentDidUpdate(){
-     if(this.state.users != this.props.users){
-       this.setState({
-         users:this.props.users
-       })
-     }
+
+   renderUserList = () => {
+     return this.props.users.map((user, index) => {
+       return (
+        <div key={index}>
+          <div className="col-md-6">{user.name}</div>
+          <div className="col-md-6">{user.socketId}</div>
+        </div>
+       )
+     })
+
    }
 
   render() {
-
+    console.log(this.props.users);
     return (
 
       <div className="row container-fluid">
-
 
         <Header/>
 
@@ -60,6 +52,11 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
           <div className= "col-sm-12 preferenceTrendingContainer">
             <PreferenceTrending/>
+          </div>
+
+          <div className="userList">
+            <div> User List </div>
+            {this.renderUserList()}
           </div>
 
           <div className= "col-sm-12 startBtnContainer">
@@ -76,7 +73,6 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 }
 
 const mapStateToProps = (state) => {
-
     return {
       users: state.users
     }

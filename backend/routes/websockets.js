@@ -18,6 +18,20 @@ module.exports = (io) => {
     // User Connection Notification
     console.log('==> User Connected : ', socket.id);
 
+<<<<<<< HEAD
+=======
+    // This is for test purpose of communication between front-backend
+    socket.on('show connection', (msg) => {
+      console.log('this is from client');
+      console.log(msg);
+      io.emit('show client', socket.id);
+    })
+
+    /**
+     * Actual Code should be wrtten below.
+     */
+
+>>>>>>> 20eddde54db00b97b1af2e532d3b9a57626213c4
     // Initialise empty user object which is to be manipulated with socket
     let user = {};
 

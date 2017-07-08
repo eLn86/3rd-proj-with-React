@@ -18,23 +18,38 @@ import Login from '../Login/Login';
 import Home from '../Home/Home';
 import Room from '../Room/Room';
 
-// Import socket io
+// Import Socket Client
 import io from 'socket.io-client';
-
 const socket = io('/');
 
+<<<<<<< HEAD
+=======
+socket.on('show client', (id) => {
+  console.log('This is from server, socket is connected well.');
+  console.log(id);
+})
+
+// const msg = 'hello world';
+// setInterval(() => {
+//   socket.emit('show connection', msg);
+// }, 1000000);
+
+
+
+>>>>>>> 20eddde54db00b97b1af2e532d3b9a57626213c4
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      users: []
     }
   }
 
   // Fire off update user list action when socket is mounted in App
   componentDidMount(){
+    // updates user reducer on socket event
     socket.on('update userList', (userArray) => {
+      console.log('New Arrival: ' + userArray.length);
       this.props.updateUserList(userArray);
     })
   }
