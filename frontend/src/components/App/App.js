@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import './App.css';
 
 import {
@@ -11,6 +12,14 @@ import Login from '../Login/Login';
 import Home from '../Home/Home'
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      sockets: {}
+    }
+  }
+
   render() {
     return (
       <Router>
@@ -29,4 +38,16 @@ class App extends Component {
 // <Route exact path="/profile" component={Profile}/>
 // <Route exact path="/logout" component={Logout}/>
 
-export default App;
+const mapStateToProps = (state) => {
+    return {
+
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
