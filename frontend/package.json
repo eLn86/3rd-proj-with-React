@@ -3,14 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "proxy": {
+<<<<<<< HEAD
     "/auth": {
       "target": "http://localhost:3001",
       "ws": true
     },
     "/socket.io": {
+=======
+    "/socket.io": {
+      "target": "ws://localhost:3001",
+      "ws": true
+    },
+
+    "/auth": {
+>>>>>>> dd9e62fc33de9f427b28133f22bb6b711c87899a
       "target": "http://localhost:3001",
       "ws": true
     }
+
   },
   "dependencies": {
     "axios": "^0.16.2",
