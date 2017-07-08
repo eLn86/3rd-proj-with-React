@@ -117,17 +117,21 @@ function onAuthorizeSuccess(d, accept) {
 app.use(passport.initialize());
 app.use(passport.session());
 
+// app.use(function(req, res, next){
+//   console.log( "Method: " + req.method +" Path: " + req.url)
+//   next();
+// });
+
 // Flash
 app.use(flash());
-
 
 /**
  * Routers.
  */
 const index = require('./routes/index');
 const authRoute = require('./routes/auth');
-app.use('/auth', authRoute);
 app.use('/', index);
+app.use('/auth', authRoute);
 
 // import socket IO route
 const socketIO = require('./routes/websockets')(io);
