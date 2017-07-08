@@ -121,15 +121,9 @@ app.use(passport.session());
 //   console.log( "Method: " + req.method +" Path: " + req.url)
 //   next();
 // });
+
 // Flash
 app.use(flash());
-
-// app.use(function(req, res, next) {
-//   console.log('CRS');
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// });
 
 /**
  * Routers.

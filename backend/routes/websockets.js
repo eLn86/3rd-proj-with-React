@@ -39,11 +39,24 @@ module.exports = (io) => {
     // Send the latest userList array to all clients.
     socket.emit('update userList', usersList);
 
+    /**
+     * disconnect
+     */
+    socket.on('disconnect', (socket) => {
+      console.log('==> User Diconnected');
 
-  });
+      // Delete disconnected user from the usersList.
+      usersList.forEach((e, i) => {
+        console.log('here');
+        if (e.name === user.name && e.id === user.id) {
 
-  io.on('disconnect', (socket) => {
-    console.log('==> User Diconnected');
-  });
+          usersList.splice(i, 1);
+        }
+      });
+      console.log(usersList);
+      // Send the latest userList array to all clients.
+      io.emit('update userList', usersList);
+    });
 
-};
+  }); // connection ends here
+}; // module ends here
