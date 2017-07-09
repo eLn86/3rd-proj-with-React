@@ -1,8 +1,10 @@
 .footerRow {
   display: flex;
-  width: 100vw;
+  width: 110vw;
   height: 4vh;
   background: linear-gradient(white, grey); /* Standard syntax */
+
+  bottom: 0;
 }
 
 .footerLeftCol {
