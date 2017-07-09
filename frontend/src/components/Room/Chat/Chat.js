@@ -27,21 +27,36 @@ export class Chat extends Component { // eslint-disable-line react/prefer-statel
   }
 
  // Helper function for generating chat text in jsx.
-  chatText = (msg) => {
+  chatText = (msg, user) => {
     return (
-      <div className="chatText"
+      <div className="chatTextComponent"
            key={this.index++}>
-        {msg}
+        {/* Conditional Rendering: Me(right), others(left) */}
+        {user.socketId !== socket.id ? (
+            <div className="chatTextLeft">
+              <img src={user.picture} className="userPicLeft"/>
+              {user.name + ' : ' + msg}
+            </div>
+          ) : (
+            <div className="chatTextRight">
+              {msg}
+              <img src={user.picture} className="userPicRight"/>
+            </div>
+          )}
       </div>
     )
   };
 
   componentDidMount() {
     this.scrollToBottom(); // auto scroll down.
-    socket.on('render msg', (msg) => {
+    socket.on('render msg', (msg, user) => {
       // recieve realtime msg and update state.
+      console.log(user);
+
+      const newMsg = this.chatText(msg, user);
+
       this.setState({
-        chatTexts: this.state.chatTexts.concat(this.chatText(msg))
+        chatTexts: this.state.chatTexts.concat(newMsg)
       })
     });
   }
@@ -77,7 +92,6 @@ export class Chat extends Component { // eslint-disable-line react/prefer-statel
       <div id="chatGrid">
         {/* Chat Text Grid here*/}
         <div className="chatTextWrapper">
-          <div className="chatText">Test Message</div>
           {this.state.chatTexts}
           {/* Auto scroll to the last */}
           <div id="messagesEnd"

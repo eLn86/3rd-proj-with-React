@@ -43,10 +43,14 @@ module.exports = (io) => {
      * Chat related Events
      */
     socket.on('broadcast msg', (msg) => {
-      // Send msg string to the room
+      // minify user data to hide id.
+      const miniUser = {};
+      miniUser.name = user.name;
+      miniUser.picture = user.picture;
+      miniUser.socketId = user.socketId;
 
       // this is test purpose without room functionality.
-      io.emit('render msg', msg);
+      io.emit('render msg', msg, miniUser);
 
       // Above should be changed like below after room implemented.
       // io.to(user.roomName).emit('render msg', msg);
