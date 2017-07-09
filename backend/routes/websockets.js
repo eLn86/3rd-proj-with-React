@@ -42,9 +42,14 @@ module.exports = (io) => {
     /**
      * Chat related Events
      */
-    socket.on('broadcast msg', (msg)=> {
+    socket.on('broadcast msg', (msg) => {
       // Send msg string to the room
-      io.to(user.roomName).emit('render msg', msg);
+
+      // this is test purpose without room functionality.
+      io.emit('render msg', msg);
+
+      // Above should be changed like below after room implemented.
+      // io.to(user.roomName).emit('render msg', msg);
     })
 
 
