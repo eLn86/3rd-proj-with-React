@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import Header from '../Partials/Header/Header';
+import Chat from './Chat/Chat';
 
 import './Room.css';
 
@@ -35,14 +36,8 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
           <div className="col-md-7 midCol">
           </div>
           <div className="col-md-3 rightCol">
-
-            <div className="input-group chatInput row">
-              <input id="btn-input" type="text" className="form-control input" placeholder="Type your message here..." />
-                <span className="input-group-btn">
-                  <button className="btn btn-warning" id="btn-chat">Send</button>
-                </span>
-            </div>
-
+            {/* Chat Grid Separated from room */}
+            <Chat/>
           </div>
         </div>
 
