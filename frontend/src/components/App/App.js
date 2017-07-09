@@ -18,20 +18,8 @@ import Login from '../Login/Login';
 import Home from '../Home/Home';
 import Room from '../Room/Room';
 
-// Import Socket Client
-import io from 'socket.io-client';
-const socket = io('/');
-
-socket.on('show client', (id) => {
-  console.log('This is from server, socket is connected well.');
-  console.log(id);
-})
-
-// const msg = 'hello world';
-// setInterval(() => {
-//   socket.emit('show connection', msg);
-// }, 1000000);
-
+// Import Socket API
+import { socket } from '../../API/socket';
 
 
 class App extends Component {
@@ -46,7 +34,6 @@ class App extends Component {
   componentDidMount(){
     // updates user reducer on socket event
     socket.on('update userList', (userArray) => {
-      console.log('New Arrival: ' + userArray.length);
       this.props.updateUserList(userArray);
     })
   }

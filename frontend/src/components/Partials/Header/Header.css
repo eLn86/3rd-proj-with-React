@@ -1,0 +1,23 @@
+.navbar {
+  display: flex;
+  width: 110vw;
+  height: 5vh;
+}
+
+.navbar-right{
+  text-align: right;
+}
+
+.navbar-nav{
+  text-align: left;
+}
+
+.navbar-header{
+
+  width:78vw;
+}
+
+.navbar-brand {
+  text-align: center;
+  width:100%;
+}
