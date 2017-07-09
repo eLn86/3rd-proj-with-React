@@ -40,32 +40,41 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
     console.log(this.props.users);
     return (
 
-      <div className="row container-fluid">
+      <div className="row container-fluid lobbyContainer">
 
+      <div className= "col-sm-12 footerContainer">
         <Header/>
+      </div>
 
         <div className= "col-md-12 componentContainer">
-
-          <div className= "col-sm-12 preferenceContainer">
-            <PreferenceBar/>
-          </div>
-
-          <div className= "col-sm-12 preferenceTrendingContainer">
-            <PreferenceTrending/>
-          </div>
 
           <div className="userList">
             <div> User List </div>
             {this.renderUserList()}
           </div>
 
-          <div className= "col-sm-12 startBtnContainer">
-            <StartBtn/>
+          <div className= "col-sm-12 preferenceContainer">
+            <div className= "col-sm-12 preferenceBar">
+              <PreferenceBar/>
+            </div>
+
+            <div className= "col-sm-12 preferenceTrending">
+              <PreferenceTrending/>
+            </div>
+          </div>
+
+
+          <div className= "col-sm-12 startBtnCol">
+            <div className= "col-sm-4 col-sm-offset-4 startBtnContainer">
+              <StartBtn/>
+            </div>
           </div>
 
         </div>
 
-        <Footer/>
+        <div className= "col-sm-12 footerContainer">
+          <Footer/>
+        </div>
 
       </div>
     );
