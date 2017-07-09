@@ -18,12 +18,13 @@ export class Header extends Component { // eslint-disable-line react/prefer-stat
     return (
       <nav className="navbar navbar-inverse row">
         <div className="container-fluid">
-          <div className="navbar-header">
-            <a className="navbar-brand" href="#">Tea Time</a>
-          </div>
+
           <ul className="nav navbar-nav">
             <li><a href="#">Preferences</a></li>
           </ul>
+          <div className="navbar-header">
+            <a className="navbar-brand" href="#">Tea Time</a>
+          </div>
           <ul className="nav navbar-nav navbar-right">
             <li><a href="#"><span className="glyphicon glyphicon-log-out"></span> Logout</a></li>
           </ul>

@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 // Children Components
+import StartScreenHeader from '../Partials/StartScreenHeader/StartScreenHeader';
 import Footer from '../Partials/Footer/Footer';
 import LoginBtn from './LoginBtn/LoginBtn';
 
@@ -21,6 +22,7 @@ export class Login extends Component { // eslint-disable-line react/prefer-state
 
     return (
       <div className="container-fluid login">
+        <StartScreenHeader/>
         <LoginBtn/>
         <Footer/>
       </div>
