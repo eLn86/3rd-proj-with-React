@@ -57,7 +57,8 @@ module.exports = (io) => {
       // 1. find a proper room in the roomList Array using roomObject.interest
       // 2. Iterating on the array. If room element's interests are matched
       //    with roomObject.interest. emit room into to the client(for redirect).
-      //    Need minimum match number.
+      //    2-1. Need minimum match number of interest.
+      //    2-2. Need to check room is full or not.
       // 3. If not, gernerate new room
       //   3-1. creat string for url of roomName
       //   3-2. push the object to the roomList Array
