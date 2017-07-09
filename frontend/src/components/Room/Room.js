@@ -36,7 +36,7 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
           <div className="col-md-7 midCol">
           </div>
           <div className="col-md-3 rightCol">
-            {/* Chat Grid Divied from room */}
+            {/* Chat Grid Separated from room */}
             <Chat/>
           </div>
         </div>
