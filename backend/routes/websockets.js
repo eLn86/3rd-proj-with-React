@@ -11,14 +11,8 @@ module.exports = (io) => {
   const usersList = [];
   // Current active rooms array.
   const roomsList = [];
-
   // Peers ID Array
   const peersIdList = [];
-  // room object may contain information below;
-  // room.interest
-  // room.name
-  // room.users
-  */
 
   /**
    * Socket Connection Events.
@@ -46,8 +40,7 @@ module.exports = (io) => {
 
     // Send the latest userList array to all clients.
     io.emit('update userList', usersList);
-    // Send the latest peerID List array to all clients
-    io.emit('update peersIdList', peersIdList);
+
     /**
      * Chat related Events
      */
@@ -59,7 +52,7 @@ module.exports = (io) => {
       miniUser.socketId = user.socketId;
 
       io.to(user.roomName).emit('render msg', msg, miniUser);
-    })
+    });
 
     /**
      * Room related Events
@@ -68,6 +61,7 @@ module.exports = (io) => {
     socket.on('enter global room', () => {
       socket.join('global');
       user.roomName = 'global';
+      console.log(user.roomName)
     });
 
     socket.on('join room', (preferenceFromFrontend) => {
@@ -76,13 +70,12 @@ module.exports = (io) => {
       let checker = true; // checker for room creation.
       roomsList.forEach((e) => {
         // for the test purpose, preferenceFromFrontend should be one.
-        console.log('e.preference is :', e.preference);
-        console.log('preferenceFromBackend is :', preferenceFromFrontend);
         // This is temporal if statement for the test.
         if (e.preference[0] === preferenceFromFrontend && e.userNumber !== 4) {
-          console.log('Preference matched!');
+          console.log('==>>Preference matched!');
           checker = false;
           socket.join(e.name);
+          user.roomName = e.name;
           e.userNumber += 1;
           io.to(socket.id).emit('get roomInfo', e.name);
         }
@@ -135,10 +128,8 @@ module.exports = (io) => {
       usersList.forEach((e, i) => {
         // If element name and id is equals to the user name and id
         // who left the room, remove the user from the user array
-        if (e.id === user.id)
-          usersList.splice(i, 1);
-        }
-      );
+        if (e.id === user.id) usersList.splice(i, 1);
+      });
 
       // Send the latest userList array to all clients.
       io.emit('update userList', usersList);
