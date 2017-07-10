@@ -64,8 +64,8 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Login}/>
             <Route exact path="/home" component={Login}/>
-            <Route exact path="/room" component={Login}/>
-            <Route exact path="/logout" component={Login}/>
+            <Route exact path="/room/:id" component={Login}/>
+
           </Switch>
         </Router>
       )
@@ -75,8 +75,8 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Home}/>
             <Route exact path="/home" component={Home}/>
-            <Route exact path="/room" component={Room}/>
-            <Route exact path="/logout" component={Login}/>
+            <Route exact path="/room/:id" component={Room}/>
+
           </Switch>
         </Router>
       )

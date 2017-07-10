@@ -37,21 +37,13 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
    }
 
-  componentDidMount(){
-
-/*
-    socket.on('signal to front', (msg) => {
-      console.log(msg);
-    });
-*/
+  componentDidMount() {
 
     /**
      * Socket Part!
      */
     // Join global channel
     socket.emit('enter global room');
-
-
   }
 
   render() {
