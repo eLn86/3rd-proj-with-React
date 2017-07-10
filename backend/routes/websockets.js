@@ -61,8 +61,6 @@ module.exports = (io) => {
 
     socket.on('enter global room', () => {
       socket.join('global');
-      user.roomName = 'global';
-      console.log(user.roomName)
     });
 
     socket.on('join room', (preferenceFromFrontend) => {
@@ -75,8 +73,6 @@ module.exports = (io) => {
         if (e.preference[0] === preferenceFromFrontend && e.userNumber !== 4) {
           console.log('==>>Preference matched!');
           checker = false;
-          socket.join(e.name);
-          user.roomName = e.name;
           e.userNumber += 1;
           io.to(socket.id).emit('get roomInfo', e.name);
         }
@@ -88,15 +84,19 @@ module.exports = (io) => {
         const testRoomObject = {
           name: '12345',
           preference: ['coffee'],
-          userNumber: 1
+          userNumber: 0
         };
-        socket.join(testRoomObject.name)
-        user.roomName = testRoomObject.name;
         // push to roomsList after creation.
+        testRoomObject.userNumber += 1;
         roomsList.push(testRoomObject);
-        io.to(socket.id).emit('get roomInfo', user.roomName);
+        io.to(socket.id).emit('get roomInfo', testRoomObject.name);
       }
     });
+
+    socket.on('join room channel', (roomName) => {
+      socket.join(roomName)
+      user.roomName = roomName;
+    })
 
     /**
      * Peer related Events
@@ -130,6 +130,14 @@ module.exports = (io) => {
         // If element name and id is equals to the user name and id
         // who left the room, remove the user from the user array
         if (e.id === user.id) usersList.splice(i, 1);
+      });
+
+
+      roomsList.forEach((e, i) => {
+        // Remove the user count from room array.
+        if (e.name === user.roomName) e.userNumber -= 1;
+        // Destroy empty room.
+        if (e.userNumber === 0) roomsList.splice(i, 1);
       });
 
       // Send the latest userList array to all clients.
