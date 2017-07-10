@@ -65,7 +65,7 @@ module.exports = (io) => {
 
     socket.on('join room', (preferences) => {
       console.log(preferences);
-      /*
+
       socket.leave('global');
       // 1. room checker here with preferences
       let checker = true; // checker for room creation.
@@ -101,7 +101,7 @@ module.exports = (io) => {
         roomsList.push(testRoomObject);
         io.to(socket.id).emit('get roomInfo', testRoomObject.name);
       }
-      */
+      
     });
 
     socket.on('join room channel', (roomName) => {
