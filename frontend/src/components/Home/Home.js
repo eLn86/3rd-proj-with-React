@@ -1,5 +1,3 @@
-import { addRoom } from '../../actions/socketActions';
-
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { socket } from '../../API/socket';
@@ -39,32 +37,23 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
    }
 
-  componentDidMount() {
+
+  componentDidMount(){
 
     /**
      * Socket Part!
      */
     // Join global channel
     socket.emit('enter global room');
-<<<<<<< HEAD
 
-    /* These are for testing room signaling stability - Han */
 
-    socket.emit('join room');
-
-    socket.on('signal to front', (msg) => {
-      console.log(msg);
-    });
-
-=======
->>>>>>> master
   }
 
   render() {
     console.log(this.props.users);
     return (
 
-      <div className="container-fluid lobbyContainer">
+      <div className="row container-fluid lobbyContainer">
 
       <div className= "col-sm-12 footerContainer">
         <Header/>
