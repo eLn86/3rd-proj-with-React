@@ -9,8 +9,6 @@ let homeController = {
 
   logout: (req, res) => {
     req.logout();
-    console.log('test');
-    res.redirect('/');
   }
 }
 

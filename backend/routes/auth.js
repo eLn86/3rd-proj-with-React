@@ -23,6 +23,7 @@ router.get('/facebook/callback', passport.authenticate('facebook', {
   })
 );
 
+
 /**
  * Commented out routes for other social media authentications
  */
