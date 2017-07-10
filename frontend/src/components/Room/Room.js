@@ -5,6 +5,7 @@ import Peer from 'peerjs';
 // Import components
 import Header from '../Partials/Header/Header';
 import Chat from './Chat/Chat';
+import Userlist from './Userlist/Userlist';
 
 // Import static files
 import './Room.css';
@@ -42,7 +43,6 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
   componentDidMount() {
     // get room name from redux store
     const roomName = this.props.roomName;
-    console.log(roomName);
     // re-join room chat channel after redirecting.
     socket.emit('join room channel', roomName)
 
@@ -63,14 +63,8 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
         <Header/>
         <div className="row roomBody">
           <div className="col-md-2 leftCol">
-            <ul className="userList">
-              <li> username </li>
-              <li> username </li>
-              <li> username </li>
-              <li> username </li>
-              <li> username </li>
-              <li> username </li>
-            </ul>
+            {/* UserList Grid Separated from room */}
+            <Userlist/>
           </div>
           <div className="col-md-7 midCol">
 
