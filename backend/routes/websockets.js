@@ -82,7 +82,7 @@ module.exports = (io) => {
       if (checker) {
         // this is test object.
         const testRoomObject = {
-          name: '12345',
+          name: uuid.v4(),
           preference: ['coffee'],
           userNumber: 0
         };

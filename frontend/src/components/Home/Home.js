@@ -44,7 +44,6 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
   }
 
   render() {
-    console.log(this.props.users);
     return (
 
       <div className="row container-fluid lobbyContainer">

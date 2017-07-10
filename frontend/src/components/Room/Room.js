@@ -24,8 +24,7 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
   componentDidMount() {
     // get room name from redux store
 
-    //const roomName = this.props.rooms;
-    const roomName = '12345';
+    const roomName = this.props.rooms;
     // re-join room chat channel after redirecting.
     socket.emit('join room channel', roomName)
   }
@@ -62,9 +61,9 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
 
 // grab current preferences from redux state
 const mapStateToProps = (state) => {
-    return {
-      rooms: state.rooms
-    }
+  return {
+    roomName: state.rooms
+  }
 }
 
 // dispatch actions
