@@ -42,6 +42,7 @@ class App extends Component {
       })
     })
 
+
     socket.on('testing connection', (user) => {
       if(user._id == undefined){
         this.setState({
@@ -88,6 +89,7 @@ class App extends Component {
         {this.conditionalRender()}
       </div>
     )
+
   }
 }
 
