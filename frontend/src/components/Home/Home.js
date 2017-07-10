@@ -29,20 +29,6 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
   }
 
 
-   renderUserList = () => {
-     return this.props.users.map((user, index) => {
-       return (
-        <div key={index}>
-          <div className="col-md-6">{user.name}</div>
-          <div className="col-md-6">{user.socketId}</div>
-        </div>
-       )
-     })
-
-   }
-
-
-
   componentDidMount() {
     console.log(this.state);
     console.log(this.props);
@@ -51,10 +37,8 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
     })
 
     // Join global channel
+
     socket.emit('enter global room', this.props.preferences);
-
-
-
   }
 /* Not sure if this is necessary */
 
@@ -68,11 +52,6 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
       </div>
 
         <div className= "col-md-12 componentContainer">
-
-          <div className="userList">
-            <div> User List </div>
-            {this.renderUserList()}
-          </div>
 
           <div className= "col-sm-12 preferenceContainer">
             <div className= "col-sm-12 preferenceBar">
@@ -104,8 +83,10 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
 const mapStateToProps = (state) => {
     return {
+
       users: state.users,
       preferences: state.preferences
+
     }
 }
 
