@@ -63,34 +63,45 @@ module.exports = (io) => {
       socket.join('global');
     });
 
-    socket.on('join room', (preferenceFromFrontend) => {
+    socket.on('join room', (preferences) => {
+      console.log(preferences);
+      /*
       socket.leave('global');
       // 1. room checker here with preferences
       let checker = true; // checker for room creation.
       roomsList.forEach((e) => {
         // for the test purpose, preferenceFromFrontend should be one.
         // This is temporal if statement for the test.
+
+
         if (e.preference[0] === preferenceFromFrontend && e.userNumber !== 4) {
           console.log('==>>Preference matched!');
           checker = false;
           e.userNumber += 1;
           io.to(socket.id).emit('get roomInfo', e.name);
         }
+
+
         console.log(roomsList);
       });
       // 2. Create room if no match.
       if (checker) {
         // this is test object.
+
+
         const testRoomObject = {
           name: '12345',
           preference: ['coffee'],
           userNumber: 0
         };
+
+
         // push to roomsList after creation.
         testRoomObject.userNumber += 1;
         roomsList.push(testRoomObject);
         io.to(socket.id).emit('get roomInfo', testRoomObject.name);
       }
+      */
     });
 
     socket.on('join room channel', (roomName) => {

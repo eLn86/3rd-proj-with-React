@@ -22,6 +22,10 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
   constructor(props){
     super(props);
+
+    this.state = {
+      preferences: []
+    }
   }
 
 
@@ -39,12 +43,18 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
 
   componentDidMount() {
+    console.log(this.state);
+    console.log(this.props);
+    this.setState({
+      preferences: this.props.preferences
+    })
+
     // Join global channel
     socket.emit('enter global room');
   }
+/* Not sure if this is necessary */
 
   render() {
-    console.log(this.props.users);
     return (
 
       <div className="row container-fluid lobbyContainer">
@@ -73,7 +83,7 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
           <div className= "col-sm-12 startBtnCol">
             <div className= "col-sm-4 col-sm-offset-4 startBtnContainer">
-              <StartBtn/>
+              <StartBtn preferences= {this.props.preferences}/>
             </div>
           </div>
 
@@ -90,7 +100,8 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
 const mapStateToProps = (state) => {
     return {
-      users: state.users
+      users: state.users,
+      preferences: state.preferences
     }
 }
 

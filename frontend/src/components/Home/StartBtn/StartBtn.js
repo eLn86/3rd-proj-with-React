@@ -29,7 +29,7 @@ export class StartBtn extends Component { // eslint-disable-line react/prefer-st
 
 
   onClick = (e) => {
-    socket.emit('join room');
+    socket.emit('join room', this.props.preferences);
   };
 
   componentDidMount() {
