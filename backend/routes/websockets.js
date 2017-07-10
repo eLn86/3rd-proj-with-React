@@ -18,7 +18,7 @@ module.exports = (io) => {
   // room.interest
   // room.name
   // room.users
-  */
+  
 
   /**
    * Socket Connection Events.
