@@ -16,8 +16,6 @@ let homeController = {
   getUserInfo: (req,res) => {
     const id = req.body.user;
     res.json(user);
-
-
   }
 }
 

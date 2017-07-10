@@ -42,6 +42,7 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
    }
 
 
+
   componentDidMount() {
     console.log(this.state);
     console.log(this.props);
@@ -51,6 +52,7 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
     // Join global channel
     socket.emit('enter global room', this.props.preferences);
+
 
 
   }
