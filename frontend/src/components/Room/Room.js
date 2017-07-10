@@ -1,10 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
+// Import components
 import Header from '../Partials/Header/Header';
 import Chat from './Chat/Chat';
 
+// Import static files
 import './Room.css';
+
+// Import Socket Client
+import {socket} from '../../API/socket';
 
 export class Room extends Component { // eslint-disable-line react/prefer-stateless-function
 
