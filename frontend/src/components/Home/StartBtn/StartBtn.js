@@ -32,7 +32,7 @@ export class StartBtn extends Component { // eslint-disable-line react/prefer-st
   onClick = (e) => {
 
     // Fire the latest preference to Socket in backend.
-    socket.emit('join room', 'coffee');
+    socket.emit('join room', this.props.preferences);
     // Fire the latest preference to MongoDB in backend.
     /* need code here */
 
@@ -66,7 +66,8 @@ export class StartBtn extends Component { // eslint-disable-line react/prefer-st
 
 const mapStateToProps = (state) => {
     return {
-      roomName: state.rooms
+      roomName: state.rooms,
+      preferences: state.preferences
     }
 }
 

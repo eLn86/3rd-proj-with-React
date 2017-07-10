@@ -11,6 +11,7 @@ module.exports = (io) => {
   const usersList = [];
   // Current active rooms array.
   const roomsList = [];
+  const globalPreferenceArray = [];
   // Peers ID Array
   const peersIdList = [];
 
@@ -59,12 +60,109 @@ module.exports = (io) => {
      * Room related Events
      */
 
-    socket.on('enter global room', () => {
+    socket.on('enter global room', (preferences) => {
       socket.join('global');
+
+
     });
 
+
+
     socket.on('join room', (preferences) => {
-      console.log(preferences);
+
+      /* This checks whether the elements in preferences exist in globalPreferenceArray.
+         If not, then push it to that array */
+
+
+         for(var i = 0; i < preferences.length; i++){
+           var existingPreference = globalPreferenceArray.some((el) => {
+             return el === preferences[i];
+           });
+           if (!existingPreference) {
+             globalPreferenceArray.push(preferences[i]);
+           }
+         }
+
+         let preferenceScore = 0;
+
+         for(var i = 0; i < preferences.length; i++){
+           for(var j = 0; j < globalPreferenceArray.length; j++){
+             if(preferences[i] === globalPreferenceArray[j]){
+               preferenceScore = preferenceScore + (j + 1);
+             }
+           }
+         }
+
+         if(preferenceScore != 0){
+           preferenceScore = (preferenceScore/preferences.length);
+         }
+
+         if(roomsList.length == 0){
+
+           let roomID = uuid.v4();
+           let roomObject = {
+             name: roomID,
+             preferences: preferences,
+             preferenceScore: preferenceScore,
+             userNumber: 1
+           }
+
+           roomsList.push(roomObject);
+           io.to(socket.id).emit('get roomInfo', roomID);
+
+         }else if(roomsList.length > 0){
+
+           var vacantRooms = [];
+
+           for(var i = 0; i < roomsList.length; i++){
+
+             if(roomsList.userNumber == 4 && i == roomsList.length - 1){
+
+               let roomID = uuid.v4();
+               let roomObject = {
+                 name: roomID,
+                 preferences: preferences,
+                 preferenceScore: preferenceScore,
+                 userNumber: 1
+               }
+
+               roomsList.push(roomObject);
+               io.to(socket.id).emit('get roomInfo', roomID);
+               break;
+
+             }else if(roomsList[i].userNumber < 4){
+
+               vacantRooms.push(roomsList[i]);
+
+             }
+         }
+
+         if(vacantRooms.length > 0){
+
+           var priority = {};
+           var previousScore = 0;
+
+           for(var i = 0; i < vacantRooms.length; i++){
+             if(preferenceScore - vacantRooms[i].preferenceScore < previousScore){
+               priority = vacantRooms[i];
+             }
+           }
+
+           io.to(socket.id).emit('get roomInfo', priority.name);
+
+           for(var i = 0; i < roomsList.length; i++){
+             if(priority.name === roomsList[i].name){
+               roomsList[i].userNumber = roomsList[i].userNumber + 1;
+               roomsList[i].preferenceScore = ((roomsList[i].preferenceScore + preferenceScore) / roomsList[i].userNumber)
+               break;
+             }
+           }
+         }
+       }
+     });
+
+
+      /*
 
       socket.leave('global');
       // 1. room checker here with preferences
@@ -101,8 +199,9 @@ module.exports = (io) => {
         roomsList.push(testRoomObject);
         io.to(socket.id).emit('get roomInfo', testRoomObject.name);
       }
-      
-    });
+      */
+
+    
 
     socket.on('join room channel', (roomName) => {
       socket.join(roomName)
