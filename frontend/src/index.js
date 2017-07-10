@@ -6,7 +6,7 @@ import registerServiceWorker from './registerServiceWorker';
 
 import { setPreferences, getPreferences } from './API/preferenceAPI';
 import { setUsers, getUsers } from './API/userAPI';
-import { setRooms, getRooms } from './API/socketAPI';
+import { setRooms, getRooms } from './API/roomAPI';
 
 // Redux
 import { Provider } from 'react-redux';
