@@ -39,15 +39,11 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
 
   componentDidMount() {
-    /**
-     * Socket Part!
-     */
     // Join global channel
     socket.emit('enter global room');
   }
 
   render() {
-    console.log(this.props.users);
     return (
 
       <div className="row container-fluid lobbyContainer">

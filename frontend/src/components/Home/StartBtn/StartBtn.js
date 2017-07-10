@@ -11,6 +11,7 @@ import { getUser } from '../../../API/userAPI';
 
 // Import Actions
 import { addPeerIdToUser } from '../../../actions/userActions';
+import { addRoom } from '../../../actions/socketActions';
 
 // Import Socket Client
 import {socket} from '../../../API/socket';
@@ -29,11 +30,17 @@ export class StartBtn extends Component { // eslint-disable-line react/prefer-st
 
 
   onClick = (e) => {
+    // Fire the latest preference to Socket in backend.
     socket.emit('join room', 'coffee');
+    // Fire the latest preference to MongoDB in backend.
+    /* need code here */
   };
 
   componentDidMount() {
     socket.on('get roomInfo', (roomName) => {
+      // need to store roomName into redux.
+      this.props.storeRoomName(roomName);
+      // Redirection
       window.location.href = '/room/' + roomName;
     })
   }
@@ -57,7 +64,7 @@ export class StartBtn extends Component { // eslint-disable-line react/prefer-st
 
 const mapStateToProps = (state) => {
     return {
-      users: state.users
+      roomName: state.rooms
     }
 }
 
@@ -65,7 +72,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addPeerIdToUser: (peerId) => {
         dispatch(addPeerIdToUser(peerId))
-      }
+      },
+    storeRoomName: (roonName) => {
+      dispatch(addRoom(roonName))
+    }
   }
 }
 
