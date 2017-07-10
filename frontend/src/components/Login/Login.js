@@ -1,13 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-// Children Components
-import StartScreenHeader from '../Partials/StartScreenHeader/StartScreenHeader';
-import Footer from '../Partials/Footer/Footer';
-import LoginBtn from './LoginBtn/LoginBtn';
-
 import './Login.css';
 
+import LoginBtn from './LoginBtn/LoginBtn';
+import Footer from '../Partials/Footer/Footer';
 
 /**
  * Login
@@ -19,11 +16,15 @@ export class Login extends Component { // eslint-disable-line react/prefer-state
   }
 
   render() {
-
     return (
-      <div className="container-fluid login">
-        <StartScreenHeader/>
-        <LoginBtn/>
+      <div className="container-fluid">
+        <div className="title row"> teaTime
+        </div>
+        <div className="subtitle row"> live video chat that keeps getting better
+        </div>
+        <div className="login row">
+          <LoginBtn/>
+        </div>
         <Footer/>
       </div>
     );
