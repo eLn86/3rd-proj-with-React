@@ -130,10 +130,8 @@ app.use(flash());
  */
 const index = require('./routes/index');
 const authRoute = require('./routes/auth');
-const userRoute = require('./routes/user');
 app.use('/', index);
 app.use('/auth', authRoute);
-app.use('/user', userRoute);
 
 // import socket IO route
 const socketIO = require('./routes/websockets')(io);
