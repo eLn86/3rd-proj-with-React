@@ -12,7 +12,7 @@ router.get('/', homeController.renderIndexPage);     //URL - http://localhost:30
 router.get('/logout',(req,res,next)=>{
 
   req.logout();
-  req.redirect('/');
+  res.redirect('/');
 
 });
 
