@@ -87,13 +87,10 @@ passport.use(new FacebookStrategy({
           user.tokens.push({ kind: 'facebook', accessToken });
           user.profile.name = `${profile.name.givenName} ${profile.name.familyName}`;
           user.profile.picture = `https://graph.facebook.com/${profile.id}/picture?type=large`;
-          console.log('before save', user)
           user.save((err) => {
             if (err) return {message: err}
-            console.log('this is here');
             done(err, user);
           });
-          console.log('after user')
         }
       });
     });
