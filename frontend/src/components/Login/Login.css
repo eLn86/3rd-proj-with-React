@@ -3,7 +3,7 @@
   width: 100vw;
 }
 
-.container-fluid {
+.container-fluid.loginpage {
   height: 100vh;
   background: black;
 }

@@ -17,7 +17,7 @@ export class Login extends Component { // eslint-disable-line react/prefer-state
 
   render() {
     return (
-      <div className="container-fluid">
+      <div className="container-fluid loginpage">
         <div className="title row"> teaTime
         </div>
         <div className="subtitle row"> live video chat that keeps getting better

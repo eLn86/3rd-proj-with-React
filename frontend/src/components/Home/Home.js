@@ -52,14 +52,14 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
     socket.on('signal to front', (msg) => {
       console.log(msg);
     });
-    
+
   }
 
   render() {
     console.log(this.props.users);
     return (
 
-      <div className="row container-fluid lobbyContainer">
+      <div className="container-fluid lobbyContainer">
 
       <div className= "col-sm-12 footerContainer">
         <Header/>
