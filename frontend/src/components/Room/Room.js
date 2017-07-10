@@ -9,8 +9,7 @@ import Chat from './Chat/Chat';
 import './Room.css';
 
 // Import Socket Client
-import io from 'socket.io-client';
-const socket = io('/');
+import {socket} from '../../API/socket';
 
 export class Room extends Component { // eslint-disable-line react/prefer-stateless-function
 
