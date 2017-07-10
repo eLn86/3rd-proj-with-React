@@ -11,7 +11,8 @@ const userSchema = mongoose.Schema({
     name: String,
     picture: String
   },
-  preferences: Array
+  preferences: Array,
+  peerId: String
 });
 
 // User Schema methods ======================
@@ -19,7 +20,7 @@ const userSchema = mongoose.Schema({
 /**
  * Password hash middleware, encrypt the password by adding salt
  */
-userSchema.pre('save', function (next) {
+userSchema.pre('save', (next) => {
   const user = this;
   if (!user.isModified('local.password')) { return next(); }
   bcrypt.genSalt(10, (err, salt) => {
@@ -35,7 +36,7 @@ userSchema.pre('save', function (next) {
 /**
  * Helper method for validating user's password.
  */
-userSchema.methods.validPassword = function (candidatePassword, cb) {
+userSchema.methods.validPassword = (candidatePassword, cb) => {
   bcrypt.compare(candidatePassword, this.local.password, (err, isMatch) => {
     cb(err, isMatch);
   });

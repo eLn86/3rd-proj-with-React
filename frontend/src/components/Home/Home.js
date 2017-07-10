@@ -1,3 +1,5 @@
+import { addRoom } from '../../actions/socketActions';
+
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { socket } from '../../API/socket';
@@ -37,13 +39,14 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
    }
 
-   /* Automatic global room join functionality
-   /* Description: Uses componentDidMount to fire off a signal to websockets.js which places
-   /* the user inside a global lobby room, from which all currently connected users can be seen.
-   */
+  componentDidMount() {
 
-  componentDidMount(){
+    /**
+     * Socket Part!
+     */
+    // Join global channel
     socket.emit('enter global room');
+<<<<<<< HEAD
 
     /* These are for testing room signaling stability - Han */
 
@@ -53,6 +56,8 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
       console.log(msg);
     });
 
+=======
+>>>>>>> master
   }
 
   render() {

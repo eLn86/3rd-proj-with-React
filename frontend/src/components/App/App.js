@@ -18,15 +18,17 @@ import Login from '../Login/Login';
 import Home from '../Home/Home';
 import Room from '../Room/Room';
 
+
 // Import Socket API
 import { socket } from '../../API/socket';
-
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      isLoggedIn: false,
+      usersList: []
     }
   }
 
@@ -35,20 +37,61 @@ class App extends Component {
     // updates user reducer on socket event
     socket.on('update userList', (userArray) => {
       this.props.updateUserList(userArray);
+      this.setState({
+        usersList: userArray
+      })
     })
-  }
+
+
+    socket.on('testing connection', (user) => {
+      if(user._id == undefined){
+        this.setState({
+          isLoggedIn: false
+        })
+      }else{
+        this.setState({
+          isLoggedIn: true
+        })
+      }
+    });
+
+  };
+
+  conditionalRender = () => {
+    if(!this.state.isLoggedIn){
+      return(
+        <Router>
+          <Switch>
+            <Route exact path="/" component={Login}/>
+            <Route exact path="/home" component={Login}/>
+            <Route exact path="/room/:id" component={Login}/>
+
+          </Switch>
+        </Router>
+      )
+    }else{
+      return(
+        <Router>
+          <Switch>
+            <Route exact path="/" component={Home}/>
+            <Route exact path="/home" component={Home}/>
+            <Route exact path="/room/:id" component={Room}/>
+
+          </Switch>
+        </Router>
+      )
+    }
+  };
 
 
   render() {
-    return (
-      <Router>
-        <Switch>
-          <Route exact path="/" component={Login}/>
-          <Route exact path="/home" component={Home}/>
-          <Route exact path="/room" component={Room}/>
-        </Switch>
-      </Router>
-    );
+
+    return(
+      <div>
+        {this.conditionalRender()}
+      </div>
+    )
+
   }
 }
 
