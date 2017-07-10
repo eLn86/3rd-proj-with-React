@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { socket } from '../../API/socket';
 
 import PreferenceBar from '../Preferences/PreferenceBar/PreferenceBar';
 import PreferenceTrending from '../Preferences/PreferenceTrending/PreferenceTrending';
@@ -35,6 +36,18 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
      })
 
    }
+
+
+  componentDidMount(){
+
+
+    /**
+     * Socket Part!
+     */
+    // Join global channel
+    socket.emit('enter global room');
+
+  }
 
   render() {
     console.log(this.props.users);
