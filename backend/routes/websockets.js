@@ -90,7 +90,7 @@ module.exports = (io) => {
 
 
         const testRoomObject = {
-          name: '12345',
+          name: uuid.v4(),
           preference: ['coffee'],
           userNumber: 0
         };

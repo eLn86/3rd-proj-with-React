@@ -51,6 +51,8 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
     // Join global channel
     socket.emit('enter global room');
+
+
   }
 /* Not sure if this is necessary */
 
