@@ -1,5 +1,5 @@
 
-import { setRooms, getRooms } from '../API/socketAPI';
+import { setRooms, getRooms } from '../API/roomAPI';
 
 // will change later to grab from server. for now it is empty array
 const initialRooms = getRooms();

@@ -21,6 +21,15 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
 
   }
 
+  componentDidMount() {
+    // get room name from redux store
+
+    //const roomName = this.props.rooms;
+    const roomName = '12345';
+    // re-join room chat channel after redirecting.
+    socket.emit('join room channel', roomName)
+  }
+
 
   render() {
 
