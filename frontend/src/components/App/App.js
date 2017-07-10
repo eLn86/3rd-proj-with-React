@@ -18,9 +18,9 @@ import Login from '../Login/Login';
 import Home from '../Home/Home';
 import Room from '../Room/Room';
 
+
 // Import Socket API
 import { socket } from '../../API/socket';
-
 
 class App extends Component {
   constructor(props) {
@@ -41,6 +41,7 @@ class App extends Component {
         usersList: userArray
       })
     })
+
 
     socket.on('testing connection', (user) => {
       if(user._id == undefined){
@@ -90,6 +91,7 @@ class App extends Component {
         {this.conditionalRender()}
       </div>
     )
+
   }
 }
 
