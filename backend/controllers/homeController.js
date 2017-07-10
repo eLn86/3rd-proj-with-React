@@ -7,10 +7,16 @@ let homeController = {
     res.render('index');
   },
 
+
   logout: (req, res) => {
     req.logout();
     console.log('test');
     res.redirect('/');
+
+  getUserInfo: (req,res) => {
+    const id = req.body.user; 
+    res.json(user);
+
   }
 }
 
