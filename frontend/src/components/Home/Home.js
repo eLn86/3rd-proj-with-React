@@ -43,16 +43,8 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
    */
 
   componentDidMount(){
-    socket.emit('enter global room');
 
-    /* These are for testing room signaling stability - Han */
 
-    socket.emit('join room');
-
-    socket.on('signal to front', (msg) => {
-      console.log(msg);
-    });
-    
   }
 
   render() {

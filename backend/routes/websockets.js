@@ -19,20 +19,19 @@ module.exports = (io) => {
     name:'global',
     usersList: []
   }
-
-  const roomsList = [];
-
   var roomIndex = 0;
 
   // Concurrent Users array.
   const usersList = [];
   // Current active rooms array.
-
-  /* Commenting this out in order to test using an object instead of array - Han
-
   const roomsList = [];
+  // Active users in current room
+  const roomUserList = [];
   // Peers ID Array
   const peersIdList = [];
+  /* Commenting this out in order to test using an object instead of array - Han
+
+
   // room object may contain information below;
   // room.interest
   // room.name
@@ -220,7 +219,7 @@ module.exports = (io) => {
         }
       }
 
-      /*
+
 
       socket.join(roomName);
       // Save room info.
@@ -228,12 +227,10 @@ module.exports = (io) => {
       // Emit room into to the client(for redirect).
       io.to(user.roomName).emit('get roomInfo', roomName);
 
-      */
+
 
       /* This test works - Han */
       io.to('0').emit('signal to front', 'testing custom room');
-      console.log(roomsList);
-      console.log(roomsList[0].usersList);
     });
 
     /* No need to specially leave room ; leaving occurs automatically upon
@@ -251,13 +248,43 @@ module.exports = (io) => {
     /**
      * Peer related Events
      */
+
+     /**
+      * Function: add peer
+      * Purpose: to add a peer to the room
+      * Dependencies: socket.emit('add peer') in Room.js
+      */
     socket.on('add peer', (peerID) => {
-      // Send my peer info to the room for add.
-      peersIdList.push(peerID);
+
+      // Boolean to check if user exists in the room, default is true
+      var userExistsInRoomList = true;
+
+      // Iterate over the room user list. If the name is not found, set user exists boolean to false
+      roomUserList.forEach((el,index) => {
+        if(el.name === user.name) {
+          el.peerID = peerID;
+        }
+        else{
+          userExistsInRoomList = false;
+        }
+      })
+
+      // If the roomUserList array is empty or if the userExists boolean is false, create a new user object and push it into the roomUserList array
+      if(roomUserList.length === 0 || userExistsInRoomList === false) {
+        // Create new user object to store current user
+        const currentUser = {};
+        currentUser.name = user.name;
+        currentUser.socketId = user.socketId;
+        currentUser.peerID = peerID;
+        roomUserList.push(currentUser);
+        peersIdList.push(currentUser.peerID);
+      }
+
       // Send the latest peerID List array to all clients
-      io.emit('update peersIdList', peersIdList);
+      // io.emit('get peers', currentUser, peersIdList);
     })
 
+/* Commented out for later use
     socket.on('delete peer', (peerID) => {
       // Send my peer info to the room for deletion.
       peersIdList.forEach((el, index) => {
@@ -268,7 +295,7 @@ module.exports = (io) => {
       // Send the latest peerID List array to all clients
       io.emit('update peersIdList', peersIdList);
     })
-
+*/
 
     /**
      * Disconnect

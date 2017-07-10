@@ -5,10 +5,6 @@ import User from '../models/User';
 let homeController = {
   renderIndexPage: (req,res) => {
     res.render('index');
-  },
-  getUserInfo: (req,res) => {
-    const id = req.body.user; 
-    res.json(user);
   }
 }
 
