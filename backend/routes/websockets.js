@@ -11,10 +11,7 @@ module.exports = (io) => {
   const usersList = [];
   // Current active rooms array.
   const roomsList = [];
-<<<<<<< HEAD
-=======
 
->>>>>>> 3af6467d16fab661368fb05cebd3ddc2f45355f8
   // Peers ID Array
   const peersIdList = [];
   // room object may contain information below;
@@ -22,10 +19,6 @@ module.exports = (io) => {
   // room.name
   // room.userså
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 3af6467d16fab661368fb05cebd3ddc2f45355f8
   /**
    * Socket Connection Events.
    */
