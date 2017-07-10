@@ -11,6 +11,13 @@ module.exports = (io) => {
   const usersList = [];
   // Current active rooms array.
   const roomsList = [];
+  // Peers ID Array
+  const peersIdList = [];
+  // room object may contain information below;
+  // room.interest
+  // room.name
+  // room.userså
+
 
   /**
    * Socket Connection Events.
@@ -36,7 +43,8 @@ module.exports = (io) => {
 
     // Send the latest userList array to all clients.
     io.emit('update userList', usersList);
-
+    // Send the latest peerID List array to all clients
+    io.emit('update peersIdList', peersIdList);
     /**
      * Chat related Events
      */
@@ -96,14 +104,22 @@ module.exports = (io) => {
     /**
      * Peer related Events
      */
-    socket.on('add peer', (peer) => {
+    socket.on('add peer', (peerID) => {
       // Send my peer info to the room for add.
-      io.to(user.roomName).emit('get peers', peer);
+      peersIdList.push(peerID);
+      // Send the latest peerID List array to all clients
+      io.emit('update peersIdList', peersIdList);
     })
 
-    socket.on('delete peer', (peer) => {
+    socket.on('delete peer', (peerID) => {
       // Send my peer info to the room for deletion.
-      io.to(user.roomName).emit('get peers', peer);
+      peersIdList.forEach((el, index) => {
+        if(el === peerID) {
+          peersIdList.splice(index,1);
+        }
+      })
+      // Send the latest peerID List array to all clients
+      io.emit('update peersIdList', peersIdList);
     })
 
     /**
