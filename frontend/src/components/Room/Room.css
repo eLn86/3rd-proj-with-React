@@ -12,3 +12,64 @@
   border: 1px solid black;
   height: 600px;
 }
+
+/* CSS for Video display Column and Video panes */
+.videoTopRow {
+  display: flex;
+  height: 300px;
+  align-items: center;
+}
+
+.videoBottomRow {
+  display: flex;
+  height: 300px;
+  align-items: center;
+}
+
+.topLeftCol {
+  display: flex;
+  justify-content: center;
+}
+
+.topRightCol {
+  display: flex;
+  justify-content: center;
+}
+
+.bottomLeftCol {
+  display: flex;
+  justify-content: center;
+}
+
+.bottomRightCol {
+  display: flex;
+  justify-content: center;
+}
+
+.topLeftVideoPane {
+  display: flex;
+  width: 200px;
+  height: 200px;
+  border: 1px solid black;
+}
+
+.topRightVideoPane {
+  display: flex;
+  width: 200px;
+  height: 200px;
+  border: 1px solid black;
+}
+
+.bottomLeftVideoPane {
+  display: flex;
+  width: 200px;
+  height: 200px;
+  border: 1px solid black;
+}
+
+.bottomRightVideoPane {
+  display: flex;
+  width: 200px;
+  height: 200px;
+  border: 1px solid black;
+}

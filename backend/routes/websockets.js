@@ -11,6 +11,8 @@ module.exports = (io) => {
   const usersList = [];
   // Current active rooms array.
   const roomsList = [];
+  // Active users in current room
+  const roomUserList = [];
   // Peers ID Array
   const peersIdList = [];
 
@@ -101,13 +103,43 @@ module.exports = (io) => {
     /**
      * Peer related Events
      */
+
+     /**
+      * Function: add peer
+      * Purpose: to add a peer to the room
+      * Dependencies: socket.emit('add peer') in Room.js
+      */
     socket.on('add peer', (peerID) => {
-      // Send my peer info to the room for add.
-      peersIdList.push(peerID);
+
+      // Boolean to check if user exists in the room, default is true
+      var userExistsInRoomList = true;
+
+      // Iterate over the room user list. If the name is not found, set user exists boolean to false
+      roomUserList.forEach((el,index) => {
+        if(el.name === user.name) {
+          el.peerID = peerID;
+        }
+        else{
+          userExistsInRoomList = false;
+        }
+      })
+
+      // If the roomUserList array is empty or if the userExists boolean is false, create a new user object and push it into the roomUserList array
+      if(roomUserList.length === 0 || userExistsInRoomList === false) {
+        // Create new user object to store current user
+        const currentUser = {};
+        currentUser.name = user.name;
+        currentUser.socketId = user.socketId;
+        currentUser.peerID = peerID;
+        roomUserList.push(currentUser);
+        peersIdList.push(currentUser.peerID);
+      }
+
       // Send the latest peerID List array to all clients
-      io.emit('update peersIdList', peersIdList);
+      // io.emit('get peers', currentUser, peersIdList);
     })
 
+/* Commented out for later use
     socket.on('delete peer', (peerID) => {
       // Send my peer info to the room for deletion.
       peersIdList.forEach((el, index) => {
@@ -118,6 +150,8 @@ module.exports = (io) => {
       // Send the latest peerID List array to all clients
       io.emit('update peersIdList', peersIdList);
     })
+
+*/
 
     /**
      * Disconnect
