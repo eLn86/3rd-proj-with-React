@@ -131,6 +131,7 @@ app.use(flash());
 const index = require('./routes/index');
 const authRoute = require('./routes/auth');
 app.use('/', index);
+app.use('/logout', index);
 app.use('/auth', authRoute);
 
 // import socket IO route
