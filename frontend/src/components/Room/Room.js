@@ -54,6 +54,7 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
 // grab current preferences from redux state
 const mapStateToProps = (state) => {
     return {
+      rooms: state.rooms
     }
 }
 
