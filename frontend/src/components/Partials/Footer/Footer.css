@@ -1,20 +1,15 @@
 .footerRow {
-  display: flex;
-  width: 110vw;
-  height: 4vh;
-  background: linear-gradient(white, grey); /* Standard syntax */
-
+  position: absolute;
   bottom: 0;
+  width: 100%;
+  font-family:'Quicksand', sans-serif;
+  color: black;
 }
 
 .footerLeftCol {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center
+
 }
 
 .footerRightCol {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center
+  text-align: right;
 }
