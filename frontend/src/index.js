@@ -5,8 +5,8 @@ import App from './components/App/App';
 import registerServiceWorker from './registerServiceWorker';
 
 import { setPreferences, getPreferences } from './API/preferenceAPI';
-
 import { setUsers, getUsers } from './API/userAPI';
+import { setRooms, getRooms } from './API/roomAPI';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -20,6 +20,7 @@ store.subscribe( () => {
   const state = store.getState();
   setPreferences(state.preferences);
   setUsers(state.users);
+  setRooms(state.rooms)
 })
 
 

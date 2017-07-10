@@ -37,18 +37,17 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
    }
 
-   /* Automatic global room join functionality
-   /* Description: Uses componentDidMount to fire off a signal to websockets.js which places
-   /* the user inside a global lobby room, from which all currently connected users can be seen.
-   */
 
-  componentDidMount(){
+
+  componentDidMount() {
+    // Join global channel
+    socket.emit('enter global room');
+
 
 
   }
 
   render() {
-    console.log(this.props.users);
     return (
 
       <div className="row container-fluid lobbyContainer">
