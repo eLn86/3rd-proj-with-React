@@ -53,9 +53,7 @@ export class Chat extends Component { // eslint-disable-line react/prefer-statel
   componentDidMount() {
     this.scrollToBottom(); // auto scroll down.
     socket.on('render msg', (msg, user) => {
-      // receive realtime msg and update state.
-      console.log(user);
-
+      // recieve realtime msg and update state.
       const newMsg = this.chatText(msg, user);
 
       this.setState({
@@ -67,7 +65,7 @@ export class Chat extends Component { // eslint-disable-line react/prefer-statel
   componentDidUpdate() {
     this.scrollToBottom(); // auto scroll down.
   }
-  
+
   // When enter is pressed and the current message in state is not empty, emit the message to socket io
   onKeypress = (e) => {
     if (e.key === 'Enter' && this.state.msg !== '') {
@@ -85,7 +83,7 @@ export class Chat extends Component { // eslint-disable-line react/prefer-statel
       this.setState({msg:''});
     }
   };
-  
+
   // Event listener for chat input field change
   onChange = (e) => {
     // Uptating state if there is change in input field.

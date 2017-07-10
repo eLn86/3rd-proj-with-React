@@ -1,3 +1,5 @@
+import uuid from 'uuid';
+
 /**
  * This file is for routing websocket requst.
  */
@@ -9,10 +11,6 @@ module.exports = (io) => {
   const usersList = [];
   // Current active rooms array.
   const roomsList = [];
-  // room object may contain information below;
-  // room.interest
-  // room.name
-  // room.users
 
   /**
    * Socket Connection Events.
@@ -28,7 +26,7 @@ module.exports = (io) => {
       user.id = socket.request.user.id;
       user.socketId = socket.id;
       user.picture = socket.request.user.profile.picture;
-      user.roomName = null;
+      user.roomName = '';
       // Push the user object to usersList array.
       usersList.push(user);
     }
@@ -49,49 +47,51 @@ module.exports = (io) => {
       miniUser.picture = user.picture;
       miniUser.socketId = user.socketId;
 
-      // this is test purpose without room functionality.
-      io.emit('render msg', msg, miniUser);
-
-      // Above should be changed like below after room implemented.
-      // io.to(user.roomName).emit('render msg', msg);
+      io.to(user.roomName).emit('render msg', msg, miniUser);
     })
-
 
     /**
      * Room related Events
      */
-    socket.on('room join', (roomObject) => {
-      // below is an example logic.
-      // roomObject is passed from frontend contain user's interest.
-      // 1. find a proper room in the roomList Array using roomObject.interest
-      // 2. Iterating on the array. If room element's interests are matched
-      //    with roomObject.interest. emit room into to the client(for redirect).
-      //    2-1. Need minimum match number of interest.
-      //    2-2. Need to check room is full or not.
-      // 3. If not, gernerate new room
-      //   3-1. creat string for url of roomName
-      //   3-2. push the object to the roomList Array
-      //      3-2-1. the object has same interests with roomObject.interest.
-      //   3-3. socket.join(roomName);
-      //   3-4. save roomName info to user object.
-      //   3-5. emit room into to the client(for redirect).
-      //
-      // below are example syntax.
-      // Join to the room (Socket, not redirection)
-      socket.join(roomName);
-      // Save room info.
-      user.roomName = roomName;
-      // Emit room into to the client(for redirect).
-      io.to(user.roomName).emit('get roomInfo', roomName);
+
+    socket.on('enter global room', () => {
+      socket.join('global');
+      user.roomName = 'global';
     });
 
-    socket.on('room leave', () => {
-      // retrieve current room name information from user obejct.
-      socket.leave(user.roomName);
-      // reset the information.
-      user.roomName = null;
+    socket.on('join room', (preferenceFromFrontend) => {
+      socket.leave('global');
+      // 1. room checker here with preferences
+      let checker = true; // checker for room creation.
+      roomsList.forEach((e) => {
+        // for the test purpose, preferenceFromFrontend should be one.
+        console.log('e.preference is :', e.preference);
+        console.log('preferenceFromBackend is :', preferenceFromFrontend);
+        // This is temporal if statement for the test.
+        if (e.preference[0] === preferenceFromFrontend && e.userNumber !== 4) {
+          console.log('Preference matched!');
+          checker = false;
+          socket.join(e.name);
+          e.userNumber += 1;
+          io.to(socket.id).emit('get roomInfo', e.name);
+        }
+        console.log(roomsList);
+      });
+      // 2. Create room if no match.
+      if (checker) {
+        // this is test object.
+        const testRoomObject = {
+          name: '12345',
+          preference: ['coffee'],
+          userNumber: 1
+        };
+        socket.join(testRoomObject.name)
+        user.roomName = testRoomObject.name;
+        // push to roomsList after creation.
+        roomsList.push(testRoomObject);
+        io.to(socket.id).emit('get roomInfo', user.roomName);
+      }
     });
-
 
     /**
      * Peer related Events
@@ -106,7 +106,6 @@ module.exports = (io) => {
       io.to(user.roomName).emit('get peers', peer);
     })
 
-
     /**
      * Disconnect
      */
@@ -117,8 +116,10 @@ module.exports = (io) => {
       usersList.forEach((e, i) => {
         // If element name and id is equals to the user name and id
         // who left the room, remove the user from the user array
-        if (e.id === user.id) usersList.splice(i, 1);
-      });
+        if (e.id === user.id)
+          usersList.splice(i, 1);
+        }
+      );
 
       // Send the latest userList array to all clients.
       io.emit('update userList', usersList);
