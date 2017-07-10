@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { socket } from '../../API/socket';
 
 import PreferenceBar from '../Preferences/PreferenceBar/PreferenceBar';
 import PreferenceTrending from '../Preferences/PreferenceTrending/PreferenceTrending';
@@ -35,6 +36,24 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
      })
 
    }
+
+   /* Automatic global room join functionality
+   /* Description: Uses componentDidMount to fire off a signal to websockets.js which places
+   /* the user inside a global lobby room, from which all currently connected users can be seen.
+   */
+
+  componentDidMount(){
+    socket.emit('enter global room');
+
+    /* These are for testing room signaling stability - Han */
+
+    socket.emit('join room');
+
+    socket.on('signal to front', (msg) => {
+      console.log(msg);
+    });
+    
+  }
 
   render() {
     console.log(this.props.users);
