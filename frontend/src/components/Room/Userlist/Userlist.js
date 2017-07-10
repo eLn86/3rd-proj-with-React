@@ -2,6 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
+import Peer from 'peerjs';
 
 // Import Static Files
 import './Userlist.css';
@@ -15,11 +16,29 @@ export class Userlist extends Component { // eslint-disable-line react/prefer-st
   constructor(props){
     super(props)
 
-    this.index = 0;
+    this.userIndex = 0;
+    this.peerIndex = 0;
     this.state = {
-      userList: []
+      userList: [],
+      peers: []
     }
   }
+
+  // When start button is clicked, this function is triggered
+  /*
+  ** Function: createPeer()
+  ** Parameters: None
+  ** Purpose: Create a new peer and emit the peer id to socket in the backend
+  */
+  createPeer = () => {
+
+        var peer = new Peer({key: 'z2urygfkdibe29'});
+
+        peer.on('open', function(id) {
+            socket.emit('add peer', id);
+          });
+
+    }
 
   componentDidMount() {
     socket.on('update userList', (userList) => {
@@ -28,13 +47,36 @@ export class Userlist extends Component { // eslint-disable-line react/prefer-st
         userList: userList
       })
     });
+
+    this.createPeer();
+
+    socket.on('get peers', (roomUserList, peersIdList) => {
+      this.setState({
+        peers: roomUserList
+      })
+    });
   }
 
-  drawUserList = (userList) => {
+  renderPeerIdList = () => {
+    return this.state.peers.map((el) => {
+      return (
+        <div className="peerDiv"
+             key={this.peerIndex++}>
+          <div className="row peerRow">
+            <div className="col-md-6 peerName">Peer Name: {el.name}</div>
+            <div className="col-md-6 peerID">Peer ID: {el.peerID}</div>
+          </div>
+
+        </div>
+      )
+    })
+  }
+
+  drawUserList = () => {
     return this.state.userList.map((e) => {
       return (
         <div className="userListComponent"
-             key={this.index++}>
+             key={this.userIndex++}>
           <img src={e.picture} className="userPic"/>
           <div className="userName">{e.name}</div>
         </div>
@@ -48,6 +90,7 @@ export class Userlist extends Component { // eslint-disable-line react/prefer-st
     return (
       <div id="userListGrid">
         {this.drawUserList()}
+        {this.renderPeerIdList()}
       </div>
     );
   }
