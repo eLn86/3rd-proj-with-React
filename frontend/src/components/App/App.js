@@ -36,6 +36,7 @@ class App extends Component {
     socket.on('update userList', (userArray) => {
       this.props.updateUserList(userArray);
     })
+    socket.emit('enter global room');
   }
 
 
@@ -45,7 +46,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={Login}/>
           <Route exact path="/home" component={Home}/>
-          <Route exact path="/room" component={Room}/>
+          <Route exact path="/room/:id" component={Room}/>
         </Switch>
       </Router>
     );
