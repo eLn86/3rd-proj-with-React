@@ -98,11 +98,11 @@ module.exports = (io) => {
 
     socket.on('delete peer', (peerID) => {
       // Send my peer info to the room for deletion.
-      peersIdList.forEach(el, index) => {
+      peersIdList.forEach((el, index) => {
         if(el === peerID) {
           peersIdList.splice(index,1);
         }
-      }
+      })
       // Send the latest peerID List array to all clients
       io.emit('update peersIdList', peersIdList);
     })
