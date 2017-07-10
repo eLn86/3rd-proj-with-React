@@ -1,10 +1,20 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import Peer from 'peerjs';
 
+// Import Static files
 import './StartBtn.css';
 
-// Import Socket API
-import { socket } from '../../../API/socket';
+
+// Import API
+import { getUser } from '../../../API/userAPI';
+
+// Import Actions
+import { addPeerIdToUser } from '../../../actions/userActions';
+
+// Import Socket Client
+import {socket} from '../../../API/socket';
+
 
 /**
  * Login
@@ -13,7 +23,10 @@ export class StartBtn extends Component { // eslint-disable-line react/prefer-st
 
   constructor(props){
     super(props)
+    this.state = {
+    }
   }
+
 
   onClick = (e) => {
     socket.emit('join room', 'coffee');
@@ -24,6 +37,7 @@ export class StartBtn extends Component { // eslint-disable-line react/prefer-st
       window.location.href = '/room/' + roomName;
     })
   }
+
 
   render() {
 
@@ -43,13 +57,15 @@ export class StartBtn extends Component { // eslint-disable-line react/prefer-st
 
 const mapStateToProps = (state) => {
     return {
-
+      users: state.users
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    // nothing to see here...
+    addPeerIdToUser: (peerId) => {
+        dispatch(addPeerIdToUser(peerId))
+      }
   }
 }
 
