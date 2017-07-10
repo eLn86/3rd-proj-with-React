@@ -34,6 +34,7 @@ export class StartBtn extends Component { // eslint-disable-line react/prefer-st
 
   componentDidMount() {
     socket.on('get roomInfo', (roomName) => {
+      // need to store roomName into redux.
       window.location.href = '/room/' + roomName;
     })
   }
