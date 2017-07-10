@@ -5,6 +5,10 @@ import Peer from 'peerjs';
 // Import Static files
 import './StartBtn.css';
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3af6467d16fab661368fb05cebd3ddc2f45355f8
 // Import API
 import { getUser } from '../../../API/userAPI';
 
@@ -13,6 +17,10 @@ import { addPeerIdToUser } from '../../../actions/userActions';
 
 // Import Socket Client
 import {socket} from '../../../API/socket';
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3af6467d16fab661368fb05cebd3ddc2f45355f8
 
 /**
  * Login
@@ -25,6 +33,10 @@ export class StartBtn extends Component { // eslint-disable-line react/prefer-st
     }
   }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3af6467d16fab661368fb05cebd3ddc2f45355f8
   onClick = (e) => {
     socket.emit('join room', 'coffee');
   };
@@ -35,6 +47,10 @@ export class StartBtn extends Component { // eslint-disable-line react/prefer-st
     })
   }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3af6467d16fab661368fb05cebd3ddc2f45355f8
   render() {
 
     return (
