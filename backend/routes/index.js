@@ -9,7 +9,13 @@ import homeController from '../controllers/homeController';
 /* GET index page. */
 router.get('/', homeController.renderIndexPage);     //URL - http://localhost:3000/
 
-router.get('/logout', homeController.logout);
+router.get('/logout',(req,res,next)=>{
+
+  req.logout();
+  res.redirect('/');
+
+});
+
 
 
 /*Execute GET call for /home to get user data*/

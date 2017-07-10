@@ -14,6 +14,7 @@ module.exports = (io) => {
   // Peers ID Array
   const peersIdList = [];
 
+
   /**
    * Socket Connection Events.
    */

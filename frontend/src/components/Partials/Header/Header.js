@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { socket } from '../../../API/socket';
+import axios from 'axios';
 
 import './Header.css';
 
@@ -15,8 +16,15 @@ export class Header extends Component { // eslint-disable-line react/prefer-stat
   }
 
   logout = (e) => {
+    axios.get('/logout')
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
     e.preventDefault();
-    window.location.href = '/logout';
+    window.location.href = '/';
   }
 
   render() {
