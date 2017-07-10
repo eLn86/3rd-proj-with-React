@@ -40,23 +40,21 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
 
   // When Room component is mounted, create peerID for user by calling createPeer function and get the peers data from socket
   componentDidMount() {
-
-      this.createPeer();
-      socket.on('get peers', (currentUser, peersIdList) => {
-        console.log('Current User: ', currentUser);
-        console.log('Peers ID Array: ', peersIdList);
-      })
-
-  }
-
-  componentDidMount() {
     // get room name from redux store
-
-    const roomName = this.props.rooms;
+    const roomName = this.props.roomName;
+    console.log(roomName);
     // re-join room chat channel after redirecting.
     socket.emit('join room channel', roomName)
-  }
 
+    this.createPeer();
+
+    socket.on('get peers', (currentUser, peersIdList) => {
+      console.log('Current User: ', currentUser);
+      console.log('Peers ID Array: ', peersIdList);
+    })
+
+
+  }
 
   render() {
 

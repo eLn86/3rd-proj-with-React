@@ -91,6 +91,7 @@ module.exports = (io) => {
         // push to roomsList after creation.
         testRoomObject.userNumber += 1;
         roomsList.push(testRoomObject);
+        console.log('Rooms List: ',roomsList);
         io.to(socket.id).emit('get roomInfo', testRoomObject.name);
       }
     });
@@ -98,6 +99,7 @@ module.exports = (io) => {
     socket.on('join room channel', (roomName) => {
       socket.join(roomName)
       user.roomName = roomName;
+      console.log('Room Name in Alex join room channel: ', user.roomName);
     })
 
     /**
@@ -110,7 +112,7 @@ module.exports = (io) => {
       * Dependencies: socket.emit('add peer') in Room.js
       */
     socket.on('add peer', (peerID) => {
-
+      console.log('peer ID: ', peerID);
       // Boolean to check if user exists in the room, default is true
       var userExistsInRoomList = true;
 
@@ -123,11 +125,12 @@ module.exports = (io) => {
           userExistsInRoomList = false;
         }
       })
-
+      const currentUser = {};
+      console.log('Room User List Array: ', roomUserList);
       // If the roomUserList array is empty or if the userExists boolean is false, create a new user object and push it into the roomUserList array
       if(roomUserList.length === 0 || userExistsInRoomList === false) {
         // Create new user object to store current user
-        const currentUser = {};
+
         currentUser.name = user.name;
         currentUser.socketId = user.socketId;
         currentUser.peerID = peerID;
@@ -135,8 +138,10 @@ module.exports = (io) => {
         peersIdList.push(currentUser.peerID);
       }
 
+      console.log('Room User List Array after creating new user: ', roomUserList);
       // Send the latest peerID List array to all clients
-      // io.emit('get peers', currentUser, peersIdList);
+      console.log('Room Name: ', user.roomName);
+        io.to(user.roomName).emit('get peers', currentUser, peersIdList);
     })
 
 /* Commented out for later use
