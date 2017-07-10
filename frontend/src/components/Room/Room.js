@@ -1,3 +1,5 @@
+import { addRoom } from '../../actions/socketActions';
+
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
@@ -61,6 +63,9 @@ const mapStateToProps = (state) => {
 // dispatch actions
 const mapDispatchToProps = (dispatch) => {
   return {
+    addRoom: (roomName) => {
+        dispatch(addRoom(roomName))
+      }
   }
 }
 
