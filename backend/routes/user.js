@@ -1,8 +1,8 @@
-// import express from 'express';
-//
-// // Import Router
-// const router = express.Router();
-//
+import express from 'express';
+
+// Import Router
+const router = express.Router();
+
 // // Import Controllers
 // import userController from '../controllers/userController';
 //
@@ -10,5 +10,5 @@
 //
 // router.delete('/', userController.deletePreference);
 //
-// // Export router for shared access
-// module.exports = router;
+// Export router for shared access
+module.exports = router;
