@@ -73,6 +73,7 @@ module.exports = (io) => {
       /* This checks whether the elements in preferences exist in globalPreferenceArray.
          If not, then push it to that array */
 
+         /* If preference does not exist in global preference array, put it */
 
          for(var i = 0; i < preferences.length; i++){
            var existingPreference = globalPreferenceArray.some((el) => {
@@ -82,6 +83,9 @@ module.exports = (io) => {
              globalPreferenceArray.push(preferences[i]);
            }
          }
+
+         /* Calculate preference score based on index position of preference in
+            global preference array */
 
          let preferenceScore = 0;
 
@@ -93,16 +97,20 @@ module.exports = (io) => {
            }
          }
 
+         /* Get average preference score by dividing by number of preferences */
+
          if(preferenceScore != 0){
            preferenceScore = (preferenceScore/preferences.length);
          }
+
+         /* If no rooms, create a new room with existing preference score and push
+            to rooms list */
 
          if(roomsList.length == 0){
 
            let roomID = uuid.v4();
            let roomObject = {
              name: roomID,
-             preferences: preferences,
              preferenceScore: preferenceScore,
              userNumber: 1
            }
@@ -110,18 +118,21 @@ module.exports = (io) => {
            roomsList.push(roomObject);
            io.to(socket.id).emit('get roomInfo', roomID);
 
+           /* If there are rooms find rooms with vacancies and place in vacantRooms */
+
          }else if(roomsList.length > 0){
 
            var vacantRooms = [];
 
            for(var i = 0; i < roomsList.length; i++){
 
+             /* If no vacant rooms, create a new room and break loop */
+
              if(roomsList.userNumber == 4 && i == roomsList.length - 1){
 
                let roomID = uuid.v4();
                let roomObject = {
                  name: roomID,
-                 preferences: preferences,
                  preferenceScore: preferenceScore,
                  userNumber: 1
                }
@@ -130,6 +141,8 @@ module.exports = (io) => {
                io.to(socket.id).emit('get roomInfo', roomID);
                break;
 
+               /* else push new vacant room */
+
              }else if(roomsList[i].userNumber < 4){
 
                vacantRooms.push(roomsList[i]);
@@ -137,18 +150,24 @@ module.exports = (io) => {
              }
          }
 
+         /* If room with vacancies exists, determine the room with the closest preference score */
+
          if(vacantRooms.length > 0){
 
            var priority = {};
-           var previousScore = 0;
+           var previousScore = 100;
 
            for(var i = 0; i < vacantRooms.length; i++){
-             if(preferenceScore - vacantRooms[i].preferenceScore < previousScore){
+             if(Math.abs(preferenceScore - vacantRooms[i].preferenceScore) < previousScore){
                priority = vacantRooms[i];
              }
            }
 
+           /* The room with the smallest difference is chosen */
+
            io.to(socket.id).emit('get roomInfo', priority.name);
+
+           /* calculate room preference score by dividing total score by number of users */
 
            for(var i = 0; i < roomsList.length; i++){
              if(priority.name === roomsList[i].name){
@@ -201,7 +220,7 @@ module.exports = (io) => {
       }
       */
 
-    
+
 
     socket.on('join room channel', (roomName) => {
       socket.join(roomName)
