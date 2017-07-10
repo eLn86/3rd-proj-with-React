@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { socket } from '../../../API/socket';
 
 import './Header.css';
 
@@ -11,6 +12,11 @@ export class Header extends Component { // eslint-disable-line react/prefer-stat
 
   constructor(props){
     super(props)
+  }
+
+  logout = (e) => {
+    e.preventDefault();
+    window.location.href = '/logout';
   }
 
   render() {
@@ -26,7 +32,7 @@ export class Header extends Component { // eslint-disable-line react/prefer-stat
             <a className="navbar-brand" href="#">Tea Time</a>
           </div>
           <ul className="nav navbar-nav navbar-right">
-            <li><a href="#"><span className="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            <li><a href="#" onClick={this.logout}><span className="glyphicon glyphicon-log-out"></span> Logout</a></li>
           </ul>
         </div>
       </nav>

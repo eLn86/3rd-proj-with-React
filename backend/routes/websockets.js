@@ -43,6 +43,8 @@ module.exports = (io) => {
    */
 
   io.on('connection', (socket) => {
+
+    io.emit('testing connection', socket.request.user);
     // Initialise empty user object which is to be manipulated with socket
     const user = {};
 
@@ -257,7 +259,6 @@ module.exports = (io) => {
       // Send my peer info to the room for deletion.
       io.to(user.roomName).emit('get peers', peer);
     })
-
 
     /**
      * Disconnect

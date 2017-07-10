@@ -5,6 +5,12 @@ import User from '../models/User';
 let homeController = {
   renderIndexPage: (req,res) => {
     res.render('index');
+  },
+
+  logout: (req, res) => {
+    req.logout();
+    console.log('test');
+    res.redirect('/');
   }
 }
 
