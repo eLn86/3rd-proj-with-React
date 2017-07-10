@@ -51,8 +51,6 @@ export class Chat extends Component { // eslint-disable-line react/prefer-statel
     this.scrollToBottom(); // auto scroll down.
     socket.on('render msg', (msg, user) => {
       // recieve realtime msg and update state.
-      console.log(user);
-
       const newMsg = this.chatText(msg, user);
 
       this.setState({
