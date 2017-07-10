@@ -16,6 +16,7 @@ import passportConfig from '../config/passport';
 router.get('/facebook', passport.authenticate('facebook', {
   scope: ['email', 'public_profile']
 }));
+
 router.get('/facebook/callback', passport.authenticate('facebook', {
   failureRedirect: '/',
   successRedirect: '/home'
