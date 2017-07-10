@@ -63,7 +63,12 @@ module.exports = (io) => {
       socket.join('global');
     });
 
+    socket.on('getIDFromSocket', () => { 
+      io.emit('getID', user.id);
+    })
+
     socket.on('join room', (preferenceFromFrontend) => {
+      io.emit('getID', user.id);
       socket.leave('global');
       // 1. room checker here with preferences
       let checker = true; // checker for room creation.

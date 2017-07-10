@@ -12,7 +12,11 @@
       "ws": true
     },
     "/socket.io": {
-      "target": "http://localhost:3001",
+      "target": "http://localhost:3001/",
+      "ws": true
+    },
+    "/user": {
+      "target": "http://localhost:3001/",
       "ws": true
     }
   },

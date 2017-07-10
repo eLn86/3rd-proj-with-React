@@ -5,7 +5,6 @@ import Peer from 'peerjs';
 // Import Static files
 import './StartBtn.css';
 
-
 // Import API
 import { getUser } from '../../../API/userAPI';
 
@@ -15,6 +14,8 @@ import { addRoom } from '../../../actions/socketActions';
 
 // Import Socket Client
 import {socket} from '../../../API/socket';
+
+import axios from 'axios';
 
 
 /**
@@ -32,9 +33,11 @@ export class StartBtn extends Component { // eslint-disable-line react/prefer-st
   onClick = (e) => {
     // Fire the latest preference to Socket in backend.
     socket.emit('join room', 'coffee');
-    // Fire the latest preference to MongoDB in backend.
-    /* need code here */
-  };
+    socket.emit('getIDFromSocket');
+  }
+
+
+
 
   componentDidMount() {
     socket.on('get roomInfo', (roomName) => {
@@ -43,6 +46,20 @@ export class StartBtn extends Component { // eslint-disable-line react/prefer-st
       // Redirection
       window.location.href = '/room/' + roomName;
     })
+
+    // get id and update preferences in backend
+    socket.on('getID', (id) => {
+      axios.put('/user', {
+        id: id,
+        preferences: this.props.preferences
+      })
+        .then( (response) => {
+          console.log('successful post', response);
+        })
+        .catch((error)=> {
+          throw error;
+       });
+    });
   }
 
 
@@ -64,14 +81,15 @@ export class StartBtn extends Component { // eslint-disable-line react/prefer-st
 
 const mapStateToProps = (state) => {
     return {
-      roomName: state.rooms
+      roomName: state.rooms,
+      preferences: state.preferences
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     addPeerIdToUser: (peerId) => {
-        dispatch(addPeerIdToUser(peerId))
+      dispatch(addPeerIdToUser(peerId))
       },
     storeRoomName: (roonName) => {
       dispatch(addRoom(roonName))
