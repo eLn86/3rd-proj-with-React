@@ -18,9 +18,9 @@ import Login from '../Login/Login';
 import Home from '../Home/Home';
 import Room from '../Room/Room';
 
-// Import Socket Client
-import io from 'socket.io-client';
-const socket = io('/');
+// Import Socket API
+import { socket } from '../../API/socket';
+
 
 class App extends Component {
   constructor(props) {

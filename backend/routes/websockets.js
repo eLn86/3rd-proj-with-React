@@ -42,9 +42,18 @@ module.exports = (io) => {
     /**
      * Chat related Events
      */
-    socket.on('broadcast msg', (msg)=> {
-      // Send msg string to the room
-      io.to(user.roomName).emit('render msg', msg);
+    socket.on('broadcast msg', (msg) => {
+      // minify user data to hide id.
+      const miniUser = {};
+      miniUser.name = user.name;
+      miniUser.picture = user.picture;
+      miniUser.socketId = user.socketId;
+
+      // this is test purpose without room functionality.
+      io.emit('render msg', msg, miniUser);
+
+      // Above should be changed like below after room implemented.
+      // io.to(user.roomName).emit('render msg', msg);
     })
 
 
@@ -57,7 +66,8 @@ module.exports = (io) => {
       // 1. find a proper room in the roomList Array using roomObject.interest
       // 2. Iterating on the array. If room element's interests are matched
       //    with roomObject.interest. emit room into to the client(for redirect).
-      //    Need minimum match number.
+      //    2-1. Need minimum match number of interest.
+      //    2-2. Need to check room is full or not.
       // 3. If not, gernerate new room
       //   3-1. creat string for url of roomName
       //   3-2. push the object to the roomList Array

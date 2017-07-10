@@ -12,10 +12,3 @@
   border: 1px solid black;
   height: 600px;
 }
-
-.chatInput {
-  position: absolute;
-  bottom: 0;
-  margin-left: -15px;
-  margin-right: 15px;
-}
