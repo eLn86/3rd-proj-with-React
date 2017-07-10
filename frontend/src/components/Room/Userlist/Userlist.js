@@ -35,7 +35,8 @@ export class Userlist extends Component { // eslint-disable-line react/prefer-st
       return (
         <div className="userListComponent"
              key={this.index++}>
-            {e.name}
+          <img src={e.picture} className="userPic"/>
+          <div className="userName">{e.name}</div>
         </div>
       )
     })
@@ -44,7 +45,6 @@ export class Userlist extends Component { // eslint-disable-line react/prefer-st
 
 
   render() {
-
     return (
       <div id="userListGrid">
         {this.drawUserList()}
