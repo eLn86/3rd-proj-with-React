@@ -49,7 +49,7 @@ export class Userlist extends Component { // eslint-disable-line react/prefer-st
       })
     });
 
-    this.createPeer();
+    //this.createPeer();
 
     socket.on('get peers', (roomUserList, streamList) => {
       this.setState({
