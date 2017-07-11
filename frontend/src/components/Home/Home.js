@@ -22,13 +22,65 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
   constructor(props){
     super(props);
+
+    this.state = {
+      preferences: [],
+      trendingPreferences: []
+    }
   }
 
+
+   renderUserList = () => {
+     return this.props.users.map((user, index) => {
+       return (
+        <div key={index}>
+          <div className="col-md-6">{user.name}</div>
+          <div className="col-md-6">{user.socketId}</div>
+        </div>
+       )
+     })
+
+   }
+
+   renderTrendingList = () => {
+     return this.state.trendingPreferences.map((trendPreference, index) => {
+       return (
+        <div key={index}>
+          <div className="col-md-6">{trendPreference}</div>
+        </div>
+       )
+     })
+
+   }
 
   componentDidMount() {
+
+    this.setState({
+      preferences: this.props.preferences
+    })
+
     // Join global channel
-    socket.emit('enter global room');
+    socket.emit('enter global room', this.props.preferences);
+
+    socket.on('preference trend', (trendData) => {
+      console.log(trendData);
+      this.setState({
+        trendingPreferences: trendData
+      })
+    });
+
+
   }
+
+  componentDidUpdate(){
+    socket.on('preference trend', (trendData) => {
+      this.setState({
+        trendingPreferences: trendData
+      })
+    });
+
+  }
+/* Not sure if this is necessary */
 
   render() {
     return (
@@ -48,13 +100,14 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
             <div className= "col-sm-12 preferenceTrending">
               <PreferenceTrending/>
+              {this.renderTrendingList()}
             </div>
           </div>
 
 
           <div className= "col-sm-12 startBtnCol">
             <div className= "col-sm-4 col-sm-offset-4 startBtnContainer">
-              <StartBtn/>
+              <StartBtn preferences= {this.props.preferences}/>
             </div>
           </div>
 
@@ -71,6 +124,9 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
 const mapStateToProps = (state) => {
     return {
+
+      users: state.users,
+      preferences: state.preferences
 
     }
 }
