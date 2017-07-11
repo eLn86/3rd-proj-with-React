@@ -31,19 +31,21 @@
   margin-bottom: 2px;
 }
 
+.message {
+    display: inline-block;
+    font-size: 20px;
+}
+
 .chatTextLeft {
   display: inline-block;
   padding-top: 7px;
-  font-size: 20px;
-  background-color: rgba(40, 40, 40, 0.2);
+
 }
 
 .chatTextRight {
   display: inline-block;
   float: right;
   padding-top: 7px;
-  font-size: 20px;
-  background-color: rgba(40, 40, 40, 0.2);
   margin-bottom: 3px;
 }
 

@@ -115,7 +115,7 @@ module.exports = (io) => {
       user.id = socket.request.user.id;
       user.socketId = socket.id;
       user.picture = socket.request.user.profile.picture;
-      user.roomName = '';
+      user.roomName = 'global';
       user.preferenceScore = (userPreferenceScore / userPreferences.length);
       // Push the user object to usersList array.
       usersList.push(user);
@@ -150,7 +150,7 @@ module.exports = (io) => {
 
     socket.on('enter global room', () => {
       socket.join('global');
-
+      user.roomName = 'global';
 
     });
 
@@ -162,7 +162,11 @@ module.exports = (io) => {
 
     socket.on('join room', () => {
 
-      socket.leave('global');
+      if(user.roomName !== 'global'){
+        socket.leave(user.roomName);
+        user.roomName = 'global'
+      }
+
 
       io.emit('getID', user.id);
 
