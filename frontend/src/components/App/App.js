@@ -44,7 +44,7 @@ class App extends Component {
     })
 
 
-    socket.on('testing connection', (user) => {
+    socket.on('send user', (user) => {
       if(user._id == undefined){
         this.setState({
           isLoggedIn: false
