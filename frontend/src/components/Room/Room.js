@@ -32,6 +32,7 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
     const roomName = this.props.roomName;
     // re-join room chat channel after redirecting.
     socket.emit('join room channel', roomName);
+
     // get peer list
     socket.on('get peers', (roomUserList, peersIdList) => {
       console.log('hello the new room user list', roomUserList);
@@ -39,6 +40,7 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
         peers: roomUserList
       })
     });
+
   }
 
   render() {
