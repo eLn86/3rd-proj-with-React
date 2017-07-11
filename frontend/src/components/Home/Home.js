@@ -29,8 +29,6 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
 
   componentDidMount() {
-    // Join global channel
-    socket.emit('enter global room');
     socket.on('send trending', (trendData) => {
 
       this.setState({
@@ -40,9 +38,6 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
     })
   }
 
-  componentWillMount() {
-    socket.emit('enter global room');
-  }
 
   render() {
     return (
