@@ -5,13 +5,13 @@ import App from './components/App/App';
 import registerServiceWorker from './registerServiceWorker';
 
 import { setPreferences, getPreferences } from './API/preferenceAPI';
-//import { setUsers } from './API/userAPI';
+import { setUsers } from './API/userAPI';
 import { setRooms, getRooms } from './API/roomAPI';
 
 // Redux
 import { Provider } from 'react-redux';
 import { initStore } from './store/Store';
-
+// Actions
 import { getUser } from './actions/userActions';
 
 const store = initStore();
@@ -20,10 +20,11 @@ store.subscribe( () => {
   // This stuff happens everytime to store is updated
   const state = store.getState();
   setPreferences(state.preferences);
-  //setUsers(state.user);
-  setRooms(state.rooms)
+  setRooms(state.rooms);
+  setUsers(state.user);
 })
 
+// This dispatcher is for the flow of storing user login status.
 store.dispatch(getUser());
 
 

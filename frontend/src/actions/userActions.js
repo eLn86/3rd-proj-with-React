@@ -7,6 +7,7 @@ export const addPeerIdToUser = (peerId) => {
   }
 }
 
+// This Action for the flow of storing user login status.
 const updateUser = (user) => {
   return {
     type: "USER_UPDATE",
@@ -18,9 +19,7 @@ export const getUser = () => {
   return (dispatch) => {
     axios.get('/auth/user')
       .then( (response) => {
-        console.log('here user action!');
         const user = response.data;
-        console.log("This is user data: ", user);
         dispatch(updateUser(user));
       })
       .catch((error)=> {

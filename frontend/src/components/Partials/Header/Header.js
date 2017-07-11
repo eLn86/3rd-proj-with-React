@@ -19,12 +19,12 @@ export class Header extends Component { // eslint-disable-line react/prefer-stat
     axios.get('/logout')
     .then(function (response) {
       console.log(response);
+      e.preventDefault();
+      window.location.href = '/';
     })
     .catch(function (error) {
       console.log(error);
     });
-    e.preventDefault();
-    window.location.href = '/';
   }
 
   render() {

@@ -20,27 +20,23 @@ import Room from '../Room/Room';
 // Import Socket API
 import { socket } from '../../API/socket';
 
+import { setUsers, getUsers } from '../../API/userAPI';
+
 
 class App extends Component {
   constructor(props) {
     super(props);
   }
 
-  componentDidMount(){
-
-  };
-
   conditionalRender = () => {
-    const checker = true;//this.props.users.length;
-    console.log(checker);
-    console.log(this.props.user._id)
-
+    const checker = getUsers()[0];
+    console.log(checker._id);
     return(
       <Router>
         <Switch>
-          <Route exact path="/" component={checker ? Home : Login}/>
-          <Route exact path="/home" component={checker ? Home : Login}/>
-          <Route exact path="/room/:id" component={checker ? Room : Login}/>
+          <Route exact path="/" component={checker._id ? Home : Login}/>
+          <Route exact path="/home" component={checker._id ? Home : Login}/>
+          <Route exact path="/room/:id" component={checker._id ? Room : Login}/>
         </Switch>
       </Router>
     )
