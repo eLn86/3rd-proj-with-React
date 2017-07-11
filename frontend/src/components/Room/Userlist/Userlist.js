@@ -68,6 +68,9 @@ export class Userlist extends Component { // eslint-disable-line react/prefer-st
              key={this.peerIndex++}>
           <div className="row peerRow">
             <div className="col-md-6 peerName">Peer Name: {el.name}</div>
+
+          </div>
+          <div className="row peerRow">
             <div className="col-md-6 peerID">Peer ID: {el.peerID}</div>
           </div>
 
