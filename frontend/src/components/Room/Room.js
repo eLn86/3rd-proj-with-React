@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Header from '../Partials/Header/Header';
 import Chat from './Chat/Chat';
 import Userlist from './Userlist/Userlist';
-import Test from '../Test/Test';
+import Video from '../Video/Video';
 
 // Import static files
 import './Room.css';
@@ -22,8 +22,6 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
       peers: []
     }
   }
-
-
 
   // When Room component is mounted, create peerID for user by calling createPeer function and get the peers data from socket
   componentDidMount() {
@@ -54,9 +52,8 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
             <Userlist/>
           </div>
           <div className="col-md-7 midCol">
-
-            <Test/>
-
+            {/* Video Grid Separated from room */}
+            <Video/>
           </div>
           <div className="col-md-3 rightCol">
             {/* Chat Grid Separated from room */}
