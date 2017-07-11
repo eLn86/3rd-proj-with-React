@@ -12,7 +12,8 @@ module.exports = (io) => {
   // Current active rooms array.
   const roomsList = [];
   // Active users in current room
-  const roomUserList = [];
+  // const roomUserList = [];
+  //
   // Peers ID Array
   const peersIdList = [];
 
@@ -115,11 +116,15 @@ module.exports = (io) => {
         }
       }
 
+      /**
+       * User object creation.
+       */
       user.name = socket.request.user.profile.name;
       user.id = socket.request.user.id;
       user.socketId = socket.id;
-      user.picture = socket.request.user.profile.picture;
+      user.peerID = '';
       user.roomName = '';
+      user.picture = socket.request.user.profile.picture;
       user.preferenceScore = (userPreferenceScore / userPreferences.length);
       // Push the user object to usersList array.
       usersList.push(user);
@@ -133,7 +138,7 @@ module.exports = (io) => {
     console.log('==> User Connected : ', user.name, socket.id);
 
     // Send the latest userList array to all clients.
-    io.emit('update userList', usersList);
+    // io.to(user.roomName).emit('update userList', usersList);
 
     /**
      * Chat related Events
@@ -153,9 +158,11 @@ module.exports = (io) => {
      */
 
     socket.on('enter global room', () => {
+      socket.leave(user.roomName);
+      console.log('Before Leaving: ',user.roomName)
       socket.join('global');
-
-
+      user.roomName = 'global';
+      console.log('After Leaving: ',user.roomName)
     });
 
     socket.on('getIDFromSocket', () => {
@@ -166,17 +173,18 @@ module.exports = (io) => {
 
     socket.on('join room', () => {
 
-      socket.leave('global');
-
       io.emit('getID', user.id);
 
       if(roomsList.length == 0){
         const roomObject = {
+          //name: uuid.v4(),
           name: uuid.v4(),
           preferenceScore: user.preferenceScore,
           userNumber: 1,
-          roomFull: false
+          roomFull: false,
+          currentUsers: []  // This is ADDED!!!!!
         };
+
 
         io.to(socket.id).emit('get roomInfo', roomObject.name);
 
@@ -218,7 +226,8 @@ module.exports = (io) => {
             name: uuid.v4(),
             preferenceScore: user.preferenceScore,
             userNumber: 1,
-            roomFull: false
+            roomFull: false,
+            currentUser: []  // This is ADDED!!!!!
           };
 
           io.to(socket.id).emit('get roomInfo', roomObject.name);
@@ -227,40 +236,12 @@ module.exports = (io) => {
       }
     });
 
-    /*
-    socket.leave('global');
-    // 1. room checker here with preferences
-    let checker = true; // checker for room creation.
-    roomsList.forEach((e) => {
-      // for the test purpose, preferenceFromFrontend should be one.
-      // This is temporal if statement for the test.
-      if (e.preference[0] === preferenceFromFrontend && e.userNumber !== 4) {
-        console.log('==>>Preference matched!');
-        checker = false;
-        e.userNumber += 1;
-        io.to(socket.id).emit('get roomInfo', e.name);
-      }
-      console.log(roomsList);
-    });
-    // 2. Create room if no match.
-    if (checker) {
-      // this is test object.
-      const testRoomObject = {
-        name: uuid.v4(),
-        preference: ['coffee'],
-        userNumber: 0
-      };
-      // push to roomsList after creation.
-      testRoomObject.userNumber += 1;
-      roomsList.push(testRoomObject);
-      console.log('Rooms List: ',roomsList);
-
-      */
-
     socket.on('join room channel', (roomName) => {
+      socket.leave('global');
       socket.join(roomName)
       user.roomName = roomName;
       console.log('Room Name in Alex join room channel: ', user.roomName);
+      //io.to(user.roomName).emit('update userList', roomUserList);
     })
 
     /*
@@ -273,6 +254,17 @@ module.exports = (io) => {
       * Dependencies: socket.emit('add peer') in Room.js
       */
     socket.on('add peer', (peerID) => {
+
+      // Assign peerID to current socket's object.
+      user.peerID = peerID;
+
+      // Broadcast Added peer info to the room except sender.
+      io.to(user.roomName).emit('get peers', );
+
+
+
+
+
 
       // Boolean to check if user exists in the room, default is false
       var userExistsInRoomList = false;
@@ -308,6 +300,7 @@ module.exports = (io) => {
         currentUser.name = user.name;
         currentUser.socketId = user.socketId;
         currentUser.peerID = peerID;
+        currentUser.picture = user.picture;
         roomUserList.push(currentUser);
       }
 
@@ -317,7 +310,11 @@ module.exports = (io) => {
       })
 
       // Send the updated roomUserList and streamList arrays to all clients
+       console.log("Fire to the Room!! :",user.roomName);
+       console.log("Fire to the Room!! :",roomUserList);
         io.to(user.roomName).emit('get peers', roomUserList, streamList);
+        // Send current user to User List in room
+        io.to(user.roomName).emit('update userList', roomUserList);
     })
 
 
@@ -355,10 +352,10 @@ module.exports = (io) => {
         if (e.userNumber === 0) roomsList.splice(i, 1);
       });
 
-      socket.leave(user.roomName);
+
 
       // Send the latest userList array to all clients.
-      io.emit('update userList', usersList);
+      io.to(user.roomName).emit('update userList', roomUserList);
     });
 
   }); // connection ends here

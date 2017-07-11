@@ -40,6 +40,10 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
     })
   }
 
+  componentWillMount() {
+    socket.emit('enter global room');
+  }
+
   render() {
     return (
 
