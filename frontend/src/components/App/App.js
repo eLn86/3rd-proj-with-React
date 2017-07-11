@@ -31,8 +31,6 @@ class App extends Component {
 
   conditionalRender = () => {
     const checker = getUsers()[0];
-    console.log(getUsers()[0])
-    console.log(this.props.user)
     return(
       <Router>
         <Switch>
