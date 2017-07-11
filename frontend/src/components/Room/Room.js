@@ -99,7 +99,6 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
             <div className="row videoTopRow">
               <div className="col-md-6 topLeftCol">
                 <div className="topLeftVideoPane">
-                <Test/>
                 </div>
               </div>
               <div className="col-md-6 topRightCol">
