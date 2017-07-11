@@ -51,6 +51,7 @@ export class Userlist extends Component { // eslint-disable-line react/prefer-st
     this.createPeer();
 
     socket.on('get peers', (roomUserList, peersIdList) => {
+      console.log(roomUserList);
       this.setState({
         peers: roomUserList
       })
@@ -58,6 +59,7 @@ export class Userlist extends Component { // eslint-disable-line react/prefer-st
   }
 
   renderPeerIdList = () => {
+
     return this.state.peers.map((el) => {
       return (
         <div className="peerDiv"

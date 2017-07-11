@@ -44,6 +44,8 @@ export class Test extends Component { // eslint-disable-line react/prefer-statel
   // failure: if video failed, log error
   this.handleError = (error) => {
     throw error.name;
+    console.log(error.name);
+    console.log(error);
   }
 
   // Get User Media
@@ -72,7 +74,7 @@ export class Test extends Component { // eslint-disable-line react/prefer-statel
 
     return (
       <div className="container-fluid">
-        <video id="gum-local" autoplay=''/>
+        <video autoPlay="true" style={{width: 'auto', height: 'auto', border: '1px solid black'}}/>
       </div>
     );
   }

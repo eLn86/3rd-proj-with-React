@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Header from '../Partials/Header/Header';
 import Chat from './Chat/Chat';
 import Userlist from './Userlist/Userlist';
+import Test from '../Test/Test';
 
 // Import static files
 import './Room.css';
@@ -98,7 +99,7 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
             <div className="row videoTopRow">
               <div className="col-md-6 topLeftCol">
                 <div className="topLeftVideoPane">
-                  <video id="gum-local" autoplay=''/>
+                <Test/>
                 </div>
               </div>
               <div className="col-md-6 topRightCol">
