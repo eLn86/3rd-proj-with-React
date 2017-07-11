@@ -137,9 +137,11 @@ module.exports = (io) => {
       io.emit('getID', user.id);
     })
 
-  /* Socket join room. Requires leave condition to balance out preference scores */  
+  /* Socket join room. Requires leave condition to balance out preference scores */
 
     socket.on('join room', () => {
+
+      socket.leave('global');
 
       io.emit('getID', user.id);
 
@@ -323,8 +325,9 @@ module.exports = (io) => {
 
         globalPreferences[userPreferences[i]] -= 1;
 
-
       }
+
+      socket.leave(user.roomName);
 
       // Send the latest userList array to all clients.
       io.emit('update userList', usersList);
