@@ -47,7 +47,6 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
        return (
         <div key={index}>
           <div className="col-md-6">{trendPreference}</div>
-          <div className="col-md-6">{1}</div>
         </div>
        )
      })
