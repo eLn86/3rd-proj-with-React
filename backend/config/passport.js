@@ -88,6 +88,7 @@ passport.use(new FacebookStrategy({
           user.profile.name = `${profile.name.givenName} ${profile.name.familyName}`;
           user.profile.picture = `https://graph.facebook.com/${profile.id}/picture?type=large`;
           user.save((err) => {
+            if (err) return {message: err}
             done(err, user);
           });
         }

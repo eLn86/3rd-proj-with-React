@@ -2,7 +2,6 @@ import { addRoom } from '../../actions/socketActions';
 
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Peer from 'peerjs';
 
 // Import components
 import Header from '../Partials/Header/Header';
@@ -25,36 +24,14 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
     }
   }
 
-  // When start button is clicked, this function is triggered
-  /*
-  ** Function: createPeer()
-  ** Parameters: None
-  ** Purpose: Create a new peer and emit the peer id to socket in the backend
-  */
-  createPeer = () => {
 
-        var peer = new Peer({key: 'z2urygfkdibe29'});
-
-        peer.on('open', function(id) {
-            socket.emit('add peer', id);
-          });
-
-    }
 
   // When Room component is mounted, create peerID for user by calling createPeer function and get the peers data from socket
   componentDidMount() {
     // get room name from redux store
     const roomName = this.props.roomName;
     // re-join room chat channel after redirecting.
-    socket.emit('join room channel', roomName)
-
-    this.createPeer();
-
-    socket.on('get peers', (currentUser, peersIdList) => {
-      console.log('Current User: ', currentUser);
-      console.log('Peers ID Array: ', peersIdList);
-    })
-
+    socket.emit('join room channel', roomName);
 
   }
 
