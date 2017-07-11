@@ -11,11 +11,14 @@ module.exports = (io) => {
   const usersList = [];
   // Current active rooms array.
   const roomsList = [];
+<<<<<<< HEAD
   // Active users in current room
   // const roomUserList = [];
   //
   // Peers ID Array
   const peersIdList = [];
+=======
+>>>>>>> 07b0d0b6ef6f68f661cb7ff57f089b8f3398e53c
 
   //Global preferences
   var globalPreferenceArray = [];
@@ -122,9 +125,14 @@ module.exports = (io) => {
       user.name = socket.request.user.profile.name;
       user.id = socket.request.user.id;
       user.socketId = socket.id;
+<<<<<<< HEAD
       user.peerID = '';
       user.roomName = '';
       user.picture = socket.request.user.profile.picture;
+=======
+      user.picture = socket.request.user.profile.picture;
+      user.roomName = 'global';
+>>>>>>> 07b0d0b6ef6f68f661cb7ff57f089b8f3398e53c
       user.preferenceScore = (userPreferenceScore / userPreferences.length);
       // Push the user object to usersList array.
       usersList.push(user);
@@ -157,13 +165,6 @@ module.exports = (io) => {
      * Room related Events
      */
 
-    socket.on('enter global room', () => {
-      socket.leave(user.roomName);
-      console.log('Before Leaving: ',user.roomName)
-      socket.join('global');
-      user.roomName = 'global';
-      console.log('After Leaving: ',user.roomName)
-    });
 
     socket.on('getIDFromSocket', () => {
       io.emit('getID', user.id);
@@ -172,6 +173,12 @@ module.exports = (io) => {
   /* Socket join room. Requires leave condition to balance out preference scores */
 
     socket.on('join room', () => {
+
+      if(user.roomName !== 'global'){
+        socket.leave(user.roomName);
+        user.roomName = 'global'
+      }
+
 
       io.emit('getID', user.id);
 
@@ -182,10 +189,9 @@ module.exports = (io) => {
           preferenceScore: user.preferenceScore,
           userNumber: 1,
           roomFull: false,
-          currentUsers: []  // This is ADDED!!!!!
+          currentUsers: []
         };
-
-
+        roomsList.push(roomObject);
         io.to(socket.id).emit('get roomInfo', roomObject.name);
 
       }else{
@@ -227,9 +233,9 @@ module.exports = (io) => {
             preferenceScore: user.preferenceScore,
             userNumber: 1,
             roomFull: false,
-            currentUser: []  // This is ADDED!!!!!
+            currentUsers: []
           };
-
+          roomsList.push(roomObject);
           io.to(socket.id).emit('get roomInfo', roomObject.name);
 
         }
@@ -254,67 +260,73 @@ module.exports = (io) => {
       * Dependencies: socket.emit('add peer') in Room.js
       */
     socket.on('add peer', (peerID) => {
-
-      // Assign peerID to current socket's object.
+      console.log('All rooms list: ', roomsList);
+      console.log('User Room Name: ', user.roomName);
+      var currentRoomObject = roomsList.filter((room) => {
+        return room.name === user.roomName;
+      })
+      console.log('Current Room Object: ',currentRoomObject);
       user.peerID = peerID;
+      var sameUserChecker = false;
 
-      // Broadcast Added peer info to the room except sender.
-      io.to(user.roomName).emit('get peers', );
-
-
-
-
-
-
-      // Boolean to check if user exists in the room, default is false
-      var userExistsInRoomList = false;
-
-      // Filter the roomUserList array to see if the current user is in the list and store result in boolArray
-      var boolArray = roomUserList.filter((peer) => {
-        return peer.name === user.name;
-      })
-
-      // If boolArray is empty, set userExist boolean to false, else set to true
-      if (boolArray.length === 0) {
-        userExistsInRoomList = false;
-      }
-      else {
-        userExistsInRoomList = true;
+      for (var i = 0; i < currentRoomObject[0].currentUsers.length; i++) {
+        if(user.id === currentRoomObject[0].currentUsers[i].id) {
+          sameUserChecker = true;
+          currentRoomObject[0].currentUsers[i].peerID = peerID;
+          break;
+        }
       }
 
-      // If userExists boolean is true, replace that user's peerID in the roomUserList with that of the new passed in peerID from 'add peer'
-      if(userExistsInRoomList) {
-        roomUserList.forEach((el,index) => {
-          if(el.name === user.name) {
-            el.peerID = peerID;
-          }
-        })
+      if(!sameUserChecker) {
+        currentRoomObject[0].currentUsers.push(user);
       }
 
-      const currentUser = {};
 
-      // If the roomUserList array is empty or if the userExists boolean is false, create a new user object and push it into the roomUserList array
-      if(roomUserList.length === 0 || userExistsInRoomList === false) {
-        // Create new user object to store current user
-        userExistsInRoomList = true;
-        currentUser.name = user.name;
-        currentUser.socketId = user.socketId;
-        currentUser.peerID = peerID;
-        currentUser.picture = user.picture;
-        roomUserList.push(currentUser);
-      }
 
-      // filter the room user list and return all the peerIDs that are not the peerID of the current user
-      var streamList = roomUserList.filter((peer) => {
-        return peer.peerID !== peerID
-      })
+      // // Boolean to check if user exists in the room, default is false
+      // var userExistsInRoomList = false;
+      //
+      // // Filter the roomUserList array to see if the current user is in the list and store result in boolArray
+      // var boolArray = roomUserList.filter((peer) => {
+      //   return peer.name === user.name;
+      // })
+      //
+      // // If boolArray is empty, set userExist boolean to false, else set to true
+      // if (boolArray.length === 0) {
+      //   userExistsInRoomList = false;
+      // }
+      // else {
+      //   userExistsInRoomList = true;
+      // }
+      //
+      // // If userExists boolean is true, replace that user's peerID in the roomUserList with that of the new passed in peerID from 'add peer'
+      // if(userExistsInRoomList) {
+      //   roomUserList.forEach((el,index) => {
+      //     if(el.name === user.name) {
+      //       el.peerID = peerID;
+      //     }
+      //   })
+      // }
+      //
+      // const currentUser = {};
+      //
+      // // If the roomUserList array is empty or if the userExists boolean is false, create a new user object and push it into the roomUserList array
+      // if(roomUserList.length === 0 || userExistsInRoomList === false) {
+      //   // Create new user object to store current user
+      //   userExistsInRoomList = true;
+      //   currentUser.name = user.name;
+      //   currentUser.socketId = user.socketId;
+      //   currentUser.peerID = peerID;
+      //   roomUserList.push(currentUser);
+      // }
+      //
+      // // filter the room user list and return all the peerIDs that are not the peerID of the current user
+      // var streamList = roomUserList.filter((peer) => {
+      //   return peer.peerID !== peerID
+      // })
 
       // Send the updated roomUserList and streamList arrays to all clients
-       console.log("Fire to the Room!! :",user.roomName);
-       console.log("Fire to the Room!! :",roomUserList);
-        io.to(user.roomName).emit('get peers', roomUserList, streamList);
-        // Send current user to User List in room
-        io.to(user.roomName).emit('update userList', roomUserList);
+        io.to(user.roomName).emit('get peers', currentRoomObject[0].currentUsers);
     })
 
 
@@ -349,7 +361,7 @@ module.exports = (io) => {
         // Remove the user count from room array.
         if (e.name === user.roomName) e.userNumber -= 1;
         // Destroy empty room.
-        if (e.userNumber === 0) roomsList.splice(i, 1);
+        // if (e.userNumber === 0) roomsList.splice(i, 1);
       });
 
 
