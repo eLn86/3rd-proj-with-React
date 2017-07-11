@@ -104,11 +104,6 @@ export class Test extends Component { // eslint-disable-line react/prefer-statel
 
   }
 
-  sendStreams = () => {
-
-
-  }
-
   render() {
 
     return (
@@ -126,9 +121,6 @@ export class Test extends Component { // eslint-disable-line react/prefer-statel
 
 // grab current preferences from redux state
 const mapStateToProps = (state) => {
-    return {
-      peer: state.peer
-  }
 }
 
 // dispatch actions

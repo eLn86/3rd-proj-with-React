@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import Peer from 'peerjs';
 
-import { storePeer } from '../../../actions/peerActions';
-
 // Import Static Files
 import './Userlist.css';
 
@@ -31,15 +29,14 @@ export class Userlist extends Component { // eslint-disable-line react/prefer-st
   ** Parameters: None
   ** Purpose: Create a new peer and emit the peer id to socket in the backend
   */
-  createPeer = () => {
-    var peer = new Peer({key: 'z2urygfkdibe29'});
-    console.log('this is the peer', peer);
-    this.props.storePeer(peer);
-
-    peer.on('open', function(id) {
-      socket.emit('add peer', id);
-    });
-  }
+  // createPeer = () => {
+  //   var peer = new Peer({key: 'z2urygfkdibe29'});
+  //   console.log('this is the peer', peer);
+  //
+  //   peer.on('open', function(id) {
+  //     socket.emit('add peer', id);
+  //   });
+  // }
 
   componentDidMount() {
     //this.createPeer();
@@ -99,17 +96,12 @@ export class Userlist extends Component { // eslint-disable-line react/prefer-st
 
 // grab current peer from redux state
 const mapStateToProps = (state) => {
-    return {
-      peer: state.peer
-  }
+  return {}
 }
 
 // dispatch actions
 const mapDispatchToProps = (dispatch) => {
   return {
-    storePeer: (peer) => {
-        dispatch(storePeer(peer))
-      }
   }
 }
 
