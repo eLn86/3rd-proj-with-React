@@ -11,10 +11,6 @@ module.exports = (io) => {
   const usersList = [];
   // Current active rooms array.
   const roomsList = [];
-  // Active users in current room
-  const roomUserList = [];
-  // Peers ID Array
-  const peersIdList = [];
 
   //Global preferences
   var globalPreferenceArray = [];
