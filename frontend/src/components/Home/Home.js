@@ -22,6 +22,7 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
   constructor(props){
     super(props);
+
     this.state = {
       trendingPreferences: [],
     }
@@ -81,7 +82,7 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
 const mapStateToProps = (state) => {
     return {
-
+      user: state.user
     }
 }
 

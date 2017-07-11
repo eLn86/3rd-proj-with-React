@@ -10,6 +10,10 @@ const router = express.Router();
  */
 import passportConfig from '../config/passport';
 
+router.get('/user', (req, res, next) => {
+  res.json(req.user);
+});
+
 /**
  * OAuth authentication routes. (Sign in)
  */
