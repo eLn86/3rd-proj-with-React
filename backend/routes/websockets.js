@@ -263,7 +263,7 @@ module.exports = (io) => {
       console.log('Room Name in Alex join room channel: ', user.roomName);
     })
 
-    /**
+    /*
      * Peer related Events
      */
 
