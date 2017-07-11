@@ -16,6 +16,10 @@ module.exports = (io) => {
   // Peers ID Array
   const peersIdList = [];
 
+  //Global preferences
+  var globalPreferenceArray = [];
+  var globalPreferences = {};
+
 
   /**
    * Socket Connection Events.
@@ -28,13 +32,74 @@ module.exports = (io) => {
 
     // If socket is connected with passport, push new user obj to arry
     if (socket.request.user.logged_in) {
+
+      /* This counts the preferences and  adds them to the global count in global
+          preferences */
+
+      var userPreferences = socket.request.user.preferences;
+
+      for(var i = 0; i < userPreferences.length; i++){
+        if (globalPreferences[userPreferences[i]] === undefined){
+          globalPreferences[userPreferences[i]] = 1;
+        }else{
+          globalPreferences[userPreferences[i]] += 1;
+        }
+      }
+
+      /* This adds only unique elements to the globalPreferenceArray */
+
+      if(globalPreferenceArray.length == 0){
+
+        globalPreferenceArray = userPreferences;
+
+      }else{
+
+        for(var i = 0; i < userPreferences.length; i++){
+
+          var checker = true;
+
+          for(var j = 0; j < globalPreferenceArray.length; j++){
+            if(userPreferences[i] === globalPreferenceArray[j]){
+              checker = false;
+            }
+          }
+
+          if(!checker){
+            checker = true;
+          }else{
+            globalPreferenceArray.push(userPreferences[i]);
+          }
+
+        }
+
+      }
+
+      /* Calculate individual preference score */
+
+      var userPreferenceScore = 0;
+
+      for(var i = 0; i < userPreferences.length; i++){
+        for(var j = 0; j < globalPreferenceArray.length; j++){
+          if(userPreferences[i] === globalPreferenceArray[j]){
+            userPreferenceScore += (j + 1);
+          }
+        }
+      }
+
       user.name = socket.request.user.profile.name;
       user.id = socket.request.user.id;
       user.socketId = socket.id;
       user.picture = socket.request.user.profile.picture;
       user.roomName = '';
+
+      user.preferenceScore = (userPreferenceScore / userPreferences.length);
       // Push the user object to usersList array.
       usersList.push(user);
+
+
+      io.emit('testing', userPreferences);
+      io.emit('testing', globalPreferenceArray);
+      io.emit('testing', usersList);
     }
 
     // User Connection Notification
@@ -62,43 +127,109 @@ module.exports = (io) => {
 
     socket.on('enter global room', () => {
       socket.join('global');
+
+
     });
 
-    socket.on('getIDFromSocket', () => { 
+    socket.on('getIDFromSocket', () => {
       io.emit('getID', user.id);
     })
 
-    socket.on('join room', (preferenceFromFrontend) => {
-      io.emit('getID', user.id);
+  /* Socket join room. Requires leave condition to balance out preference scores */
+
+    socket.on('join room', () => {
+
       socket.leave('global');
-      // 1. room checker here with preferences
-      let checker = true; // checker for room creation.
-      roomsList.forEach((e) => {
-        // for the test purpose, preferenceFromFrontend should be one.
-        // This is temporal if statement for the test.
-        if (e.preference[0] === preferenceFromFrontend && e.userNumber !== 4) {
-          console.log('==>>Preference matched!');
-          checker = false;
-          e.userNumber += 1;
-          io.to(socket.id).emit('get roomInfo', e.name);
-        }
-        console.log(roomsList);
-      });
-      // 2. Create room if no match.
-      if (checker) {
-        // this is test object.
-        const testRoomObject = {
+
+      io.emit('getID', user.id);
+
+      if(roomsList.length == 0){
+        const roomObject = {
           name: uuid.v4(),
-          preference: ['coffee'],
-          userNumber: 0
+          preferenceScore: user.preferenceScore,
+          userNumber: 1,
+
+          roomFull: false
         };
-        // push to roomsList after creation.
-        testRoomObject.userNumber += 1;
-        roomsList.push(testRoomObject);
-        console.log('Rooms List: ',roomsList);
-        io.to(socket.id).emit('get roomInfo', testRoomObject.name);
+
+        io.to(socket.id).emit('get roomInfo', roomObject.name);
+
+      }else{
+
+        /* Check whether or not rooms are full */
+        var priority = {};
+        var priorityScore = 1000;
+
+        for(var i = 0; i < roomsList.length; i++){
+
+          /* Set room to full based on number of users */
+          var comparisonScore = Math.abs(user.preferenceScore - roomsList[i].preferenceScore)
+
+          if(roomsList[i].userNumber == 2){
+
+            roomsList[i].roomFull = true;
+
+          }else if(!roomsList[i].roomFull){
+
+            if(comparisonScore < priorityScore){
+              priorityScore = comparisonScore;
+              priority = roomsList[i];
+
+            }
+          }
+        }
+
+        if(priority.name !== undefined){
+
+          priority.userNumber += 1;
+          priority.preferenceScore = (priority.preferenceScore + user.preferenceScore) / priority.userNumber;
+
+          io.to(socket.id).emit('get roomInfo', priority.name);
+
+        }else{
+
+          const roomObject = {
+            name: uuid.v4(),
+            preferenceScore: user.preferenceScore,
+            userNumber: 1,
+            roomFull: false
+          };
+
+          io.to(socket.id).emit('get roomInfo', roomObject.name);
+
+        }
       }
     });
+
+    /*
+    socket.leave('global');
+    // 1. room checker here with preferences
+    let checker = true; // checker for room creation.
+    roomsList.forEach((e) => {
+      // for the test purpose, preferenceFromFrontend should be one.
+      // This is temporal if statement for the test.
+      if (e.preference[0] === preferenceFromFrontend && e.userNumber !== 4) {
+        console.log('==>>Preference matched!');
+        checker = false;
+        e.userNumber += 1;
+        io.to(socket.id).emit('get roomInfo', e.name);
+      }
+      console.log(roomsList);
+    });
+    // 2. Create room if no match.
+    if (checker) {
+      // this is test object.
+      const testRoomObject = {
+        name: uuid.v4(),
+        preference: ['coffee'],
+        userNumber: 0
+      };
+      // push to roomsList after creation.
+      testRoomObject.userNumber += 1;
+      roomsList.push(testRoomObject);
+      console.log('Rooms List: ',roomsList);
+
+      */
 
     socket.on('join room channel', (roomName) => {
       socket.join(roomName)
@@ -165,7 +296,7 @@ module.exports = (io) => {
     /**
      * Disconnect
      */
-    socket.on('disconnect', (socket) => {
+    socket.on('disconnect', () => {
       console.log('==> User Diconnected');
 
       // Delete disconnected user from the usersList.
@@ -182,6 +313,19 @@ module.exports = (io) => {
         // Destroy empty room.
         if (e.userNumber === 0) roomsList.splice(i, 1);
       });
+
+      var userPreferences = socket.request.user.preferences;
+
+      /* This subtracts a user's preference from the global count upon
+         disconnect */
+
+      for(var i = 0; i < userPreferences.length; i++){
+
+        globalPreferences[userPreferences[i]] -= 1;
+
+      }
+
+      socket.leave(user.roomName);
 
       // Send the latest userList array to all clients.
       io.emit('update userList', usersList);

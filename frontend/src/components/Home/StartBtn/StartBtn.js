@@ -32,7 +32,7 @@ export class StartBtn extends Component { // eslint-disable-line react/prefer-st
 
   onClick = (e) => {
     // Fire the latest preference to Socket in backend.
-    socket.emit('join room', 'coffee');
+    socket.emit('join room');
     socket.emit('getIDFromSocket');
   }
 

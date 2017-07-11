@@ -29,6 +29,9 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
   componentDidMount() {
     // Join global channel
     socket.emit('enter global room');
+    socket.on('testing', (msg) => {
+      console.log(msg);
+    });
   }
 
   render() {
