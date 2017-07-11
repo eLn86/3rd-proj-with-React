@@ -65,7 +65,7 @@ module.exports = (io) => {
       socket.join('global');
     });
 
-    socket.on('getIDFromSocket', () => { 
+    socket.on('getIDFromSocket', () => {
       io.emit('getID', user.id);
     })
 
@@ -107,7 +107,7 @@ module.exports = (io) => {
       console.log('Room Name in Alex join room channel: ', user.roomName);
     })
 
-    /**
+    /*
      * Peer related Events
      */
 

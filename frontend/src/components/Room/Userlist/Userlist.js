@@ -4,12 +4,13 @@ import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import Peer from 'peerjs';
 
+import { storePeer } from '../../../actions/peerActions';
+
 // Import Static Files
 import './Userlist.css';
 
 // Import Socket API
 import { socket } from '../../../API/socket';
-
 
 export class Userlist extends Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -31,24 +32,24 @@ export class Userlist extends Component { // eslint-disable-line react/prefer-st
   ** Purpose: Create a new peer and emit the peer id to socket in the backend
   */
   createPeer = () => {
+    var peer = new Peer({key: 'z2urygfkdibe29'});
+    console.log('this is the peer', peer);
+    this.props.storePeer(peer);
 
-        var peer = new Peer({key: 'z2urygfkdibe29'});
-
-        peer.on('open', function(id) {
-            socket.emit('add peer', id);
-          });
-
-    }
+    peer.on('open', function(id) {
+      socket.emit('add peer', id);
+    });
+  }
 
   componentDidMount() {
+    this.createPeer();
+
     socket.on('update userList', (userList) => {
       // Updating userlist in state.
       this.setState({
         userList: userList
       })
     });
-
-    this.createPeer();
 
     socket.on('get peers', (roomUserList, peersIdList) => {
       this.setState({
@@ -96,4 +97,20 @@ export class Userlist extends Component { // eslint-disable-line react/prefer-st
   }
 }
 
-export default Userlist;
+// grab current peer from redux state
+const mapStateToProps = (state) => {
+    return {
+      peer: state.peer
+  }
+}
+
+// dispatch actions
+const mapDispatchToProps = (dispatch) => {
+  return {
+    storePeer: (peer) => {
+        dispatch(storePeer(peer))
+      }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Userlist);
