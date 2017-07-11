@@ -15,7 +15,7 @@ import {
 import Login from '../Login/Login';
 import Home from '../Home/Home';
 import Room from '../Room/Room';
-//import Test from '../Test/Test';
+import Test from '../Test/Test';
 
 
 // Import Socket API
@@ -62,7 +62,6 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
     return {
-      user: state.user
     }
 }
 
