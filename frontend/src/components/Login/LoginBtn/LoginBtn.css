@@ -1,21 +1,5 @@
-.loginBtnRow {
-  display: flex;
-  height: 90vh;
-  background: url('../../../images/start-screen-background.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 0% 50%;
-}
-
-.loginBtn {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-.loginBtnCol {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
+.btn-social {
+  display: block;
+  width: 260px;
+  margin: auto;
 }
