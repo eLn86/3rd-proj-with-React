@@ -34,9 +34,9 @@ class App extends Component {
     return(
       <Router>
         <Switch>
-          <Route exact path="/" component={checker._id ? Home : Login}/>
-          <Route exact path="/home" component={checker._id ? Home : Login}/>
-          <Route exact path="/room/:id" component={checker._id ? Room : Login}/>
+          <Route exact path="/" component={checker ? Home : Login}/>
+          <Route exact path="/home" component={checker ? Home : Login}/>
+          <Route exact path="/room/:id" component={checker ? Room : Login}/>
         </Switch>
       </Router>
     )

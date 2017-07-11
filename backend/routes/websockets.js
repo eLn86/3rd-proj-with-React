@@ -20,7 +20,6 @@ module.exports = (io) => {
   var globalPreferenceArray = [];
   var globalPreferences = {};
 
-
   /**
    * Socket Connection Events.
    */
@@ -29,10 +28,8 @@ module.exports = (io) => {
 
     // Initialise empty user object which is to be manipulated with socket
     const user = {};
-
     // If socket is connected with passport, push new user obj to arry
     if (socket.request.user.logged_in) {
-
       /* This counts the preferences and  adds them to the global count in global
           preferences */
 
@@ -91,11 +88,9 @@ module.exports = (io) => {
       user.socketId = socket.id;
       user.picture = socket.request.user.profile.picture;
       user.roomName = '';
-
       user.preferenceScore = (userPreferenceScore / userPreferences.length);
       // Push the user object to usersList array.
       usersList.push(user);
-
 
       io.emit('testing', userPreferences);
       io.emit('testing', globalPreferenceArray);
@@ -148,7 +143,6 @@ module.exports = (io) => {
           name: uuid.v4(),
           preferenceScore: user.preferenceScore,
           userNumber: 1,
-
           roomFull: false
         };
 
@@ -247,7 +241,7 @@ module.exports = (io) => {
       * Dependencies: socket.emit('add peer') in Room.js
       */
     socket.on('add peer', (peerID) => {
-      console.log('userslist ', usersList);
+
       // Boolean to check if user exists in the room, default is true
       var userExistsInRoomList = true;
 
@@ -261,7 +255,7 @@ module.exports = (io) => {
         }
       })
       const currentUser = {};
-      console.log('Room User List Array: ', roomUserList);
+
       // If the roomUserList array is empty or if the userExists boolean is false, create a new user object and push it into the roomUserList array
       if(roomUserList.length === 0 || userExistsInRoomList === false) {
         // Create new user object to store current user
@@ -306,24 +300,12 @@ module.exports = (io) => {
         if (e.id === user.id) usersList.splice(i, 1);
       });
 
-
       roomsList.forEach((e, i) => {
         // Remove the user count from room array.
         if (e.name === user.roomName) e.userNumber -= 1;
         // Destroy empty room.
         if (e.userNumber === 0) roomsList.splice(i, 1);
       });
-
-      var userPreferences = socket.request.user.preferences;
-
-      /* This subtracts a user's preference from the global count upon
-         disconnect */
-
-      for(var i = 0; i < userPreferences.length; i++){
-
-        globalPreferences[userPreferences[i]] -= 1;
-
-      }
 
       socket.leave(user.roomName);
 
