@@ -24,6 +24,7 @@ export class Test extends Component { // eslint-disable-line react/prefer-statel
 
 
     const video = document.querySelector('.local'); // for my own stream
+    /* lol testes */
     const testee = document.querySelector('.peer1'); // for peer stream
 
     /*
