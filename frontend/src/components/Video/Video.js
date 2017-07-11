@@ -38,23 +38,7 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
         }
       }
 
-      // success: if video received, append to html element
-      this.handleSuccess = (stream) => {
-        video.srcObject = stream;
 
-        this.setState({
-          localStream: stream
-        })
-      }
-      // failure: if video failed, log error
-        this.handleError = (error) => {
-          throw error.name;
-        }
-
-        // Get User Media (this has to be put below the this.handleSuccess and this.handleError)
-        navigator.mediaDevices.getUserMedia(constraints)
-        .then(this.handleSuccess)
-        .catch(this.handleError);
 
       var peer = new Peer({key: 'z2urygfkdibe29'});
       //this.props.storePeer(peer);
@@ -63,11 +47,40 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
         socket.emit('add peer', id);
       });
 
-      socket.on('get peers', (user) => {
+      socket.on('get peers', (user, streamList) => {
+
         this.setState({
-          peers: user
+          peers: user,
+          peerStreamData: streamList
         })
       });
+
+      // success: if video received, append to html element
+      this.handleSuccess = (stream) => {
+        video.srcObject = stream;
+        console.log('Other Peer ID: ', this.state.peerStreamData);
+
+        if (this.state.peerStreamData.length !== 0) {
+          var call = peer.call(this.state.peerStreamData[0].peerID, stream);
+          call.on('stream', function(remoteStream) {
+            // Show stream in some video/canvas element.
+            testee.srcObject = remoteStream;
+          });
+        }
+
+        this.setState({
+          localStream: stream
+        })
+      }
+      // failure: if video failed, log error
+      this.handleError = (error) => {
+          throw error.name;
+      }
+
+      // Get User Media (this has to be put below the this.handleSuccess and this.handleError)
+      navigator.mediaDevices.getUserMedia(constraints)
+      .then(this.handleSuccess)
+      .catch(this.handleError);
   }
 
       // console.log('User Stream: ',this.state.localStream);
@@ -77,24 +90,6 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
       //     console.log('sending stream to ', id);
       //     var outCall = peer.call(id, stream);
       //   })
-//
-//         //each time peer receives a call, answer the call, and stream the video
-//         peer.on('call', (call) => {
-//           // Answer the call, providing our mediaStream, answer() will emit the parameter, in this case 'stream'
-//           call.answer(stream);
-//
-//           // Listener for calls, listens for 'stream' and
-//           call.on('stream', (peerStream) => {
-//             testee.srcObject = peerStream;
-//           });
-//         });
-//
-
-//    });
-//  }  // close this.handleSuccess
-  // close componentDidMount()
-
-
 
       // // TOGGLE play and pause
       // toggle.addEventListener('click', () => {

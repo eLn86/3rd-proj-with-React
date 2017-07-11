@@ -292,52 +292,14 @@ module.exports = (io) => {
         currentRoomObject[0].currentUsers.push(user);
       }
 
+      // filter the room user list and return all the peerIDs that are not the peerID of the current user
+      var streamList = currentRoomObject[0].currentUsers.filter((peer) => {
+        return peer.peerID !== peerID
+      })
 
-
-      // // Boolean to check if user exists in the room, default is false
-      // var userExistsInRoomList = false;
-      //
-      // // Filter the roomUserList array to see if the current user is in the list and store result in boolArray
-      // var boolArray = roomUserList.filter((peer) => {
-      //   return peer.name === user.name;
-      // })
-      //
-      // // If boolArray is empty, set userExist boolean to false, else set to true
-      // if (boolArray.length === 0) {
-      //   userExistsInRoomList = false;
-      // }
-      // else {
-      //   userExistsInRoomList = true;
-      // }
-      //
-      // // If userExists boolean is true, replace that user's peerID in the roomUserList with that of the new passed in peerID from 'add peer'
-      // if(userExistsInRoomList) {
-      //   roomUserList.forEach((el,index) => {
-      //     if(el.name === user.name) {
-      //       el.peerID = peerID;
-      //     }
-      //   })
-      // }
-      //
-      // const currentUser = {};
-      //
-      // // If the roomUserList array is empty or if the userExists boolean is false, create a new user object and push it into the roomUserList array
-      // if(roomUserList.length === 0 || userExistsInRoomList === false) {
-      //   // Create new user object to store current user
-      //   userExistsInRoomList = true;
-      //   currentUser.name = user.name;
-      //   currentUser.socketId = user.socketId;
-      //   currentUser.peerID = peerID;
-      //   roomUserList.push(currentUser);
-      // }
-      //
-      // // filter the room user list and return all the peerIDs that are not the peerID of the current user
-      // var streamList = roomUserList.filter((peer) => {
-      //   return peer.peerID !== peerID
-      // })
-
+      console.log('Stream List: ',streamList)
       // Send the updated roomUserList and streamList arrays to all clients
-        io.to(user.roomName).emit('get peers', currentRoomObject[0].currentUsers);
+        io.to(user.roomName).emit('get peers', currentRoomObject[0].currentUsers, streamList);
     })
 
 
