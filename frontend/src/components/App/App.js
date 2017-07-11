@@ -30,7 +30,6 @@ class App extends Component {
 
   conditionalRender = () => {
     const checker = getUsers()[0];
-    console.log(checker._id);
     return(
       <Router>
         <Switch>
