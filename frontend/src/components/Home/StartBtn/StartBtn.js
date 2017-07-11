@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Peer from 'peerjs';
 
 // Import Static files
 import './StartBtn.css';
@@ -27,6 +26,7 @@ export class StartBtn extends Component { // eslint-disable-line react/prefer-st
     this.state = {
     }
   }
+
 
 
   onClick = (e) => {

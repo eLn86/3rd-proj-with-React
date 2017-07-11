@@ -11,7 +11,10 @@ module.exports = (io) => {
   const usersList = [];
   // Current active rooms array.
   const roomsList = [];
+
   const globalPreferenceArray = [];
+  const roomUserList = [];
+
   // Peers ID Array
   const peersIdList = [];
 
@@ -274,6 +277,7 @@ module.exports = (io) => {
         // push to roomsList after creation.
         testRoomObject.userNumber += 1;
         roomsList.push(testRoomObject);
+        console.log('Rooms List: ',roomsList);
         io.to(socket.id).emit('get roomInfo', testRoomObject.name);
       }
       */
@@ -283,18 +287,52 @@ module.exports = (io) => {
     socket.on('join room channel', (roomName) => {
       socket.join(roomName)
       user.roomName = roomName;
+      console.log('Room Name in Alex join room channel: ', user.roomName);
     })
 
     /**
      * Peer related Events
      */
+
+     /**
+      * Function: add peer
+      * Purpose: to add a peer to the room
+      * Dependencies: socket.emit('add peer') in Room.js
+      */
     socket.on('add peer', (peerID) => {
-      // Send my peer info to the room for add.
-      peersIdList.push(peerID);
+      console.log('peer ID: ', peerID);
+      // Boolean to check if user exists in the room, default is true
+      var userExistsInRoomList = true;
+
+      // Iterate over the room user list. If the name is not found, set user exists boolean to false
+      roomUserList.forEach((el,index) => {
+        if(el.name === user.name) {
+          el.peerID = peerID;
+        }
+        else{
+          userExistsInRoomList = false;
+        }
+      })
+      const currentUser = {};
+      console.log('Room User List Array: ', roomUserList);
+      // If the roomUserList array is empty or if the userExists boolean is false, create a new user object and push it into the roomUserList array
+      if(roomUserList.length === 0 || userExistsInRoomList === false) {
+        // Create new user object to store current user
+
+        currentUser.name = user.name;
+        currentUser.socketId = user.socketId;
+        currentUser.peerID = peerID;
+        roomUserList.push(currentUser);
+        peersIdList.push(currentUser.peerID);
+      }
+
+      console.log('Room User List Array after creating new user: ', roomUserList);
       // Send the latest peerID List array to all clients
-      io.emit('update peersIdList', peersIdList);
+      console.log('Room Name: ', user.roomName);
+        io.to(user.roomName).emit('get peers', currentUser, peersIdList);
     })
 
+/* Commented out for later use
     socket.on('delete peer', (peerID) => {
       // Send my peer info to the room for deletion.
       peersIdList.forEach((el, index) => {
@@ -305,6 +343,8 @@ module.exports = (io) => {
       // Send the latest peerID List array to all clients
       io.emit('update peersIdList', peersIdList);
     })
+
+*/
 
     /**
      * Disconnect

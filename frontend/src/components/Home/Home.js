@@ -79,6 +79,7 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
         trendingPreferences: trendData
       })
     });
+
   }
 /* Not sure if this is necessary */
 
@@ -92,11 +93,6 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
       </div>
 
         <div className= "col-md-12 componentContainer">
-
-          <div className="userList">
-            <div> User List </div>
-            {this.renderUserList()}
-          </div>
 
           <div className= "col-sm-12 preferenceContainer">
             <div className= "col-sm-12 preferenceBar">
@@ -129,8 +125,10 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
 const mapStateToProps = (state) => {
     return {
+
       users: state.users,
       preferences: state.preferences
+
     }
 }
 
