@@ -10,7 +10,6 @@ import './Userlist.css';
 // Import Socket API
 import { socket } from '../../../API/socket';
 
-
 export class Userlist extends Component { // eslint-disable-line react/prefer-stateless-function
 
   constructor(props){
@@ -31,17 +30,18 @@ export class Userlist extends Component { // eslint-disable-line react/prefer-st
   ** Parameters: None
   ** Purpose: Create a new peer and emit the peer id to socket in the backend
   */
-  createPeer = () => {
-
-        var peer = new Peer({key: 'z2urygfkdibe29'});
-
-        peer.on('open', function(id) {
-            socket.emit('add peer', id);
-          });
-
-    }
+  // createPeer = () => {
+  //   var peer = new Peer({key: 'z2urygfkdibe29'});
+  //   console.log('this is the peer', peer);
+  //
+  //   peer.on('open', function(id) {
+  //     socket.emit('add peer', id);
+  //   });
+  // }
 
   componentDidMount() {
+    //this.createPeer();
+
     socket.on('update userList', (userList) => {
       // Updating userlist in state.
       this.setState({
@@ -100,4 +100,15 @@ export class Userlist extends Component { // eslint-disable-line react/prefer-st
   }
 }
 
-export default Userlist;
+// grab current peer from redux state
+const mapStateToProps = (state) => {
+  return {}
+}
+
+// dispatch actions
+const mapDispatchToProps = (dispatch) => {
+  return {
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Userlist);

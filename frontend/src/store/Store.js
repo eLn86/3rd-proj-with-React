@@ -11,7 +11,7 @@ export let initStore = () => {
   // Combine reducers
   const reducer = combineReducers({
     preferences: preferenceReducer,
-    user: userReducer,
+    users: userReducer,
     rooms: roomReducer
   });
 
