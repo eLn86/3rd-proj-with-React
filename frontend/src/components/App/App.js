@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 // Import static files
 import './App.css';
 
-// Import Actions
-import {updateUserList} from '../../actions/userActions';
 
 import {
   BrowserRouter as Router,
@@ -23,65 +21,25 @@ import Test from '../Test/Test';
 // Import Socket API
 import { socket } from '../../API/socket';
 
+import { setUsers, getUsers } from '../../API/userAPI';
+
+
 class App extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      isLoggedIn: false,
-      usersList: []
-    }
   }
 
-  // Fire off update user list action when socket is mounted in App
-  componentDidMount(){
-    // updates user reducer on socket event
-    socket.on('update userList', (userArray) => {
-      this.props.updateUserList(userArray);
-      this.setState({
-        usersList: userArray
-      })
-    })
-
-
-    socket.on('send user', (user) => {
-      if(user._id == undefined){
-        this.setState({
-          isLoggedIn: false
-        })
-      }else{
-        this.setState({
-          isLoggedIn: true
-        })
-      }
-    });
-
-  };
-
   conditionalRender = () => {
-    if(!this.state.isLoggedIn){
-      return(
-        <Router>
-          <Switch>
-            <Route exact path="/" component={Login}/>
-            <Route exact path="/home" component={Login}/>
-            <Route exact path="/room/:id" component={Login}/>
-            <Route exact path="/test" component={Test}/>
-          </Switch>
-        </Router>
-      )
-    }else{
-      return(
-        <Router>
-          <Switch>
-            <Route exact path="/" component={Home}/>
-            <Route exact path="/home" component={Home}/>
-            <Route exact path="/room/:id" component={Room}/>
-            <Route exact path="/test" component={Test}/>
-          </Switch>
-        </Router>
-      )
-    }
+    const checker = getUsers()[0];
+    return(
+      <Router>
+        <Switch>
+          <Route exact path="/" component={checker ? Home : Login}/>
+          <Route exact path="/home" component={checker ? Home : Login}/>
+          <Route exact path="/room/:id" component={checker ? Room : Login}/>
+        </Switch>
+      </Router>
+    )
   };
 
 
@@ -104,15 +62,11 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
     return {
-
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateUserList: (userArray) => {
-        dispatch(updateUserList(userArray))
-      },
   }
 }
 
