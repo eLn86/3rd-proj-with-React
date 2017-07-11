@@ -13,7 +13,7 @@ const TwitterStrategy = require('passport-twitter').Strategy;
 // const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 // const OAuthStrategy = require('passport-oauth').OAuthStrategy;
-// const OAuth2Strategy = require('passport-oauth').OAuth2Strategy;
+const OAuth2Strategy = require('passport-oauth').OAuth2Strategy;
 
 import User from '../models/User';
 
