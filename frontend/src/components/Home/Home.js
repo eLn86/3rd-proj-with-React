@@ -22,12 +22,16 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
   constructor(props){
     super(props);
+
   }
 
 
   componentDidMount() {
     // Join global channel
     socket.emit('enter global room');
+    socket.on('testing', (msg) => {
+      console.log(msg);
+    });
   }
 
   render() {
@@ -71,7 +75,7 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
 const mapStateToProps = (state) => {
     return {
-
+      user: state.user
     }
 }
 

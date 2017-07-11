@@ -5,7 +5,6 @@
 */
 
 export const setPreferences = (preferences) => {
-  console.log(preferences);
   if(Array.isArray(preferences)){
     localStorage.setItem('Preferences', JSON.stringify(preferences));
   }

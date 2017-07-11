@@ -102,8 +102,8 @@ export class Test extends Component { // eslint-disable-line react/prefer-statel
     //     toggle.dataset.toggle = 'on';
     //   }
 
-  }
 
+  }
   render() {
 
     return (
