@@ -17,7 +17,7 @@ import {
 import Login from '../Login/Login';
 import Home from '../Home/Home';
 import Room from '../Room/Room';
-//import Test from '../Test/Test';
+import Test from '../Test/Test';
 
 
 // Import Socket API
@@ -66,7 +66,7 @@ class App extends Component {
             <Route exact path="/" component={Login}/>
             <Route exact path="/home" component={Login}/>
             <Route exact path="/room/:id" component={Login}/>
-
+            <Route exact path="/test" component={Test}/>
           </Switch>
         </Router>
       )
@@ -77,7 +77,7 @@ class App extends Component {
             <Route exact path="/" component={Home}/>
             <Route exact path="/home" component={Home}/>
             <Route exact path="/room/:id" component={Room}/>
-
+            <Route exact path="/test" component={Test}/>
           </Switch>
         </Router>
       )
