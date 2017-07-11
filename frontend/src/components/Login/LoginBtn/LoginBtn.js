@@ -20,14 +20,32 @@ export class LoginBtn extends Component { // eslint-disable-line react/prefer-st
     window.location.href = "/auth/facebook";
   }
 
+  googleLogin = (e) => {
+    e.preventDefault();
+    window.location.href = "/auth/google";
+  }
+
+  twitterLogin = (e) => {
+    e.preventDefault();
+    window.location.href = "/auth/twitter";
+  }
+
   render() {
 
     return (
-      <div className="facebookButton">
-        <a className="btn-lg btn-social btn-facebook" onClick= {this.facebookLogin}>
-        <span className="fa fa-facebook"></span>
-          Sign in with Facebook
-        </a>
+      <div className="socialBtn">
+          <a className="btn-lg btn-social btn-facebook" onClick= {this.facebookLogin}>
+          <span className="fa fa-facebook"></span>
+            Sign in with Facebook
+          </a>
+          <a className="btn-lg btn-social btn-google" onClick= {this.googleLogin}>
+          <span className="fa fa-google"></span>
+            Sign in with Google
+          </a>
+          <a className="btn-lg btn-social btn-twitter" onClick= {this.twitterLogin}>
+          <span className="fa fa-twitter"></span>
+            Sign in with Twitter
+          </a>
       </div>
     );
   }
