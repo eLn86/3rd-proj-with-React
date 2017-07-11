@@ -20,6 +20,8 @@ module.exports = (io) => {
   var globalPreferenceArray = [];
   var globalPreferences = {};
 
+  var trendingPreferences = []
+
   /**
    * Socket Connection Events.
    */
@@ -42,6 +44,36 @@ module.exports = (io) => {
           globalPreferences[userPreferences[i]] += 1;
         }
       }
+
+      /* This sorts preferences into the preference trending array according to
+          popularity */
+
+      if(globalPreferenceArray.length > 1){
+        for(var i = 1; i < globalPreferenceArray.length; i++){
+          if(globalPreferences[globalPreferenceArray[i - 1]] > globalPreferences[globalPreferenceArray[i]]){
+            trendingPreferences[i - 1] = globalPreferenceArray[i];
+            trendingPreferences[i] = globalPreferenceArray[i - 1];
+          }else{
+            trendingPreferences[i - 1] = globalPreferenceArray[i - 1];
+            trendingPreferences[i] = globalPreferenceArray[i];
+          }
+        }
+
+        for(var i = 1; i < trendingPreferences.length; i++){
+          if(globalPreferences[trendingPreferences[i - 1]] > globalPreferences[trendingPreferences[i]]){
+            var temp = trendingPreferences[i - 1];
+            trendingPreferences[i - 1] = trendingPreferences[i];
+            trendingPreferences[i] = temp;
+          }
+        }
+      }else{
+        trendingPreferences = globalPreferenceArray;
+      }
+
+
+      io.emit('send trending', trendingPreferences);
+
+
 
       /* This adds only unique elements to the globalPreferenceArray */
 
