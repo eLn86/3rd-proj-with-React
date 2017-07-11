@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import Header from '../Partials/Header/Header';
 import Chat from './Chat/Chat';
 import Userlist from './Userlist/Userlist';
-import Test from '../Test/Test';
+import Video from '../Video/Video';
 
 import PreferenceBar from '../Preferences/PreferenceBar/PreferenceBar';
 import PreferenceTrending from '../Preferences/PreferenceTrending/PreferenceTrending';
@@ -51,6 +51,7 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
 
   }
 
+<<<<<<< HEAD
   openModal = () => {
   this.setState({modalIsOpen: true});
   }
@@ -76,6 +77,8 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
     socket.emit('getIDFromSocket');
   }
 
+=======
+>>>>>>> cb22bd78987f6271927a74a7bfff0d77d2e5bdbe
   // When Room component is mounted, create peerID for user by calling createPeer function and get the peers data from socket
   componentDidMount() {
 
@@ -137,6 +140,7 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
             <Userlist/>
           </div>
           <div className="col-md-7 midCol">
+<<<<<<< HEAD
           <div>
 
           {/* This is the modal section */}
@@ -168,6 +172,10 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
 
             <Test/>
 
+=======
+            {/* Video Grid Separated from room */}
+            <Video/>
+>>>>>>> cb22bd78987f6271927a74a7bfff0d77d2e5bdbe
           </div>
         </div>
         <div className="col-md-3 rightCol">
