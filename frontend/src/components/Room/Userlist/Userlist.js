@@ -20,7 +20,8 @@ export class Userlist extends Component { // eslint-disable-line react/prefer-st
     this.peerIndex = 0;
     this.state = {
       userList: [],
-      peers: []
+      peers: [],
+      peerStreamData: []
     }
   }
 
@@ -50,14 +51,17 @@ export class Userlist extends Component { // eslint-disable-line react/prefer-st
 
     this.createPeer();
 
-    socket.on('get peers', (roomUserList, peersIdList) => {
+    socket.on('get peers', (roomUserList, streamList) => {
       this.setState({
-        peers: roomUserList
+        peers: roomUserList,
+        peerStreamData: streamList
       })
+      console.log('Peer Stream Data: ',this.state.peerStreamData);
     });
   }
 
   renderPeerIdList = () => {
+
     return this.state.peers.map((el) => {
       return (
         <div className="peerDiv"

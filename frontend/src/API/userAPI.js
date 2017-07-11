@@ -16,19 +16,19 @@ export const getUser = () => {
     });
 }
 
-export const setUsers = (users) => {
-  if(Array.isArray(users)){
-    localStorage.setItem('Users', JSON.stringify(users));
+export const setUsers = (user) => {
+  if(Array.isArray(user)){
+    localStorage.setItem('user', JSON.stringify(user));
   }
 }
 
 export const getUsers = () => {
-  const usersJSON = localStorage.getItem('Users');
-  let Users = [];
+  const usersJSON = localStorage.getItem('user');
+  let User = [];
   try {
-    Users = JSON.parse(usersJSON);
+    User = JSON.parse(usersJSON);
   }catch(e){
     console.log("Error: Cound not decode preferences from localstorage");
   }
-  return Array.isArray(Users) ? Users : [];
+  return Array.isArray(User) ? User : [];
 }
