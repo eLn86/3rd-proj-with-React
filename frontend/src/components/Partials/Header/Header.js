@@ -56,7 +56,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    // nothing to see here...
+
   }
 }
 

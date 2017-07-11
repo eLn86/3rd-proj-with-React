@@ -23,7 +23,6 @@ module.exports = (io) => {
 
   io.on('connection', (socket) => {
 
-    io.emit('testing connection', socket.request.user);
     // Initialise empty user object which is to be manipulated with socket
     const user = {};
 

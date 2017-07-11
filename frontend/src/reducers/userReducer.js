@@ -1,31 +1,15 @@
-import { setUsers, getUsers } from '../API/userAPI';
+const userReducer = (state = {}, action) => {
 
-// will change later to grab from server. for now it is empty array
-const initialUsers = getUsers();
-
-const users = (state = initialUsers, action) => {
+  console.log('here again!')
+  console.log(action.user);
 
   switch (action.type) {
-
-    case "UPDATE_USER_LIST":
-      console.log(action.type);
-      return [
-        ...action.userArray
-      ]
-      break;
-
-    case "READ_USER":
-      break;
-    case "UPDATE_USER":
-      break;
-    case "DELETE_USER":
-      break;
-    case "INIT_USERS":
-      break;
+    case "USER_UPDATE":
+        return action.user || {};
 
     default:
-      return state;
+        return state;
   }
 }
 
-export default users;
+export default userReducer;
