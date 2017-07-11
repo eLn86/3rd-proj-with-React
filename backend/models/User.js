@@ -5,6 +5,8 @@ import bcrypt from 'bcrypt-nodejs';
 const userSchema = mongoose.Schema({
 
   facebook: String,
+  twitter: String,
+  google: String,
   tokens: Array,
 
   profile: {
@@ -13,7 +15,8 @@ const userSchema = mongoose.Schema({
   },
   preferences: Array,
   peerId: String
-});
+  
+}, { timestamps: true });
 
 // User Schema methods ======================
 

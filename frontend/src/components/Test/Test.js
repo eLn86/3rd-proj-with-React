@@ -23,8 +23,8 @@ export class Test extends Component { // eslint-disable-line react/prefer-statel
   componentDidMount() {
 
 
-    const video = document.querySelector('.local');
-    const testee = document.querySelector('.peer1')
+    const video = document.querySelector('.local'); // for my own stream
+    const testee = document.querySelector('.peer1'); // for peer stream
 
     /*
     * CONSTRAINTS: specify type of media to request
@@ -46,7 +46,7 @@ export class Test extends Component { // eslint-disable-line react/prefer-statel
       video.srcObject = stream;
 
       this.setState({
-        localSream: stream
+        localStream: stream
       })
 
       var peer = new Peer({key: 'z2urygfkdibe29'});
@@ -69,11 +69,12 @@ export class Test extends Component { // eslint-disable-line react/prefer-statel
 
       //each time peer receives a call, answer the call, and stream the video
       peer.on('call', (call) => {
-        // Answer the call, providing our mediaStream
+        // Answer the call, providing our mediaStream, answer() will emit the parameter, in this case 'stream'
         call.answer(stream);
 
-        call.on('stream', (stream) => {
-          testee.srcObject = stream;
+        // Listener for calls, listens for 'stream' and
+        call.on('stream', (peerStream) => {
+          testee.srcObject = peerStream;
         });
       });
     }
