@@ -51,7 +51,7 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
 
   }
 
-<<<<<<< HEAD
+
   openModal = () => {
   this.setState({modalIsOpen: true});
   }
@@ -77,8 +77,6 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
     socket.emit('getIDFromSocket');
   }
 
-=======
->>>>>>> cb22bd78987f6271927a74a7bfff0d77d2e5bdbe
   // When Room component is mounted, create peerID for user by calling createPeer function and get the peers data from socket
   componentDidMount() {
 
@@ -140,11 +138,10 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
             <Userlist/>
           </div>
           <div className="col-md-7 midCol">
-<<<<<<< HEAD
           <div>
 
           {/* This is the modal section */}
-          
+
             <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal}
                   onRequestClose={this.closeModal} style={modalStyles} contentLabel="roomExit">
               <h1 className= "modalHeading"ref={subtitle => this.subtitle = subtitle}>Where Would You Like to Go?</h1>
@@ -170,12 +167,9 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
 
             {/* This is the modal section */}
 
-            <Test/>
-
-=======
             {/* Video Grid Separated from room */}
             <Video/>
->>>>>>> cb22bd78987f6271927a74a7bfff0d77d2e5bdbe
+
           </div>
         </div>
         <div className="col-md-3 rightCol">

@@ -26,6 +26,9 @@ export class Header extends Component { // eslint-disable-line react/prefer-stat
 
   constructor(props){
     super(props)
+    this.state = {
+      modalIsOpen:false
+    }
   }
 
   logout = (e) => {
@@ -65,7 +68,7 @@ export class Header extends Component { // eslint-disable-line react/prefer-stat
           </ul>
           <div className="navbar-header">
             <a className="navbar-brand" href="#">Tea Time</a>
-            
+
             {/* This is the modal section */}
 
             <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal}
