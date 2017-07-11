@@ -5,9 +5,6 @@ const initialPreferences = getPreferences();
 
 const preferences = (state = initialPreferences, action) =>{
 
-  console.log(action.type);
-  console.log(initialPreferences);
-
   switch (action.type) {
     case 'ADD_PREFERENCE':
       return [

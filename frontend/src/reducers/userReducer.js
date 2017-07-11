@@ -1,31 +1,36 @@
+// This reducer for the flow of storing user login status.
+// const userReducer = (state = {}, action) => {
+//
+//   switch (action.type) {
+//     case "USER_UPDATE":
+//         return action.user || {};
+//
+//     default:
+//         return state;
+//   }
+// }
+//
+// export default userReducer;
+
+
+// This is experimental trial
+
 import { setUsers, getUsers } from '../API/userAPI';
 
-// will change later to grab from server. for now it is empty array
-const initialUsers = getUsers();
+const initialUser = getUsers();
 
-const users = (state = initialUsers, action) => {
+const userReducer = (state = initialUser, action) => {
 
   switch (action.type) {
+    case "USER_UPDATE":
 
-    case "UPDATE_USER_LIST":
-      console.log(action.type);
-      return [
-        ...action.userArray
-      ]
-      break;
+        return [action.user]
 
-    case "READ_USER":
-      break;
-    case "UPDATE_USER":
-      break;
-    case "DELETE_USER":
-      break;
-    case "INIT_USERS":
-      break;
+        break;
 
     default:
-      return state;
+        return state;
   }
 }
 
-export default users;
+export default userReducer;
