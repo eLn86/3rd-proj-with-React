@@ -15,6 +15,8 @@ module.exports = (io) => {
   // Peers ID Array
   const peersIdList = [];
 
+  const preferenceCounter = {};
+
 
   /**
    * Socket Connection Events.
@@ -63,26 +65,82 @@ module.exports = (io) => {
     socket.on('enter global room', (preferences) => {
       socket.join('global');
 
-
-    });
-
-
-
-    socket.on('join room', (preferences) => {
+      var trendingPreferences = [];
 
       /* This checks whether the elements in preferences exist in globalPreferenceArray.
          If not, then push it to that array */
 
          /* If preference does not exist in global preference array, put it */
 
-         for(var i = 0; i < preferences.length; i++){
-           var existingPreference = globalPreferenceArray.some((el) => {
-             return el === preferences[i];
-           });
-           if (!existingPreference) {
-             globalPreferenceArray.push(preferences[i]);
-           }
-         }
+
+      for(var i = 0; i < preferences.length; i++){
+        var existingPreference = globalPreferenceArray.some((el) => {
+          return el === preferences[i];
+        });
+        if (!existingPreference) {
+          globalPreferenceArray.push(preferences[i]);
+        }
+      }
+
+      /* This associates a certain user with his preferences */
+
+      for(var i = 0; i < usersList.length; i++){
+        if(socket.request.user.id === usersList[i].id){
+          usersList[i].preferences = preferences
+        }
+      }
+
+      /* This counts the number of preferences */
+
+      for(var j = 0; j < preferences.length; j++){
+
+        if(preferenceCounter[preferences[j]] === undefined){
+          preferenceCounter[preferences[j]] = 1;
+
+        }else{
+          preferenceCounter[preferences[j]] = preferenceCounter[preferences[j]] + 1;
+        }
+
+      }
+
+
+      /* COMPLETE BRUTE FORCE DUMB SORT */
+
+      for(var j = 1; j < globalPreferenceArray.length; j++){
+
+        if(preferenceCounter[globalPreferenceArray[j - 1]] < preferenceCounter[globalPreferenceArray[j]]){
+          var temp = globalPreferenceArray[j];
+          globalPreferenceArray[j] = globalPreferenceArray[j - 1];
+          globalPreferenceArray[j - 1] = temp;
+        }
+      }
+
+      for(var j = 1; j < globalPreferenceArray.length; j++){
+
+        if(preferenceCounter[globalPreferenceArray[j - 1]] < preferenceCounter[globalPreferenceArray[j]]){
+          var temp = globalPreferenceArray[j];
+          globalPreferenceArray[j] = globalPreferenceArray[j - 1];
+          globalPreferenceArray[j - 1] = temp;
+        }
+      }
+
+
+
+      for(var j = 0; j < 10; j++){
+        if(globalPreferenceArray[j] !== undefined){
+          trendingPreferences.push(globalPreferenceArray[j]);
+        }
+      }
+
+      io.emit('preference trend', trendingPreferences)
+
+    });
+
+
+
+
+    socket.on('join room', (preferences) => {
+
 
          /* Calculate preference score based on index position of preference in
             global preference array */
@@ -264,7 +322,10 @@ module.exports = (io) => {
 
       roomsList.forEach((e, i) => {
         // Remove the user count from room array.
-        if (e.name === user.roomName) e.userNumber -= 1;
+        if (e.name === user.roomName) {
+          e.userNumber -= 1;
+
+        }
         // Destroy empty room.
         if (e.userNumber === 0) roomsList.splice(i, 1);
       });
