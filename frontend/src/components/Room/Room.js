@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Peer from 'peerjs';
 
 // Import components
 import Header from '../Partials/Header/Header';
@@ -23,35 +22,62 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
     }
   }
 
-  // When start button is clicked, this function is triggered
-  /*
-  ** Function: createPeer()
-  ** Parameters: None
-  ** Purpose: Create a new peer and emit the peer id to socket in the backend
-  */
-  createPeer = () => {
 
-        var peer = new Peer({key: 'z2urygfkdibe29'});
-
-        peer.on('open', function(id) {
-            socket.emit('add peer', id);
-          });
-
-    }
 
   // When Room component is mounted, create peerID for user by calling createPeer function and get the peers data from socket
   componentDidMount() {
     // get room name from redux store
     const roomName = this.props.roomName;
     // re-join room chat channel after redirecting.
-    socket.emit('join room channel', roomName)
+    socket.emit('join room channel', roomName);
 
-    this.createPeer();
 
-    socket.on('get peers', (currentUser, peersIdList) => {
-      console.log('Current User: ', currentUser);
-      console.log('Peers ID Array: ', peersIdList);
-    })
+  const video = document.querySelector('video');
+  const toggle = document.querySelector('.togglebtn');
+
+  /*
+  * CONSTRAINTS: specify type of media to request
+  * properties can either be boolean or be objects for more specificity
+  * e.g. mandatory or optional, width, height, quality etc.
+  */
+  const constraints = {
+    audio: false,
+    video: {
+        frameRate: {
+          max: 10
+        }
+    }
+  }
+
+  // success: if video received, append to html element
+  this.handleSuccess = (stream) => {
+    window.stream = stream;
+    video.srcObject = stream;
+  }
+
+  // failure: if video failed, log error
+  this.handleError = (error) => {
+    throw error.name;
+  }
+
+  // Get User Media
+  navigator.mediaDevices.getUserMedia(constraints)
+  .then(this.handleSuccess)
+  .catch(this.handleError);
+
+  // // TOGGLE play and pause
+  // toggle.addEventListener('click', () => {
+  //   if (toggle.dataset.toggle === 'on') {
+  //     // Pause the video
+  //     video.pause();
+  //     window.stream.getVideoTracks()[0].enabled = false;
+  //     toggle.dataset.toggle = 'off'
+  //   } else {
+  //     // play the video
+  //     video.play();
+  //     window.stream.getVideoTracks()[0].enabled = true;
+  //     toggle.dataset.toggle = 'on';
+  //   }
 
 
   }
@@ -72,6 +98,7 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
             <div className="row videoTopRow">
               <div className="col-md-6 topLeftCol">
                 <div className="topLeftVideoPane">
+                  <video id="gum-local" autoplay=''/>
                 </div>
               </div>
               <div className="col-md-6 topRightCol">

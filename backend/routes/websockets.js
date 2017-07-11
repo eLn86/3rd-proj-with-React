@@ -65,7 +65,12 @@ module.exports = (io) => {
       socket.join('global');
     });
 
+    socket.on('getIDFromSocket', () => { 
+      io.emit('getID', user.id);
+    })
+
     socket.on('join room', (preferenceFromFrontend) => {
+      io.emit('getID', user.id);
       socket.leave('global');
       // 1. room checker here with preferences
       let checker = true; // checker for room creation.
@@ -112,7 +117,7 @@ module.exports = (io) => {
       * Dependencies: socket.emit('add peer') in Room.js
       */
     socket.on('add peer', (peerID) => {
-      console.log('peer ID: ', peerID);
+      console.log('userslist ', usersList);
       // Boolean to check if user exists in the room, default is true
       var userExistsInRoomList = true;
 
@@ -141,7 +146,7 @@ module.exports = (io) => {
       console.log('Room User List Array after creating new user: ', roomUserList);
       // Send the latest peerID List array to all clients
       console.log('Room Name: ', user.roomName);
-        io.to(user.roomName).emit('get peers', currentUser, peersIdList);
+        io.to(user.roomName).emit('get peers', roomUserList, peersIdList);
     })
 
 /* Commented out for later use
