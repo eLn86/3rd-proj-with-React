@@ -11,14 +11,6 @@ module.exports = (io) => {
   const usersList = [];
   // Current active rooms array.
   const roomsList = [];
-<<<<<<< HEAD
-  // Active users in current room
-  // const roomUserList = [];
-  //
-  // Peers ID Array
-  const peersIdList = [];
-=======
->>>>>>> 07b0d0b6ef6f68f661cb7ff57f089b8f3398e53c
 
   //Global preferences
   var globalPreferenceArray = [];
@@ -125,14 +117,8 @@ module.exports = (io) => {
       user.name = socket.request.user.profile.name;
       user.id = socket.request.user.id;
       user.socketId = socket.id;
-<<<<<<< HEAD
-      user.peerID = '';
-      user.roomName = '';
-      user.picture = socket.request.user.profile.picture;
-=======
       user.picture = socket.request.user.profile.picture;
       user.roomName = 'global';
->>>>>>> 07b0d0b6ef6f68f661cb7ff57f089b8f3398e53c
       user.preferenceScore = (userPreferenceScore / userPreferences.length);
       // Push the user object to usersList array.
       usersList.push(user);
