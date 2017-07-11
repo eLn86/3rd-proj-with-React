@@ -24,7 +24,8 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
     super(props);
 
     this.state = {
-      preferences: []
+      preferences: [],
+      trendingPreferences: []
     }
   }
 
@@ -41,10 +42,20 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
    }
 
+   renderTrendingList = () => {
+     return this.state.trendingPreferences.map((trendPreference, index) => {
+       return (
+        <div key={index}>
+          <div className="col-md-6">{trendPreference}</div>
+          <div className="col-md-6">{1}</div>
+        </div>
+       )
+     })
+
+   }
 
   componentDidMount() {
-    console.log(this.state);
-    console.log(this.props);
+
     this.setState({
       preferences: this.props.preferences
     })
@@ -52,7 +63,22 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
     // Join global channel
     socket.emit('enter global room', this.props.preferences);
 
+    socket.on('preference trend', (trendData) => {
+      console.log(trendData);
+      this.setState({
+        trendingPreferences: trendData
+      })
+    });
 
+
+  }
+
+  componentDidUpdate(){
+    socket.on('preference trend', (trendData) => {
+      this.setState({
+        trendingPreferences: trendData
+      })
+    });
   }
 /* Not sure if this is necessary */
 
@@ -79,6 +105,7 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
             <div className= "col-sm-12 preferenceTrending">
               <PreferenceTrending/>
+              {this.renderTrendingList()}
             </div>
           </div>
 
