@@ -20,6 +20,7 @@ module.exports = (io) => {
   var globalPreferenceArray = [];
   var globalPreferences = {};
 
+  var trendingPreferences = []
 
   /**
    * Socket Connection Events.
@@ -47,6 +48,36 @@ module.exports = (io) => {
           globalPreferences[userPreferences[i]] += 1;
         }
       }
+
+      /* This sorts preferences into the preference trending array according to
+          popularity */
+
+      if(globalPreferenceArray.length > 1){
+        for(var i = 1; i < globalPreferenceArray.length; i++){
+          if(globalPreferences[globalPreferenceArray[i - 1]] > globalPreferences[globalPreferenceArray[i]]){
+            trendingPreferences[i - 1] = globalPreferenceArray[i];
+            trendingPreferences[i] = globalPreferenceArray[i - 1];
+          }else{
+            trendingPreferences[i - 1] = globalPreferenceArray[i - 1];
+            trendingPreferences[i] = globalPreferenceArray[i];
+          }
+        }
+
+        for(var i = 1; i < trendingPreferences.length; i++){
+          if(globalPreferences[trendingPreferences[i - 1]] > globalPreferences[trendingPreferences[i]]){
+            var temp = trendingPreferences[i - 1];
+            trendingPreferences[i - 1] = trendingPreferences[i];
+            trendingPreferences[i] = temp;
+          }
+        }
+      }else{
+        trendingPreferences = globalPreferenceArray;
+      }
+
+
+      io.emit('send trending', trendingPreferences);
+
+
 
       /* This adds only unique elements to the globalPreferenceArray */
 
@@ -316,16 +347,6 @@ module.exports = (io) => {
         if (e.userNumber === 0) roomsList.splice(i, 1);
       });
 
-      var userPreferences = socket.request.user.preferences;
-
-      /* This subtracts a user's preference from the global count upon
-         disconnect */
-
-      for(var i = 0; i < userPreferences.length; i++){
-
-        globalPreferences[userPreferences[i]] -= 1;
-
-      }
 
       socket.leave(user.roomName);
 
