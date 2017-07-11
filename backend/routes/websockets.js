@@ -152,11 +152,15 @@ module.exports = (io) => {
         currentUser.socketId = user.socketId;
         currentUser.peerID = peerID;
         roomUserList.push(currentUser);
-        peersIdList.push(currentUser.peerID);
       }
 
-      // Send the latest peerID List array to all clients
-        io.to(user.roomName).emit('get peers', roomUserList, peersIdList);
+      // filter the room user list and return all the peerIDs that are not the peerID of the current user
+      var streamList = roomUserList.filter((peer) => {
+        return peer.peerID !== peerID
+      })
+
+      // Send the updated roomUserList and streamList arrays to all clients
+        io.to(user.roomName).emit('get peers', roomUserList, streamList);
     })
 
 
