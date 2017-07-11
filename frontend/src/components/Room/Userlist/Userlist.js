@@ -42,7 +42,7 @@ export class Userlist extends Component { // eslint-disable-line react/prefer-st
   }
 
   componentDidMount() {
-    this.createPeer();
+    //this.createPeer();
 
     socket.on('update userList', (userList) => {
       // Updating userlist in state.

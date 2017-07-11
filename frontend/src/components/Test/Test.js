@@ -2,10 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import Peer from 'peerjs';
+// Import Socket API
+import { socket } from '../../API/socket';
 
 // Import components
-
-// Import Socket Client
 
 export class Test extends Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -21,20 +21,7 @@ export class Test extends Component { // eslint-disable-line react/prefer-statel
 
   // When Room component is mounted, create peerID for user by calling createPeer function and get the peers data from socket
   componentDidMount() {
-    console.log('this is the peer', this.props.peer);
-    const peer = this.props.peer;
-    //this.sendStreams();
 
-    // each time peer receives a call, answer the call, and stream the video
-    // peer.on('call', (call) => {
-    //   // Answer the call, providing our mediaStream
-    //   call.answer(this.state.localStream);
-    //
-    //   call.on('stream', (stream) => {
-    //     testee.srcObject = stream;
-    //   });
-
-    //});
 
     const video = document.querySelector('.local');
     const testee = document.querySelector('.peer1')
@@ -62,6 +49,33 @@ export class Test extends Component { // eslint-disable-line react/prefer-statel
         localSream: stream
       })
 
+      var peer = new Peer({key: 'z2urygfkdibe29'});
+      console.log('this is the peer', peer);
+      //this.props.storePeer(peer);
+
+      peer.on('open', function(id) {
+        socket.emit('add peer', id);
+      });
+
+      console.log('this is the peer', peer);
+
+      const streamList = ['u49y1u3zmwcul3di', '0lou909xlpx2yb9'];
+
+      streamList.forEach((id) => {
+        // send localStream to each available peer in room
+        console.log('sending stream to ', id);
+        var outCall = peer.call(id, stream);
+      })
+
+      //each time peer receives a call, answer the call, and stream the video
+      peer.on('call', (call) => {
+        // Answer the call, providing our mediaStream
+        call.answer(stream);
+
+        call.on('stream', (stream) => {
+          testee.srcObject = stream;
+        });
+      });
     }
 
     // failure: if video failed, log error
@@ -87,19 +101,13 @@ export class Test extends Component { // eslint-disable-line react/prefer-statel
     //     window.stream.getVideoTracks()[0].enabled = true;
     //     toggle.dataset.toggle = 'on';
     //   }
+
   }
 
-  // sendStreams = () => {
-  //   const streamList = ['n2yotocb84obt9', 'uc0r4ssbd7mygb9'];
-  //   const peer = this.props.peer;
-  //
-  //   streamList.forEach((id) => {
-  //     // send localStream to each available peer in room
-  //     var outCall = peer.call(id, this.state.localStream);
-  //
-  //   })
-  //
-  // }
+  sendStreams = () => {
+
+
+  }
 
   render() {
 
