@@ -36,12 +36,16 @@ export class Chat extends Component { // eslint-disable-line react/prefer-statel
         {/* Conditional Rendering: Me(right), others(left) */}
         {user.socketId !== socket.id ? (
             <div className="chatTextLeft">
+              <div className="message">
+                {user.name + ' : ' + msg}
+              </div>
               <img src={user.picture} className="userPicLeft"/>
-              {user.name + ' : ' + msg}
             </div>
           ) : (
             <div className="chatTextRight">
-              {msg}
+              <div className="message">
+                {msg}
+              </div>
               <img src={user.picture} className="userPicRight"/>
             </div>
           )}
@@ -49,7 +53,8 @@ export class Chat extends Component { // eslint-disable-line react/prefer-statel
     )
   };
 
-  // When component mounts, render all messages from other users including user by returning conditional JSX from this.chatText function
+  // When component mounts, render all messages from other users including user
+  // by returning conditional JSX from this.chatText function
   componentDidMount() {
     this.scrollToBottom(); // auto scroll down.
     socket.on('render msg', (msg, user) => {
@@ -66,7 +71,8 @@ export class Chat extends Component { // eslint-disable-line react/prefer-statel
     this.scrollToBottom(); // auto scroll down.
   }
 
-  // When enter is pressed and the current message in state is not empty, emit the message to socket io
+  // When enter is pressed and the current message in state is not empty,
+  // emit the message to socket io
   onKeypress = (e) => {
     if (e.key === 'Enter' && this.state.msg !== '') {
       // If press enter, emit msg.
@@ -75,7 +81,8 @@ export class Chat extends Component { // eslint-disable-line react/prefer-statel
     }
   };
 
-  // When send button is clicked, check if current message in state is not empty, if so, emit the message to socket io
+  // When send button is clicked, check if current message in state is not empty,
+  // if so, emit the message to socket io
   onClick = (e) => {
     if (this.state.msg !== '') {
       // If click send btn, emit msg.
