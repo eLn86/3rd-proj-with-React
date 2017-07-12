@@ -77,7 +77,11 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
 
           peer.on('call', (remoteCall) => {
             remoteCall.answer(this.state.video);
-
+      
+      /*
+      ** Robyn, can you look at this const streamList?
+      ** It is also found above starting from line 63
+      */
       const streamList = this.state.peers.filter((peerUser) => {
         return peerUser.peerID !== peer.id;
       })
@@ -101,7 +105,7 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
         }
       }
     }
-
+    
     this.clearPeerVideos = () => {
       for (var vid of peerScreens) {
         vid.srcObject = null;
