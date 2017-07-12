@@ -86,8 +86,6 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
       })
     }
 
-
-
     this.renderPeerVideo = (stream) => {
       for (var vid of peerScreens) {
         if (vid.srcObject === null) {
@@ -121,8 +119,7 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
         peers: peers
       })
 
-
-      console.log('this is my peers in the room ', this.state.peers);
+      console.log('this are my peers in the room after set state: ', this.state.peers);
 
       this.updateStreamList();
 
