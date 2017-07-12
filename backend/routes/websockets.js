@@ -368,6 +368,11 @@ module.exports = (io) => {
              for(var i = 0; i < e.currentUsers.length; i++){
                if(e.currentUsers[i].id === user.id){
                  e.currentUsers.splice(i, 1);
+                 // Emit updated user list back to the front end
+                 io.to(user.roomName).emit('get peers', e.currentUsers);
+                 // Send the lastes user list.
+                 io.to(user.roomName).emit('update userList', e.currentUsers);
+                 break;
                }
              }
 
@@ -379,6 +384,8 @@ module.exports = (io) => {
            }
          });
        }
+
+
       //  console.log('Rooms List after one user dcs: ',roomsList[0]);
      })
 
