@@ -164,7 +164,7 @@ module.exports = (io) => {
   // Room channel join - see 'join room channel', consider reuse this.
   // the socket function called after actual redirecting.
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  
+
     socket.on('join room', () => {
 
       io.emit('getID', user.id);
@@ -271,11 +271,6 @@ module.exports = (io) => {
         return peer.peerID !== peerID
       })
 
-<<<<<<< HEAD
-      console.log('Stream List: ',streamList)
-      // Send the updated roomUserList and streamList arrays to all clients
-        io.to(user.roomName).emit('get peers', currentRoomObject[0].currentUsers, streamList);
-=======
       // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       // To Han and El.
       // UserList updated by currentRoomObject[0].currentUsers
@@ -287,7 +282,6 @@ module.exports = (io) => {
       io.to(user.roomName).emit('get peers', currentRoomObject[0].currentUsers);
       // Send the lastes user list.
       io.to(user.roomName).emit('update userList', currentRoomObject[0].currentUsers);
->>>>>>> master
     })
 
 
