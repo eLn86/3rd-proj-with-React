@@ -26,23 +26,6 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
   componentDidMount() {
     const video = document.querySelector('.local'); // for my own stream
     const testee = document.querySelector('.peer1'); // for peer stream
-<<<<<<< HEAD
-//
-      /*
-      * CONSTRAINTS: specify type of media to request
-      * properties can either be boolean or be objects for more specificity
-      * e.g. mandatory or optional, width, height, quality etc.
-      */
-      const constraints = {
-        audio: false,
-        video: {
-            width: 300,
-            height: 300
-        }
-      }
-
-
-=======
 
     /*
     * CONSTRAINTS: specify type of media to request
@@ -56,7 +39,6 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
           height: 300
       }
     }
->>>>>>> master
 
       var peer = new Peer({key: 'z2urygfkdibe29'});
       //this.props.storePeer(peer);
@@ -119,21 +101,9 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
         video.srcObject = stream;
         console.log('Other Peer ID: ', this.state.peerStreamData);
 
-<<<<<<< HEAD
-        if (this.state.peerStreamData.length !== 0) {
-          var call = peer.call(this.state.peerStreamData[0].peerID, stream);
-          call.on('stream', function(remoteStream) {
-            // Show stream in some video/canvas element.
-            testee.srcObject = remoteStream;
-          });
-        }
-
-        this.setState({
-          localStream: stream
-=======
         this.setState({
           video: stream
->>>>>>> master
+
         })
       }
       // failure: if video failed, log error
