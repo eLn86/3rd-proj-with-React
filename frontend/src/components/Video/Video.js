@@ -33,11 +33,13 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
     const video = document.querySelector('.local'); // for my own stream
     const testee = document.querySelector('.peer1'); // for peer stream
 
+
     // HTML element array: [screen2, screen3, screen4]
     const peerScreens = document.querySelectorAll('.peer');
     console.log('peer screen src object', peerScreens[0].srcObject);
 
     this.getStream = () => {
+
 
       // specify video constraints
       const constraints = {
@@ -52,6 +54,7 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
       this.handleSuccess = (stream) => {
         video.srcObject = stream;
         console.log('Other Peer ID: ', this.state.streamList);
+
 
         this.setState({
           video: stream,
@@ -69,16 +72,20 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
       .catch(this.handleError);
     }
 
+
     this.updateStreamList = () => {
+
 
       const streamList = this.state.peers.filter((peerUser) => {
         return peerUser.peerID !== peer.id;
       })
 
+
       this.setState({
         streamList: streamList
       })
     }
+
 
     this.renderPeerVideo = (stream) => {
       for (var vid of peerScreens) {

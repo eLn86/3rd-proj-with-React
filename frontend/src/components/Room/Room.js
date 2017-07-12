@@ -14,6 +14,9 @@ import Video from '../Video/Video';
 import PreferenceBar from '../Preferences/PreferenceBar/PreferenceBar';
 import PreferenceTrending from '../Preferences/PreferenceTrending/PreferenceTrending';
 
+import { addPeerIdToUser } from '../../actions/userActions';
+import { addRoom } from '../../actions/socketActions';
+
 
 // Import static files
 import './Room.css';
@@ -46,9 +49,6 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
       modalIsOpen: false,
       peers: []
     }
-
-
-
   }
 
 
@@ -200,6 +200,12 @@ const mapStateToProps = (state) => {
 // dispatch actions
 const mapDispatchToProps = (dispatch) => {
   return {
+    addPeerIdToUser: (peerId) => {
+      dispatch(addPeerIdToUser(peerId))
+      },
+    storeRoomName: (roonName) => {
+      dispatch(addRoom(roonName))
+    }
   }
 }
 

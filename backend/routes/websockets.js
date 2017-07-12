@@ -24,9 +24,12 @@ module.exports = (io) => {
 
   io.on('connection', (socket) => {
 
+      console.log("On connection roomlist: " + roomsList);
     // Initialise empty user object which is to be manipulated with socket
     const user = {};
     // If socket is connected with passport, push new user obj to arry
+
+
     if (socket.request.user.logged_in) {
       /* This counts the preferences and  adds them to the global count in global
           preferences */
@@ -169,6 +172,44 @@ module.exports = (io) => {
 
       io.emit('getID', user.id);
 
+      for(var i = 0; i < roomsList.length; i++){
+
+        if(roomsList[i].name === user.roomName){
+          roomsList[i].userNumber -= 1;
+
+          /*
+          for(var j = 0; j < roomsList[i].currentUsers.length; j++){
+            if(roomsList[i].currentUsers[j].id === user.id){
+              roomsList.currentUsers.splice(j, 1);
+            }
+          }
+          */
+          if(roomsList[i].userNumber === 0){
+            roomsList.splice(i, 1);
+            break;
+          }
+        }
+
+
+
+      }
+
+      /*
+        if (e.name === user.roomName){
+
+          console.log("Disconnected from: " + e.name);
+
+          console.log("e.userNumber: " + e.userNumber);
+
+          if (e.userNumber === 0){
+            roomsList.splice(i, 1);
+          }
+          socket.leave(e.name);
+          user.roomName = 'global';
+
+        }
+*/
+
       if(roomsList.length == 0){
         const roomObject = {
           name: uuid.v4(),
@@ -209,7 +250,6 @@ module.exports = (io) => {
 
           priority.userNumber += 1;
           priority.preferenceScore = (priority.preferenceScore + user.preferenceScore) / priority.userNumber;
-
           io.to(socket.id).emit('get roomInfo', priority.name);
 
         }else{
@@ -240,53 +280,48 @@ module.exports = (io) => {
      */
 
      /**
-       * Function: add peer
-       * Purpose: to add a peer to the room
-       * Dependencies: socket.emit('add peer') in Room.js
-       */
-     socket.on('add peer', (peerID) => {
-       console.log('All rooms list: ', roomsList);
-       console.log('User Room Name: ', user.roomName);
-       var currentRoomObject = roomsList.filter((room) => {
-         return room.name === user.roomName;
-       })
-       console.log('Current Room Object: ',currentRoomObject);
-       user.peerID = peerID;
-       var sameUserChecker = false;
+      * Function: add peer
+      * Purpose: to add a peer to the room
+      * Dependencies: socket.emit('add peer') in Room.js
+      */
+    socket.on('add peer', (peerID) => {
+      console.log('All rooms list: ', roomsList);
+      console.log('User Room Name: ', user.roomName);
+      var currentRoomObject = roomsList.filter((room) => {
+        return room.name === user.roomName;
+      })
+      console.log('Current Room Object: ',currentRoomObject);
+      user.peerID = peerID;
+      var sameUserChecker = false;
 
-       for (var i = 0; i < currentRoomObject[0].currentUsers.length; i++) {
-         if(user.id === currentRoomObject[0].currentUsers[i].id) {
-           sameUserChecker = true;
-           currentRoomObject[0].currentUsers[i].peerID = peerID;
-           break;
-         }
-       }
+      for (var i = 0; i < currentRoomObject[0].currentUsers.length; i++) {
+        if(user.id === currentRoomObject[0].currentUsers[i].id) {
+          sameUserChecker = true;
+          currentRoomObject[0].currentUsers[i].peerID = peerID;
+          break;
+        }
+      }
 
-       if(!sameUserChecker) {
-         currentRoomObject[0].currentUsers.push(user);
-       }
+      if(!sameUserChecker) {
+        currentRoomObject[0].currentUsers.push(user);
+      }
+      // filter the room user list and return all the peerIDs that are not the peerID of the current user
+      var streamList = currentRoomObject[0].currentUsers.filter((peer) => {
+        return peer.peerID !== peerID
+      })
 
-       // filter the room user list and return all the peerIDs that are not the peerID of the current user
-       var streamList = currentRoomObject[0].currentUsers.filter((peer) => {
-         return peer.peerID !== peerID
-       })
+      // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      // To Han and El.
+      // UserList updated by currentRoomObject[0].currentUsers
+      // Need a logic when an user leave, updating the currentRoomObject[0].currentUsers.
+      // Thank you!
+      // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-       // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-       // To Han and El.
-       // UserList updated by currentRoomObject[0].currentUsers
-       // Need a logic when an user leave, updating the currentRoomObject[0].currentUsers.
-       // Thank you!
-       // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-       console.log('Stream List: ',streamList)
-       // Send the updated roomUserList and streamList arrays to all clients
-         io.to(user.roomName).emit('get peers', currentRoomObject[0].currentUsers);
-         // Send the lastes user list.
-         io.to(user.roomName).emit('update userList', currentRoomObject[0].currentUsers);
-     })
-
-
-
-
+      // Send the updated roomUserList and streamList arrays to all clients
+      io.to(user.roomName).emit('get peers', currentRoomObject[0].currentUsers);
+      // Send the lastes user list.
+      io.to(user.roomName).emit('update userList', currentRoomObject[0].currentUsers);
+    })
 
 
 /* Commented out for later use
@@ -317,8 +352,17 @@ module.exports = (io) => {
       });
 
       roomsList.forEach((e, i) => {
-        // Remove the user count from room array.
-        if (e.name === user.roomName) e.userNumber -= 1;
+        if (e.name === user.roomName){
+
+          console.log("Disconnected from: " + e.name);
+          e.userNumber -= 1;
+          if (e.userNumber === 0){
+            roomsList.splice(i, 1);
+          }
+          socket.leave(e.name);
+          user.roomName = 'global';
+        }
+
         // Destroy empty room.
         // if (e.userNumber === 0) roomsList.splice(i, 1);
       });
