@@ -50,11 +50,10 @@ export class Chat extends Component { // eslint-disable-line react/prefer-statel
         {user.socketId !== socket.id ? (
             <div className="chatTextLeft">
               <img src={image} className= "userPicLeft"/>
-            <span className="userNameDisplay">{'@' + user.name}</span>
-              <div className="messageLeft">
-                {msg}
-              </div>
-
+              <span className="userNameDisplay">{'@' + user.name}</span>
+                <div className="messageLeft">
+                  {msg}
+                </div>
             </div>
           ) : (
             <div className="chatTextRight">
