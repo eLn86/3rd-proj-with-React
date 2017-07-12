@@ -1,16 +1,22 @@
 .leftCol {
-  border: 1px solid black;
+  border: 1px solid white;
   height: 600px;
 }
 
 .midCol {
-  border: 1px solid black;
+  border: 1px solid white;
   height: 600px;
 }
 
 .rightCol {
-  border: 1px solid black;
+  border: 1px solid white;
   height: 600px;
+}
+
+.room {
+  background: black;
+  width: 100%;
+  height: 100%;
 }
 
 /* CSS for Video display Column and Video panes */
@@ -50,28 +56,28 @@
   display: flex;
   width: 200px;
   height: 200px;
-  border: 1px solid black;
+  border: 1px solid white;
 }
 
 .topRightVideoPane {
   display: flex;
   width: 200px;
   height: 200px;
-  border: 1px solid black;
+  border: 1px solid white;
 }
 
 .bottomLeftVideoPane {
   display: flex;
   width: 200px;
   height: 200px;
-  border: 1px solid black;
+  border: 1px solid white;
 }
 
 .bottomRightVideoPane {
   display: flex;
   width: 200px;
   height: 200px;
-  border: 1px solid black;
+  border: 1px solid white;
 }
 
 .closeBtn{
@@ -99,4 +105,27 @@
 .preferenceText{
   text-align:center;
   padding:5px;
+}
+
+/* Fetcher */
+.fetching {
+  color: white;
+  font-size: 50px;
+}
+
+.spinner {
+  color: white;
+}
+
+.fetcherWrapper {
+  width: 120px;
+  height: 130px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translate(-50%, -50%);
 }

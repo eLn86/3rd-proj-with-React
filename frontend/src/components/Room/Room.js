@@ -130,59 +130,69 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
   render() {
 
     return (
-      <div className="container-fluid">
-        <Header/>
-        <div className="row roomBody">
-          <div className="col-md-2 leftCol">
-            {/* UserList Grid Separated from room */}
-            <Userlist/>
+      <div className="container-fluid room">
+        {this.props.isFetching[0] ? (
+          <div className="fetcherWrapper">
+            {/* This is Wait! Screen for logout*/}
+            <i className="fa fa-spinner fa-5x fa-spin spinner" aria-hidden="true"></i>
+            <div className="fetching">Wait...</div>
           </div>
-          <div className="col-md-7 midCol">
+        ) : (
           <div>
-
-          {/* This is the modal section */}
-
-            <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal}
-                  onRequestClose={this.closeModal} style={modalStyles} contentLabel="roomExit">
-              <h1 className= "modalHeading"ref={subtitle => this.subtitle = subtitle}>Where Would You Like to Go?</h1>
-              <button className="closeBtn" onClick={this.closeModal}>X</button>
-
-              <div className= "preferenceBar">
-
-                <div className= "preferenceText"> Edit Your Preferences </div>
-                <PreferenceBar/>
-
-                <div className= "preferenceTrendingBar">
-                  <div className= "preferenceText"> Preferences Currently Trending </div>
-                  <PreferenceTrending trendingPreferences= {this.state.trendingPreferences}/>
-                </div>
-
-              </div>
-
-              <form>
-                <button className= "homeBtn" onClick={this.sendHome}>Return to Lobby</button>
-                <button className= "nextBtn" onClick={this.nextRoom}>Next Room</button>
-              </form>
-            </Modal>
+          {/* This is room screen */}
+          <Header/>
+          <div className="row roomBody">
+            <div className="col-md-2 leftCol">
+              {/* UserList Grid Separated from room */}
+              <Userlist/>
+            </div>
+            <div className="col-md-7 midCol">
+            <div>
 
             {/* This is the modal section */}
 
-            {/* Video Grid Separated from room */}
-            <Video/>
+              <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal}
+                    onRequestClose={this.closeModal} style={modalStyles} contentLabel="roomExit">
+                <h1 className= "modalHeading"ref={subtitle => this.subtitle = subtitle}>Where Would You Like to Go?</h1>
+                <button className="closeBtn" onClick={this.closeModal}>X</button>
+
+                <div className= "preferenceBar">
+
+                  <div className= "preferenceText"> Edit Your Preferences </div>
+                  <PreferenceBar/>
+
+                  <div className= "preferenceTrendingBar">
+                    <div className= "preferenceText"> Preferences Currently Trending </div>
+                    <PreferenceTrending trendingPreferences= {this.state.trendingPreferences}/>
+                  </div>
+
+                </div>
+
+                <form>
+                  <button className= "homeBtn" onClick={this.sendHome}>Return to Lobby</button>
+                  <button className= "nextBtn" onClick={this.nextRoom}>Next Room</button>
+                </form>
+              </Modal>
+
+              {/* This is the modal section */}
+
+              {/* Video Grid Separated from room */}
+              <Video/>
+
+            </div>
+          </div>
+          <div className="col-md-3 rightCol">
+            {/* Chat Grid Separated from room */}
+            <Chat/>
+          </div>
+
+          <div className="col-md-7 col-md-offset-2 utilityPanel">
+            <button onClick={this.openModal}>Leave Room</button>
+          </div>
 
           </div>
-        </div>
-        <div className="col-md-3 rightCol">
-          {/* Chat Grid Separated from room */}
-          <Chat/>
-        </div>
-
-        <div className="col-md-7 col-md-offset-2 utilityPanel">
-          <button onClick={this.openModal}>Leave Room</button>
-        </div>
-
-        </div>
-
+          </div>
+        )}
       </div>
     );
   }
@@ -193,7 +203,8 @@ const mapStateToProps = (state) => {
     return {
       users: state.users,
       preferences: state.preferences,
-      roomName: state.rooms
+      roomName: state.rooms,
+      isFetching: state.isFetching
   }
 }
 

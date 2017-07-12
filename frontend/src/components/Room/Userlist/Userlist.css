@@ -1,8 +1,8 @@
 #userListGrid {
-  border: 1px solid red;
   height: 100%;
   width: auto;
   padding: 10px 0;
+  border: 1px solid red;
 }
 
 .userPic {

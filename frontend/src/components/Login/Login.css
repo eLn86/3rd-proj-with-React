@@ -29,6 +29,23 @@
 }
 
 .fetching {
-  font-size: 200px;
   color: white;
+  font-size: 50px;
+}
+
+.spinner {
+  color: white;
+}
+
+.fetcherWrapper {
+  width: 120px;
+  height: 130px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translate(-50%, -50%);
 }

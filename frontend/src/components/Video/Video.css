@@ -11,3 +11,7 @@
   display: flex;
   max-width: 60%;
 }
+
+.peerName{
+  color: white;
+}

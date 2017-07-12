@@ -32,15 +32,10 @@ export class Header extends Component { // eslint-disable-line react/prefer-stat
     }
   }
 
-  fetcher = (result) => {
-    this.props.isFetching(result);
-  }
-
   logout = (e) => {
-    //this.props.isFetching(false);
+    this.props.isFetching(false);
     axios.get('/logout')
     .then((response) => {
-      this.props.isFetching(false);
       e.preventDefault();
       window.location.href = '/';
     })

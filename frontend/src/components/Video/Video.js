@@ -5,6 +5,8 @@ import Peer from 'peerjs';
 // Import Socket API
 import { socket } from '../../API/socket';
 
+import './Video.css';
+
 // Import components
 
 export class Video extends Component { // eslint-disable-line react/prefer-stateless-function
