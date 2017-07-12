@@ -341,31 +341,69 @@ module.exports = (io) => {
     /**
      * Disconnect
      */
+
+     socket.on('explicit leave', (leaveSignal) => {
+
+      //  console.log('explicit leave fired');
+
+       // LeaveSignal is true only when user clicks
+       if(leaveSignal) {
+        //  console.log('leave signal is true');
+         // Delete disconnected user from the global usersList.
+         usersList.forEach((e, i) => {
+           // If element name and id is equals to the user name and id
+           // who left the room, remove the user from the user array
+           if (e.id === user.id) usersList.splice(i, 1);
+         });
+
+         // Delete disconnected user from the local usersList
+        //  console.log('Rooms List BEFORE one user dcs: ',roomsList[0]);
+
+         roomsList.forEach((e, i) => {
+           if (e.name === user.roomName){
+
+            //  console.log("Disconnected from: " + e.name);
+             e.userNumber -= 1;
+
+             for(var i = 0; i < e.currentUsers.length; i++){
+               if(e.currentUsers[i].id === user.id){
+                 e.currentUsers.splice(i, 1);
+               }
+             }
+
+             if (e.userNumber === 0){
+               roomsList.splice(i, 1);
+             }
+             socket.leave(e.name);
+             user.roomName = 'global';
+           }
+         });
+       }
+      //  console.log('Rooms List after one user dcs: ',roomsList[0]);
+     })
+
     socket.on('disconnect', () => {
-      console.log('==> User Diconnected');
+      // console.log('==> User Diconnected');
 
-      // Delete disconnected user from the usersList.
-      usersList.forEach((e, i) => {
-        // If element name and id is equals to the user name and id
-        // who left the room, remove the user from the user array
-        if (e.id === user.id) usersList.splice(i, 1);
-      });
 
-      roomsList.forEach((e, i) => {
-        if (e.name === user.roomName){
-
-          console.log("Disconnected from: " + e.name);
-          e.userNumber -= 1;
-          if (e.userNumber === 0){
-            roomsList.splice(i, 1);
-          }
-          socket.leave(e.name);
-          user.roomName = 'global';
-        }
+    });
+        // // Iterate over rooms list array and if the current user is found in the roomsList array, remove the user from roomsList
+        // roomsList.forEach((e, i) => {
+        //   if (e.name === user.roomName){
+        //
+        //     console.log("Disconnected from: " + e.name);
+        //     e.userNumber -= 1;
+        //     if (e.userNumber === 0){
+        //       roomsList.splice(i, 1);
+        //     }
+        //     socket.leave(e.name);
+        //     user.roomName = 'global';
+        //   }
+        // });
 
         // Destroy empty room.
         // if (e.userNumber === 0) roomsList.splice(i, 1);
-      });
+
 
 
 
@@ -373,5 +411,4 @@ module.exports = (io) => {
       //io.to(user.roomName).emit('update userList', roomUserList);
     });
 
-  }); // connection ends here
-}; // module ends here
+  } // Module ends here

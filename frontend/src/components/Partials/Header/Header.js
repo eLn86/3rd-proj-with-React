@@ -32,14 +32,17 @@ export class Header extends Component { // eslint-disable-line react/prefer-stat
   }
 
   logout = (e) => {
+      socket.emit('explicit leave', true);
+      e.preventDefault();
     axios.get('/logout')
     .then(function (response) {
-      console.log(response);
+      // console.log(response);
+
       e.preventDefault();
       window.location.href = '/';
     })
     .catch(function (error) {
-      console.log(error);
+      // console.log(error);
     });
   }
 
