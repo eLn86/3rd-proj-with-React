@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
+
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 
@@ -116,14 +117,6 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
     const roomName = this.props.roomName[0];
     // re-join room chat channel after redirecting.
     socket.emit('join room channel', roomName);
-
-    // get peer list
-    socket.on('get peers', (roomUserList, peersIdList) => {
-      console.log('hello the new room user list', roomUserList);
-      this.setState({
-        peers: roomUserList
-      })
-    });
 
   }
 

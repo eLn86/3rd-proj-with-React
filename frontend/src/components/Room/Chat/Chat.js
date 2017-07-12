@@ -1,5 +1,6 @@
 // Import React, Redux
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes, Image} from 'react';
+
 import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 
@@ -28,8 +29,20 @@ export class Chat extends Component { // eslint-disable-line react/prefer-statel
     this.messagesEnd.scrollIntoView();
   }
 
+
  // Helper function for generating chat text in jsx.
   chatText = (msg, user) => {
+    const video = document.querySelector('.local'); // for my own stream
+    var canvas = document.createElement('canvas');
+
+    canvas.width = 300;
+    canvas.height = 300;
+
+    var context = canvas.getContext('2d');
+    context.drawImage(video, 0, 0, 300, 300, 0, 0, 300, 300);
+
+    var image = canvas.toDataURL("image/png");
+
     return (
       <div className="chatTextComponent"
            key={this.index++}>
@@ -41,13 +54,15 @@ export class Chat extends Component { // eslint-disable-line react/prefer-statel
               <div className="messageLeft">
                 {msg}
               </div>
+              <img src={image} className= "userPicLeft"/>
+
             </div>
           ) : (
             <div className="chatTextRight">
               <div className="messageRight">
                 {msg}
               </div>
-              <img src={user.picture} className="userPicRight"/>
+              <img src={image} className= "userPicRight"/>
             </div>
           )}
       </div>
@@ -59,12 +74,16 @@ export class Chat extends Component { // eslint-disable-line react/prefer-statel
   componentDidMount() {
     this.scrollToBottom(); // auto scroll down.
     socket.on('render msg', (msg, user) => {
-      // recieve realtime msg and update state.
-      const newMsg = this.chatText(msg, user);
 
-      this.setState({
-        chatTexts: this.state.chatTexts.concat(newMsg)
-      })
+
+
+        const newMsg = this.chatText(msg, user);
+
+              this.setState({
+                chatTexts: this.state.chatTexts.concat(newMsg)
+              })
+      // recieve realtime msg and update state.
+    //  const newMsg = this.chatText(msg, user);
     });
   }
 
@@ -76,6 +95,7 @@ export class Chat extends Component { // eslint-disable-line react/prefer-statel
   // emit the message to socket io
   onKeypress = (e) => {
     if (e.key === 'Enter' && this.state.msg !== '') {
+      socket.emit('take picture instruction');
       // If press enter, emit msg.
       socket.emit('broadcast msg', this.state.msg);
       this.setState({msg:''});
