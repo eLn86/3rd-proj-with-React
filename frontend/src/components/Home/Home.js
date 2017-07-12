@@ -22,13 +22,22 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
   constructor(props){
     super(props);
+    this.state = {
+      trendingPreferences: [],
+    }
   }
 
 
   componentDidMount() {
-    // Join global channel
-    socket.emit('enter global room');
+    socket.on('send trending', (trendData) => {
+
+      this.setState({
+        trendingPreferences: trendData
+      }, console.log(this.state.trendingPreferences));
+
+    })
   }
+
 
   render() {
     return (
@@ -47,7 +56,7 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
             </div>
 
             <div className= "col-sm-12 preferenceTrending">
-              <PreferenceTrending/>
+              <PreferenceTrending trendingPreferences= {this.state.trendingPreferences}/>
             </div>
           </div>
 
@@ -71,7 +80,7 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
 const mapStateToProps = (state) => {
     return {
-
+      user: state.user
     }
 }
 

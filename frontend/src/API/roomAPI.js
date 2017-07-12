@@ -1,5 +1,4 @@
 export const setRooms = (rooms) => {
-   console.log(rooms);
    if(Array.isArray(rooms)){
      localStorage.setItem('Rooms', JSON.stringify(rooms));
    }
