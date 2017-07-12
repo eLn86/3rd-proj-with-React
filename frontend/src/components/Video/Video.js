@@ -18,14 +18,19 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
       localStream: {},
       video: {}
     }
+
+    // Compatability
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
   }
-
-
 
   // When Room component is mounted, create peerID for user by calling createPeer function and get the peers data from socket
   componentDidMount() {
     const video = document.querySelector('.local'); // for my own stream
     const testee = document.querySelector('.peer1'); // for peer stream
+
+    // HTML element array: [screen2, screen3, screen4]
+    const peerScreens = document.querySelectorAll('.peer');
 
     /*
     * CONSTRAINTS: specify type of media to request
@@ -40,8 +45,18 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
       }
     }
 
+    this.updateStreamList = () => {
+
+      const streamList = this.state.peers.filter((peerUser) => {
+        return peerUser.peerID !== peer.id;
+      })
+
+      this.setState({
+        peerStreamData: streamList
+      })
+    }
+
       var peer = new Peer({key: 'z2urygfkdibe29'});
-      //this.props.storePeer(peer);
 
       peer.on('open', function(id) {
         socket.emit('add peer', id);
@@ -53,14 +68,8 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
         })
 
         console.log('this is my peers in the room ', this.state.peers);
+        this.updateStreamList();
 
-        const streamList = this.state.peers.filter((peerUser) => {
-          return peerUser.peerID !== peer.id;
-        })
-
-        this.setState({
-          peerStreamData: streamList
-        })
 
         //console.log('peer id i am about to call::::::', this.state.peerStreamData[0].peerID);
         console.log('my video stream to be sent out: ', this.state.video);
@@ -165,11 +174,17 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
         </div>
 
         <div className="row peerFirstRow">
-          <div className="col-md-6 selfCol">
+          <div className="col-md-6 self">
             <video className="local" autoPlay='true'/>
           </div>
-          <div className="col-md-6 firstPeer">
-            <video className="peer1" autoPlay='true'/>
+          <div className="col-md-6 peer1div">
+            <video className="peer peer1" autoPlay='true'/>
+          </div>
+          <div className="col-md-6 peer2div">
+            <video className="peer peer2" autoPlay='true'/>
+          </div>
+          <div className="col-md-6 peer3div">
+            <video className="peer peer3" autoPlay='true'/>
           </div>
         </div>
       </div>
