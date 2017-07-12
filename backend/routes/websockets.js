@@ -232,7 +232,7 @@ module.exports = (io) => {
           /* Set room to full based on number of users */
           var comparisonScore = Math.abs(user.preferenceScore - roomsList[i].preferenceScore)
 
-          if(roomsList[i].userNumber == 2){
+          if(roomsList[i].userNumber == 3){
 
             roomsList[i].roomFull = true;
 
