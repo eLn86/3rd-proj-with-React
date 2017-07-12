@@ -48,7 +48,7 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
         <div className= "componentContainer">
 
-          <div className= "col-sm-8 col-md-offset-2 preferenceContainer">
+          <div className= "preferenceContainer">
             <PreferenceBar/>
             <PreferenceTrending trendingPreferences= {this.state.trendingPreferences}/>
           </div>

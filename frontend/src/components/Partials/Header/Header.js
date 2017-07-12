@@ -64,7 +64,7 @@ export class Header extends Component { // eslint-disable-line react/prefer-stat
   render() {
 
     return (
-      <nav className="navbar navbar-inverse">
+      <nav className="navbar navbar-default navbar-inverse">
         <div className="container-fluid">
 
           <div className="navbar-header">

@@ -23,4 +23,8 @@
 
 .preferenceContainer {
   color: white;
+  width: 60vw;
+  height: 200px;
+  margin: auto;
+  padding-top: 50px;
 }
