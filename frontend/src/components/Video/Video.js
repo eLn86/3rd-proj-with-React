@@ -39,6 +39,7 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
           height: 300
       }
     }
+    let streamList;
 
       var peer = new Peer({key: 'z2urygfkdibe29'});
       //this.props.storePeer(peer);
@@ -47,16 +48,15 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
         socket.emit('add peer', id);
       });
 
-      socket.on('get peers', (user, streamList) => {
+      socket.on('get peers', (user) => {
 
         this.setState({
-          peers: user,
-          peerStreamData: streamList
+          peers: user
         })
 
         console.log('this is my peers in the room ', this.state.peers);
 
-        const streamList = this.state.peers.filter((peerUser) => {
+        streamList = this.state.peers.filter((peerUser) => {
           return peerUser.peerID !== peer.id;
         })
 
@@ -64,7 +64,7 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
           peerStreamData: streamList
         })
 
-        //console.log('peer id i am about to call::::::', this.state.peerStreamData[0].peerID);
+        console.log('peer id i am about to call::::::', this.state.peerStreamData);
         console.log('my video stream to be sent out: ', this.state.video);
 
         if (this.state.peerStreamData.length !== 0) {
@@ -103,7 +103,6 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
 
         this.setState({
           video: stream
-
         })
       }
       // failure: if video failed, log error
