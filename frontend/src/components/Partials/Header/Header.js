@@ -33,15 +33,17 @@ export class Header extends Component { // eslint-disable-line react/prefer-stat
   }
 
   logout = (e) => {
-    this.props.isFetching(false);
+      socket.emit('explicit leave', true);
+      e.preventDefault();
     axios.get('/logout')
-    .then((response) => {
+    .then(function (response) {
+      // console.log(response);
+
       e.preventDefault();
       window.location.href = '/';
     })
-    .catch((error) => {
-      console.log(error);
-      this.props.isFetching(true);
+    .catch(function (error) {
+      // console.log(error);
     });
   }
 
