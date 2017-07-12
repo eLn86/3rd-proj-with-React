@@ -149,10 +149,8 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
               <Userlist/>
             </div>
             <div className="col-md-7 midCol">
-            <div>
-
             {/* This is the modal section */}
-
+            <div>
               <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal}
                     onRequestClose={this.closeModal} style={modalStyles} contentLabel="roomExit">
                 <h1 className= "modalHeading"ref={subtitle => this.subtitle = subtitle}>Where Would You Like to Go?</h1>
@@ -175,15 +173,27 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
                   <button className= "nextBtn" onClick={this.nextRoom}>Next Room</button>
                 </form>
               </Modal>
-
-              {/* This is the modal section */}
-
-              {/* Video Grid Separated from room */}
-              <Video/>
-
-              <button onClick={this.openModal}>Leave Room</button>
+            </div>
+            {/* Video Grid Separated from room */}
+            <Video/>
+            {/* Function btn groups */}
+            <div className="col-md-12 functionBtns">
+              <div className="mic">
+                <i className="fa fa-microphone fa-2x" aria-hidden="true"></i>
+              </div>
+              <div className="leaveRoomWrapper"
+                   onClick={this.openModal}>
+                <i className="fa fa-coffee fa-3x LeaveRoom"
+                   aria-hidden="true"></i>
+                <span className="sideText">SHUFFLE</span>
+              </div>
+              <div className="video">
+                <i className="fa fa-video-camera fa-2x" aria-hidden="true"></i>
+              </div>
             </div>
           </div>
+          {/* Mid col ends here */}
+
           <div className="col-md-3 rightCol">
             {/* Chat Grid Separated from room */}
             <Chat/>

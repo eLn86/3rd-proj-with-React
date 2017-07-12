@@ -115,7 +115,9 @@
   padding:5px;
 }
 
-/* Fetcher */
+/*
+ Fetcher
+ */
 .fetching {
   color: white;
   font-size: 50px;
@@ -136,4 +138,53 @@
   -moz-transform: translateX(-50%) translateY(-50%);
   -webkit-transform: translateX(-50%) translateY(-50%);
   transform: translate(-50%, -50%);
+}
+
+/*
+ functionBtns
+ */
+
+.functionBtns {
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-bottom: 15px;
+}
+
+.leaveRoomWrapper {
+  width: 75px;
+  height: 75px;
+  padding-top: 9px;
+  margin: auto;
+  display: inline-block;
+  color: rgb(48, 48, 48);
+  background: #E26A6A;
+  border-radius: 100%;
+}
+
+.leaveRoomWrapper:hover {
+  color: #E26A6A;
+  background-color: rgb(48, 48, 48);
+}
+
+.sideText {
+  font-size: 10px;
+  margin: 0 10px;
+  display: block;
+}
+
+.video, .mic {
+  position: absolute;
+  margin: 0px 35px;
+  top: 30%;
+}
+
+.video {
+  left: 55%;
+}
+
+.mic {
+  right: 55%;
 }

@@ -67,7 +67,7 @@ export class StartBtn extends Component { // eslint-disable-line react/prefer-st
 
     return (
 
-        <div className="container-fluid startButton">
+        <div className="startButton">
           <button type="button"
                   className="btn btn-danger startButton"
                   onClick={this.onClick}>

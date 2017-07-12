@@ -20,9 +20,9 @@ export class Footer extends Component { // eslint-disable-line react/prefer-stat
             <h5 className="footer-content-left">
               teaTime <span className='hearts'> &hearts;</span> Team Bukit Timah Hills,
               All rights reserved 2017.</h5>
-            <h5 className="footer-content-right">
-              <a href="#">Git Hub</a>
-            </h5>
+            <a className="footer-content-right" href="#">
+              <i className="fa fa-github" aria-hidden="true"></i>  Git Hub
+            </a>
           </div>
       </div>
     );

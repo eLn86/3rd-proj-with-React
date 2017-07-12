@@ -42,36 +42,21 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
   render() {
     return (
 
-      <div className="row container-fluid lobbyContainer">
+      <div className="container-fluid lobbyContainer">
 
-      <div className= "col-sm-12 footerContainer">
         <Header/>
-      </div>
 
-        <div className= "col-md-12 componentContainer">
+        <div className= "componentContainer">
 
-          <div className= "col-sm-12 preferenceContainer">
-            <div className= "col-sm-12 preferenceBar">
-              <PreferenceBar/>
-            </div>
-
-            <div className= "col-sm-12 preferenceTrending">
-              <PreferenceTrending trendingPreferences= {this.state.trendingPreferences}/>
-            </div>
+          <div className= "col-sm-8 col-md-offset-2 preferenceContainer">
+            <PreferenceBar/>
+            <PreferenceTrending trendingPreferences= {this.state.trendingPreferences}/>
           </div>
-
-
-          <div className= "col-sm-12 startBtnCol">
-            <div className= "col-sm-4 col-sm-offset-4 startBtnContainer">
-              <StartBtn/>
-            </div>
-          </div>
+          <StartBtn/>
 
         </div>
 
-        <div className= "col-sm-12 footerContainer">
-          <Footer/>
-        </div>
+        <Footer/>
 
       </div>
     );
