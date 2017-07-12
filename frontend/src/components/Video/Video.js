@@ -25,27 +25,53 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
 
   }
 
+
+
   // When Room component is mounted, create peerID for user by calling createPeer function and get the peers data from socket
   componentDidMount() {
+
     const video = document.querySelector('.local'); // for my own stream
     const testee = document.querySelector('.peer1'); // for peer stream
 
     // HTML element array: [screen2, screen3, screen4]
     const peerScreens = document.querySelectorAll('.peer');
 
-    /*
-    * CONSTRAINTS: specify type of media to request
-    * properties can either be boolean or be objects for more specificity
-    * e.g. mandatory or optional, width, height, quality etc.
-    */
-    const constraints = {
-      audio: false,
-      video: {
-          width: 300,
-          height: 300
+    this.getStream = () => {
+      /*
+      * CONSTRAINTS: specify type of media to request
+      * properties can either be boolean or be objects for more specificity
+      * e.g. mandatory or optional, width, height, quality etc.
+      */
+      const constraints = {
+        audio: false,
+        video: {
+            width: 300,
+            height: 300
+        }
       }
+
+      // success: if video received, append to html element
+      this.handleSuccess = (stream) => {
+        video.srcObject = stream;
+        console.log('Other Peer ID: ', this.state.streamList);
+
+        this.setState({
+          video: stream,
+          streamReady: true
+        })
+      }
+      // failure: if video failed, log error
+      this.handleError = (error) => {
+          throw error.name;
+      }
+
+      // Get User Media (this has to be put below the this.handleSuccess and this.handleError)
+      navigator.mediaDevices.getUserMedia(constraints)
+      .then(this.handleSuccess)
+      .catch(this.handleError);
     }
 
+    this.getStream();
     this.updateStreamList = () => {
 
       const streamList = this.state.peers.filter((peerUser) => {
@@ -86,7 +112,7 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
           let call = peer.call(peerUser.peerID, this.state.video);
         })
       }
-
+      // takes place everytime user receives a call
       peer.on('call', (remoteCall) => {
         remoteCall.answer(this.state.video);
 
@@ -97,27 +123,8 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
         });
       })
 
-    }) // end of socket on get peers 
+    }) // end of socket on get peers
 
-      // success: if video received, append to html element
-      this.handleSuccess = (stream) => {
-        video.srcObject = stream;
-        console.log('Other Peer ID: ', this.state.peerStreamData);
-
-        this.setState({
-          video: stream,
-          streamReady: true
-        })
-      }
-      // failure: if video failed, log error
-      this.handleError = (error) => {
-          throw error.name;
-      }
-
-      // Get User Media (this has to be put below the this.handleSuccess and this.handleError)
-      navigator.mediaDevices.getUserMedia(constraints)
-      .then(this.handleSuccess)
-      .catch(this.handleError);
   }
 
       // console.log('User Stream: ',this.state.localStream);
