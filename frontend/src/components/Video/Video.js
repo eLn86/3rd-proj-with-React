@@ -5,6 +5,8 @@ import Peer from 'peerjs';
 // Import Socket API
 import { socket } from '../../API/socket';
 
+import './Video.css';
+
 // Import components
 
 export class Video extends Component { // eslint-disable-line react/prefer-stateless-function
@@ -50,9 +52,11 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
 
       socket.on('get peers', (user) => {
 
-        this.setState({
-          peers: user
-        })
+      // specify video constraints
+      const constraints = {
+        audio: false,
+        video: true
+      }
 
         console.log('this is my peers in the room ', this.state.peers);
 
@@ -74,13 +78,9 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
           peer.on('call', (remoteCall) => {
             remoteCall.answer(this.state.video);
 
-            remoteCall.on('stream', (remoteStream) => {
-              // Show stream in some video/canvas element.
-              console.log('this is the other stream', remoteStream);
-              testee.srcObject = remoteStream;
-            });
-
-          })
+      const streamList = this.state.peers.filter((peerUser) => {
+        return peerUser.peerID !== peer.id;
+      })
 
           // no  log
           call.on('error', (err) => {
@@ -92,9 +92,72 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
             console.log('peer error detected', err);
           })
 
+    this.renderPeerVideo = (stream) => {
+      for (var vid of peerScreens) {
+        if (vid.srcObject === null || vid.srcObject.active === false) {
+          vid.srcObject = stream;
+          console.log('assigning stream');
+          break;
         }
+      }
+    }
 
-      });
+    this.clearPeerVideos = () => {
+      for (var vid of peerScreens) {
+        vid.srcObject = null;
+      }
+    }
+
+
+    /*
+    * Flow of events starts here
+    */
+
+    // Get Local Stream from Camera
+    this.getStream();
+
+
+    // Init Peer Object
+    var peer = new Peer({key: 'z2urygfkdibe29'});
+
+    peer.on('open', (id) => {
+      socket.emit('add peer', id);
+    });
+
+    // Peers Received
+    socket.on('get peers', (peers) => {
+
+      this.setState({
+        peers: peers
+      })
+
+      console.log('this are my peers in the room after set state: ', this.state.peers);
+
+      this.updateStreamList();
+
+      // if video is ready, send out to each available peer
+      if (this.state.streamReady) {
+        console.log('my video stream to be sent out: ', this.state.video);
+
+        console.log('streamlist', this.state.streamList);
+
+        this.state.streamList.forEach((peerUser) => {
+          let call = peer.call(peerUser.peerID, this.state.video);
+
+          // takes place everytime user receives a call
+          peer.on('call', (remoteCall) => {
+            if (this.state.streamReady) {
+              remoteCall.answer(this.state.video);
+              console.log('a call was just answered');
+
+              remoteCall.on('stream', (remoteStream) => {
+                // Show stream in some video/canvas element.
+                console.log('this is the other stream', remoteStream);
+                this.clearPeerVideos();
+                this.renderPeerVideo(remoteStream);
+              });
+            }
+          })
 
       // success: if video received, append to html element
       this.handleSuccess = (stream) => {
@@ -167,15 +230,21 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
     return (
       <div className="container-fluid">
         <div className="row peerRow">
-          {this.renderPeersList()}
+
         </div>
 
         <div className="row peerFirstRow">
-          <div className="col-md-6 selfCol">
+          <div className="col-md-6 vidcol self">
             <video className="local" autoPlay='true'/>
           </div>
-          <div className="col-md-6 firstPeer">
-            <video className="peer1" autoPlay='true'/>
+          <div className="col-md-6 vidcol peer1div">
+            <video className="peer peer1" autoPlay='true'/>
+          </div>
+          <div className="col-md-6 vidcol peer2div">
+            <video className="peer peer2" autoPlay='true'/>
+          </div>
+          <div className="col-md-6 vidcol peer3div">
+            <video className="peer peer3" autoPlay='true'/>
           </div>
         </div>
       </div>

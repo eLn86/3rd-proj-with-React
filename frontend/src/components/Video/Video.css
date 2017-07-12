@@ -1,3 +1,21 @@
 .peerFirstRow {
-  display: flex;
+  height: 100%;
+}
+
+.vidcol {
+  margin-top: 15px;
+}
+
+.vidcol.self, .vidcol.peer2div {
+  padding-left: 0px;
+
+}
+
+.vidcol.peer1div, .vidcol.peer3div {
+  padding-right: 0px;
+}
+
+video {
+  width: 100%;
+  height: auto;
 }
