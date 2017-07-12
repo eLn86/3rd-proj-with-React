@@ -49,9 +49,11 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
         socket.emit('add peer', id);
       });
 
-      socket.on('get peers', (user) => {
+      socket.on('get peers', (user, streamList) => {
+
         this.setState({
-          peers: user
+          peers: user,
+          peerStreamData: streamList
         })
 
         console.log('this is my peers in the room ', this.state.peers);
@@ -103,6 +105,7 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
 
         this.setState({
           video: stream
+
         })
       }
       // failure: if video failed, log error
