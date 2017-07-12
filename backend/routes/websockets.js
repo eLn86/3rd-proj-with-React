@@ -323,6 +323,17 @@ module.exports = (io) => {
       io.to(user.roomName).emit('update userList', currentRoomObject[0].currentUsers);
     })
 
+    socket.on('toggle mic', (isMicOn) => {
+      isMicOn === true ? isMicOn = false : isMicOn = true
+      console.log('Is the Mic On????? ', isMicOn);
+      io.to(user).emit('get mic constraint', isMicOn);
+    })
+
+    socket.on('toggle camera', (isCameraOn) => {
+      isCameraOn === true ? isCameraOn = false : isCameraOn = true
+      console.log('Is the Camera On????? ', isCameraOn);
+      io.to(user).emit('get camera constraint', isCameraOn);
+    })
 
 /* Commented out for later use
     socket.on('delete peer', (peerID) => {

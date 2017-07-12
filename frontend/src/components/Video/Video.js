@@ -18,7 +18,11 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
       peers: [],
       peerStreamData: [],
       localStream: {},
-      video: {}
+      video: {},
+      constraints: {
+        audio: false,
+        video: true
+      }
     }
     // Compatability
       navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
@@ -38,11 +42,11 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
         this.getStream = () => {
 
 
-          // specify video constraints
-          const constraints = {
-            audio: false,
-            video: true
-          }
+          // // specify video constraints
+          // const constraints = {
+          //   audio: false,
+          //   video: true
+          // }
 
           // success: if video received, append to html element
           this.handleSuccess = (stream) => {
@@ -61,7 +65,7 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
           }
 
           // Get User Media
-          navigator.mediaDevices.getUserMedia(constraints)
+          navigator.mediaDevices.getUserMedia(this.state.constraints)
           .then(this.handleSuccess)
           .catch(this.handleError);
         }
