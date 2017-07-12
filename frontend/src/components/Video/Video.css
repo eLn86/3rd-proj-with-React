@@ -1,13 +1,3 @@
 .peerFirstRow {
   display: flex;
 }
-
-.col-md-6 .selfCol {
-  display: flex;
-  justify-content: center;
-}
-
-.local {
-  display: flex;
-  max-width: 60%;
-}
