@@ -56,7 +56,7 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
 
         console.log('this is my peers in the room ', this.state.peers);
 
-        const streamList = this.state.peers.filter((peerUser) => {
+        streamList = this.state.peers.filter((peerUser) => {
           return peerUser.peerID !== peer.id;
         })
 
