@@ -87,6 +87,7 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
     }
 
 
+
     this.renderPeerVideo = (stream) => {
       for (var vid of peerScreens) {
         if (vid.srcObject === null) {
@@ -105,10 +106,11 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
     // Get Local Stream from Camera
     this.getStream();
 
+
     // Init Peer Object
     var peer = new Peer({key: 'z2urygfkdibe29'});
 
-    peer.on('open', function(id) {
+    peer.on('open', (id) => {
       socket.emit('add peer', id);
     });
 
@@ -118,6 +120,7 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
       this.setState({
         peers: peers
       })
+
 
       console.log('this is my peers in the room ', this.state.peers);
 
@@ -146,21 +149,12 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
             }
           })
 
+
         })
       }
-
-
     }) // end of socket on get peers
 
   }
-
-      // console.log('User Stream: ',this.state.localStream);
-      // // Send stream data to all other peers in the room
-      //   this.state.peerStreamData.forEach((id) => {
-      //     // send localStream to each available peer in room
-      //     console.log('sending stream to ', id);
-      //     var outCall = peer.call(id, stream);
-      //   })
 
       // // TOGGLE play and pause
       // toggle.addEventListener('click', () => {
