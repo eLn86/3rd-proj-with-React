@@ -60,7 +60,7 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
     // Init Peer Object
     var peer = new Peer({key: 'z2urygfkdibe29'});
 
-    peer.on('open', function(id) {
+    peer.on('open', (id) => {
       socket.emit('add peer', id);
     });
 
@@ -71,12 +71,7 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
         peers: peers
       })
 
-      console.log('this is my peers in the room ', this.state.peers);
-
       this.updateStreamList();
-
-
-      //console.log('peer id i am about to call::::::', this.state.peerStreamData[0].peerID);
 
       // if video is ready, send out to each available peer
       if (this.state.streamReady) {
@@ -118,14 +113,6 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
       .then(this.handleSuccess)
       .catch(this.handleError);
   }
-
-      // console.log('User Stream: ',this.state.localStream);
-      // // Send stream data to all other peers in the room
-      //   this.state.peerStreamData.forEach((id) => {
-      //     // send localStream to each available peer in room
-      //     console.log('sending stream to ', id);
-      //     var outCall = peer.call(id, stream);
-      //   })
 
       // // TOGGLE play and pause
       // toggle.addEventListener('click', () => {
