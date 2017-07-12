@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 
 // Import components
 import Header from '../Partials/Header/Header';
+import Footer from '../Partials/Footer/Footer';
 import Chat from './Chat/Chat';
 import Userlist from './Userlist/Userlist';
 import Video from '../Video/Video';
@@ -124,60 +125,77 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
   render() {
 
     return (
-      <div className="container-fluid">
-        <Header/>
-        <div className="row roomBody">
-          <div className="col-md-2 leftCol">
-            {/* UserList Grid Separated from room */}
-            <Userlist/>
-
+      <div className="container-fluid room">
+        {this.props.isFetching[0] ? (
+          <div className="fetcherWrapper">
+            {/* This is Wait! Screen for logout*/}
+            <i className="fa fa-spinner fa-5x fa-spin spinner" aria-hidden="true"></i>
+            <div className="fetching">Logging you out...</div>
           </div>
-          <div className="col-md-7 midCol">
+        ) : (
           <div>
+          {/* This is room screen */}
+          <Header/>
+          <div className="row roomBody">
+            <div className="col-md-2 leftCol">
+              {/* UserList Grid Separated from room */}
+              <Userlist/>
+            </div>
+            <div className="col-md-7 midCol">
+            {/* This is the modal section */}
+            <div>
+              <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal}
+                    onRequestClose={this.closeModal} style={modalStyles} contentLabel="roomExit">
+                <h1 className= "modalHeading"ref={subtitle => this.subtitle = subtitle}>Where Would You Like to Go?</h1>
+                <button className="closeBtn" onClick={this.closeModal}>X</button>
 
-          {/* This is the modal section */}
+                <div className= "preferenceBar">
 
-            <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal}
-                  onRequestClose={this.closeModal} style={modalStyles} contentLabel="roomExit">
-              <h1 className= "modalHeading"ref={subtitle => this.subtitle = subtitle}>Where Would You Like to Go?</h1>
-              <button className="closeBtn" onClick={this.closeModal}>X</button>
+                  <div className= "preferenceText"> Edit Your Preferences </div>
+                  <PreferenceBar/>
 
-              <div className= "preferenceBar">
+                  <div className= "preferenceTrendingBar">
+                    <div className= "preferenceText"> Preferences Currently Trending </div>
+                    <PreferenceTrending trendingPreferences= {this.state.trendingPreferences}/>
+                  </div>
 
-                <div className= "preferenceText"> Edit Your Preferences </div>
-                <PreferenceBar/>
-
-                <div className= "preferenceTrendingBar">
-                  <div className= "preferenceText"> Preferences Currently Trending </div>
-                  <PreferenceTrending trendingPreferences= {this.state.trendingPreferences}/>
                 </div>
 
-              </div>
-
-              <form>
-                <button className= "homeBtn" onClick={this.sendHome}>Return to Lobby</button>
-                <button className= "nextBtn" onClick={this.nextRoom}>Next Room</button>
-              </form>
-            </Modal>
-
-            {/* This is the modal section */}
-
+                <form>
+                  <button className= "homeBtn" onClick={this.sendHome}>Return to Lobby</button>
+                  <button className= "nextBtn" onClick={this.nextRoom}>Next Room</button>
+                </form>
+              </Modal>
+            </div>
             {/* Video Grid Separated from room */}
             <Video/>
+            {/* Function btn groups */}
+            <div className="col-md-12 functionBtns">
+              <div className="mic">
+                <i className="fa fa-microphone fa-2x" aria-hidden="true"></i>
+              </div>
+              <div className="leaveRoomWrapper"
+                   onClick={this.openModal}>
+                <i className="fa fa-coffee fa-3x LeaveRoom"
+                   aria-hidden="true"></i>
+                <span className="sideText">SHUFFLE</span>
+              </div>
+              <div className="video">
+                <i className="fa fa-video-camera fa-2x" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+          {/* Mid col ends here */}
+
+          <div className="col-md-3 rightCol">
+            {/* Chat Grid Separated from room */}
+            <Chat/>
+          </div>
 
           </div>
-        </div>
-        <div className="col-md-3 rightCol">
-          {/* Chat Grid Separated from room */}
-          <Chat/>
-        </div>
-
-        <div className="col-md-7 col-md-offset-2 utilityPanel">
-          <button onClick={this.openModal}>Leave Room</button>
-        </div>
-
-        </div>
-
+          <Footer/>
+          </div>
+        )}
       </div>
     );
   }
@@ -188,7 +206,8 @@ const mapStateToProps = (state) => {
     return {
       users: state.users,
       preferences: state.preferences,
-      roomName: state.rooms
+      roomName: state.rooms,
+      isFetching: state.isFetching
   }
 }
 

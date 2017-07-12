@@ -1,14 +1,36 @@
-.footerRow {
+.footer {
   position: absolute;
-  bottom: 0;
   width: 100%;
-  color: black;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: white;
 }
 
-.footerLeftCol {
-
+.footer-content-left {
+  display: inline-block;
+  float: left;
 }
 
-.footerRightCol {
-  text-align: right;
+.footer-content-right {
+  display: inline-block;
+  float: right;
+  text-decoration: none !important;
+  color: rgb(83, 200, 221);
+}
+
+.footer-content-right:hover {
+  color: white;
+}
+
+.footer-content-right i {
+  color: rgb(83, 200, 221);
+}
+
+.hearts {
+  color: #E26A6A;
+}
+
+.fa-github {
+  color: white;
 }

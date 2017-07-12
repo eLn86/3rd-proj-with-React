@@ -1,16 +1,30 @@
 .leftCol {
-  border: 1px solid black;
-  height: 600px;
+  height: 100%;
 }
 
 .midCol {
-  border: 1px solid black;
-  height: 600px;
+  border: 5px solid rgba(48, 48, 48, 0.7);
+  height: 100%;
+  border-radius: 10px;
 }
 
 .rightCol {
-  border: 1px solid black;
-  height: 600px;
+  height: 100%;
+}
+
+.room {
+  background: black;
+  width: 100vw;
+  height: 100vh;
+}
+
+.roomBody {
+  padding-top: 70px;
+  padding-bottom: 50px;
+  padding-right: 50px;
+  padding-left: 30px;
+  width: 100vw;
+  height: 100vh;
 }
 
 /* CSS for Video display Column and Video panes */
@@ -50,28 +64,28 @@
   display: flex;
   width: 200px;
   height: 200px;
-  border: 1px solid black;
+  border: 1px solid white;
 }
 
 .topRightVideoPane {
   display: flex;
   width: 200px;
   height: 200px;
-  border: 1px solid black;
+  border: 1px solid white;
 }
 
 .bottomLeftVideoPane {
   display: flex;
   width: 200px;
   height: 200px;
-  border: 1px solid black;
+  border: 1px solid white;
 }
 
 .bottomRightVideoPane {
   display: flex;
   width: 200px;
   height: 200px;
-  border: 1px solid black;
+  border: 1px solid white;
 }
 
 .closeBtn{
@@ -99,4 +113,78 @@
 .preferenceText{
   text-align:center;
   padding:5px;
+}
+
+/*
+ Fetcher
+ */
+.fetching {
+  color: white;
+  font-size: 50px;
+}
+
+.spinner {
+  color: white;
+}
+
+.fetcherWrapper {
+  width: 120px;
+  height: 130px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translate(-50%, -50%);
+}
+
+/*
+ functionBtns
+ */
+
+.functionBtns {
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-bottom: 15px;
+}
+
+.leaveRoomWrapper {
+  width: 75px;
+  height: 75px;
+  padding-top: 9px;
+  margin: auto;
+  display: inline-block;
+  color: rgb(48, 48, 48);
+  background: #E26A6A;
+  border-radius: 100%;
+}
+
+.leaveRoomWrapper:hover {
+  color: #E26A6A;
+  background-color: rgb(48, 48, 48);
+}
+
+.sideText {
+  font-size: 10px;
+  margin: 0 10px;
+  display: block;
+}
+
+.video, .mic {
+  position: absolute;
+  margin: 0px 35px;
+  top: 30%;
+}
+
+.video {
+  left: 55%;
+}
+
+.mic {
+  right: 55%;
 }

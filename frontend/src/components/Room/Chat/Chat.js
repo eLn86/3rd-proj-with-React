@@ -49,15 +49,16 @@ export class Chat extends Component { // eslint-disable-line react/prefer-statel
         {/* Conditional Rendering: Me(right), others(left) */}
         {user.socketId !== socket.id ? (
             <div className="chatTextLeft">
-              <div className="message">
-                {user.name + ' : ' + msg}
-              </div>
               <img src={image} className= "userPicLeft"/>
+            <span className="userNameDisplay">{'@' + user.name}</span>
+              <div className="messageLeft">
+                {msg}
+              </div>
 
             </div>
           ) : (
             <div className="chatTextRight">
-              <div className="message">
+              <div className="messageRight">
                 {msg}
               </div>
               <img src={image} className= "userPicRight"/>
