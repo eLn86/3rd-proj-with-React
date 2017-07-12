@@ -5,6 +5,8 @@ import '../../../bootstrap-social.css';
 
 import './LoginBtn.css';
 
+import { isFetching } from '../../../actions/fetchingActions';
+
 
 /**
  * Login
@@ -17,16 +19,19 @@ export class LoginBtn extends Component { // eslint-disable-line react/prefer-st
 
   facebookLogin = (e) => {
     e.preventDefault();
+    this.props.isFetching(true);
     window.location.href = "/auth/facebook";
   }
 
   googleLogin = (e) => {
     e.preventDefault();
+    this.props.isFetching(true);
     window.location.href = "/auth/google";
   }
 
   twitterLogin = (e) => {
     e.preventDefault();
+    this.props.isFetching(true);
     window.location.href = "/auth/twitter";
   }
 
@@ -59,7 +64,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    // nothing to see here...
+    isFetching: (result) => {
+      dispatch(isFetching(result))
+    }
   }
 }
 

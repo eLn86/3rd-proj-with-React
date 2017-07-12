@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import { socket } from '../../../API/socket';
 import axios from 'axios';
+import { isFetching } from '../../../actions/fetchingActions';
 
 import './Header.css';
 
@@ -31,15 +32,21 @@ export class Header extends Component { // eslint-disable-line react/prefer-stat
     }
   }
 
+  fetcher = (result) => {
+    this.props.isFetching(result);
+  }
+
   logout = (e) => {
+    //this.props.isFetching(false);
     axios.get('/logout')
-    .then(function (response) {
-      console.log(response);
+    .then((response) => {
+      this.props.isFetching(false);
       e.preventDefault();
       window.location.href = '/';
     })
-    .catch(function (error) {
+    .catch((error) => {
       console.log(error);
+      this.props.isFetching(true);
     });
   }
 
@@ -98,7 +105,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
+    isFetching: (result) => {
+      dispatch(isFetching(result))
+    }
   }
 }
 

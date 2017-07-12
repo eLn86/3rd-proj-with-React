@@ -5,6 +5,7 @@ import thunk from 'redux-thunk'
 import preferenceReducer from '../reducers/preferenceReducer';
 import userReducer from '../reducers/userReducer';
 import roomReducer from '../reducers/roomReducer';
+import fetchingReducer from '../reducers/fetchingReducer';
 
 export let initStore = () => {
 
@@ -12,7 +13,8 @@ export let initStore = () => {
   const reducer = combineReducers({
     preferences: preferenceReducer,
     user: userReducer,
-    rooms: roomReducer
+    rooms: roomReducer,
+    isFetching: fetchingReducer
   });
 
   // Create the store with all the reducers and allow for chrome redux dev tools to run and read reducers

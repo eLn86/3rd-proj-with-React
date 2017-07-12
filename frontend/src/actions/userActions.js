@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { isFetching } from './fetchingActions';
 // Adds peerID to user based on id passed from peerjs to socketio
 export const addPeerIdToUser = (peerId) => {
   return {
@@ -25,6 +26,7 @@ export const getUser = () => {
       .catch((error)=> {
         console.error("AJAX: Could not get user @ '/auth/user'")
         dispatch(updateUser({}));
+        dispatch(isFetching(false));
       });
   };
 }

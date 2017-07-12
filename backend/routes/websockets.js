@@ -164,7 +164,7 @@ module.exports = (io) => {
   // Room channel join - see 'join room channel', consider reuse this.
   // the socket function called after actual redirecting.
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  
+
     socket.on('join room', () => {
 
       io.emit('getID', user.id);
@@ -311,8 +311,7 @@ module.exports = (io) => {
       roomsList.forEach((e, i) => {
         // Remove the user count from room array.
         if (e.name === user.roomName) e.userNumber -= 1;
-        // Destroy empty room.
-        // if (e.userNumber === 0) roomsList.splice(i, 1);
+
       });
 
 
