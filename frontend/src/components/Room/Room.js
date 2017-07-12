@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 
 // Import components
 import Header from '../Partials/Header/Header';
+import Footer from '../Partials/Footer/Footer';
 import Chat from './Chat/Chat';
 import Userlist from './Userlist/Userlist';
 import Video from '../Video/Video';
@@ -179,6 +180,7 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
               {/* Video Grid Separated from room */}
               <Video/>
 
+              <button onClick={this.openModal}>Leave Room</button>
             </div>
           </div>
           <div className="col-md-3 rightCol">
@@ -186,11 +188,8 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
             <Chat/>
           </div>
 
-          <div className="col-md-7 col-md-offset-2 utilityPanel">
-            <button onClick={this.openModal}>Leave Room</button>
           </div>
-
-          </div>
+          <Footer/>
           </div>
         )}
       </div>

@@ -62,14 +62,12 @@ export class Header extends Component { // eslint-disable-line react/prefer-stat
   render() {
 
     return (
-      <nav className="navbar navbar-inverse row">
+      <nav className="navbar navbar-inverse">
         <div className="container-fluid">
 
-          <ul className="nav navbar-nav">
-            <li><a href="#">Preferences</a></li>
-          </ul>
           <div className="navbar-header">
-            <a className="navbar-brand" href="#">Tea Time</a>
+            <a className="navbar-brand" id="teaTimeHeader" href="/">
+             Tea Time<span className='hearts'> &hearts;</span></a>
 
             {/* This is the modal section */}
 

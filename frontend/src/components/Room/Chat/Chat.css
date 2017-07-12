@@ -1,23 +1,24 @@
 #chatGrid {
   height: 100%;
   width: auto;
-  border: 1px solid red;  
 }
 
 .chatInput {
   position: absolute;
   bottom: 0;
-  margin-left: -15px;
-  margin-right: 15px;
+  padding-left: 15px;
+  padding-right: 44px;
 }
 
 .chatTextWrapper {
-  height: 90%;
+  height: 100%;
   width: auto;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  padding-top: 25px;
+  padding-bottom: 50px;
   overflow: auto;
   overflow-x: hidden;
+  background-color: rgba(48, 48, 48, 0.6);
+  border-radius: 10px;
 }
 
 .chatTextWrapper::-webkit-scrollbar {
@@ -27,42 +28,81 @@
 .chatTextComponent {
   width: 100%;
   min-height: 40px;
-  text-align: left;
   word-break: break-all;
   margin-bottom: 2px;
+  padding-right: 8px;
 }
 
-.message {
-    display: inline-block;
-    font-size: 20px;
+.messageLeft {
+  font-size: 18px;
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+
+.messageRight {
+  display: inline-block;
+  font-size: 18px;
+  margin-left: 10px;
+  margin-right: 35px;
+  padding-top: 2px;
 }
 
 .chatTextLeft {
   display: inline-block;
+  font-family: sans-serif;
+  font-weight: 100;
   padding-top: 7px;
+  padding-left: 5px;
+  margin-right: 40px;
+  background-color: rgba(48, 48, 48, 0.5);
+  border-radius: 10px;
   color: white;
 }
 
 .chatTextRight {
   display: inline-block;
+  font-family: sans-serif;
+  font-weight: 100;
   float: right;
-  padding-top: 7px;
+  clear:right;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 3px;
+  margin-left: 40px;
   margin-bottom: 3px;
+  background-color: rgba(48, 48, 48, 0.5);
+  border-radius: 10px;
   color: white;
 }
 
 .userPicLeft, .userPicRight {
   width: 30px;
   height: 30px;
-  margin-right: 10px;
-  margin-top: -10px;
 }
+
+.userPicLeft {
+  border-radius: 50%;
+  float: left;
+  margin-right: 10px;
+}
+
 
 .userPicRight {
   float: right;
+  border-radius: 50%;
   margin-right: 0px;
   margin-left: 10px;
+  margin-top: 0px;
 }
+
+.userNameDisplay {
+  font-size: 12px;
+  display: inline-block;
+  color: gray;
+  padding-right: 10px;
+}
+
+
 
 #messageEnd {
   clear: "both"
