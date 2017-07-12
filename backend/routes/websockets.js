@@ -164,7 +164,7 @@ module.exports = (io) => {
   // Room channel join - see 'join room channel', consider reuse this.
   // the socket function called after actual redirecting.
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  
+
     socket.on('join room', () => {
 
       io.emit('getID', user.id);
@@ -240,45 +240,53 @@ module.exports = (io) => {
      */
 
      /**
-      * Function: add peer
-      * Purpose: to add a peer to the room
-      * Dependencies: socket.emit('add peer') in Room.js
-      */
-    socket.on('add peer', (peerID) => {
-      console.log('All rooms list: ', roomsList);
-      console.log('User Room Name: ', user.roomName);
-      var currentRoomObject = roomsList.filter((room) => {
-        return room.name === user.roomName;
-      })
-      console.log('Current Room Object: ',currentRoomObject);
-      user.peerID = peerID;
-      var sameUserChecker = false;
+       * Function: add peer
+       * Purpose: to add a peer to the room
+       * Dependencies: socket.emit('add peer') in Room.js
+       */
+     socket.on('add peer', (peerID) => {
+       console.log('All rooms list: ', roomsList);
+       console.log('User Room Name: ', user.roomName);
+       var currentRoomObject = roomsList.filter((room) => {
+         return room.name === user.roomName;
+       })
+       console.log('Current Room Object: ',currentRoomObject);
+       user.peerID = peerID;
+       var sameUserChecker = false;
 
-      for (var i = 0; i < currentRoomObject[0].currentUsers.length; i++) {
-        if(user.id === currentRoomObject[0].currentUsers[i].id) {
-          sameUserChecker = true;
-          currentRoomObject[0].currentUsers[i].peerID = peerID;
-          break;
-        }
-      }
+       for (var i = 0; i < currentRoomObject[0].currentUsers.length; i++) {
+         if(user.id === currentRoomObject[0].currentUsers[i].id) {
+           sameUserChecker = true;
+           currentRoomObject[0].currentUsers[i].peerID = peerID;
+           break;
+         }
+       }
 
-      if(!sameUserChecker) {
-        currentRoomObject[0].currentUsers.push(user);
-      }
+       if(!sameUserChecker) {
+         currentRoomObject[0].currentUsers.push(user);
+       }
+
+       // filter the room user list and return all the peerIDs that are not the peerID of the current user
+       var streamList = currentRoomObject[0].currentUsers.filter((peer) => {
+         return peer.peerID !== peerID
+       })
+
+       // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+       // To Han and El.
+       // UserList updated by currentRoomObject[0].currentUsers
+       // Need a logic when an user leave, updating the currentRoomObject[0].currentUsers.
+       // Thank you!
+       // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+       console.log('Stream List: ',streamList)
+       // Send the updated roomUserList and streamList arrays to all clients
+         io.to(user.roomName).emit('get peers', currentRoomObject[0].currentUsers);
+         // Send the lastes user list.
+         io.to(user.roomName).emit('update userList', currentRoomObject[0].currentUsers);
+     })
 
 
-      // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      // To Han and El.
-      // UserList updated by currentRoomObject[0].currentUsers
-      // Need a logic when an user leave, updating the currentRoomObject[0].currentUsers.
-      // Thank you!
-      // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-      // Send the updated roomUserList and streamList arrays to all clients
-      io.to(user.roomName).emit('get peers', currentRoomObject[0].currentUsers);
-      // Send the lastes user list.
-      io.to(user.roomName).emit('update userList', currentRoomObject[0].currentUsers);
-    })
+
 
 
 /* Commented out for later use
