@@ -102,7 +102,6 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
       // success: if video received, append to html element
       this.handleSuccess = (stream) => {
         video.srcObject = stream;
-        console.log('Other Peer ID: ', this.state.peerStreamData);
 
         this.setState({
           video: stream,
