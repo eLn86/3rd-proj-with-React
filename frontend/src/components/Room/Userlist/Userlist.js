@@ -21,24 +21,7 @@ export class Userlist extends Component { // eslint-disable-line react/prefer-st
     }
   }
 
-  // When start button is clicked, this function is triggered
-  /*
-  ** Function: createPeer()
-  ** Parameters: None
-  ** Purpose: Create a new peer and emit the peer id to socket in the backend
-  */
-  // createPeer = () => {
-  //   var peer = new Peer({key: 'z2urygfkdibe29'});
-  //   console.log('this is the peer', peer);
-  //
-  //   peer.on('open', function(id) {
-  //     socket.emit('add peer', id);
-  //   });
-  // }
-
   componentDidMount() {
-    //this.createPeer();
-
     socket.on('update userList', (userList) => {
       // Updating userlist in state.
       this.setState({

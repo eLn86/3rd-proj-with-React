@@ -73,3 +73,30 @@
   height: 200px;
   border: 1px solid black;
 }
+
+.closeBtn{
+  float:right;
+  margin-top:-70px;
+}
+
+.nextBtn{
+  float:right;
+}
+
+.homeBtn{
+  float:left;
+}
+
+.preferenceTrendingBar{
+  text-align:center;
+  padding: 4%;
+}
+
+.modalHeading{
+  text-align:center;
+}
+
+.preferenceText{
+  text-align:center;
+  padding:5px;
+}

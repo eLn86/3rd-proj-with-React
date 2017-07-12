@@ -21,3 +21,16 @@
   text-align: center;
   width:100%;
 }
+
+.closeBtn{
+  float:right;
+  margin-top:-70px;
+}
+
+.cnfmBtm{
+  float:center;
+}
+
+.modalHeading{
+  text-align:left;
+}
