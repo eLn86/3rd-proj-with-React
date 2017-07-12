@@ -67,6 +67,7 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
 
 
   sendHome = (e) => {
+    socket.emit('explicit leave', true);
     e.preventDefault();
     window.location.href = "/home";
   }
