@@ -6,8 +6,9 @@
 .chatInput {
   position: absolute;
   bottom: 0;
-  padding-left: 15px;
-  padding-right: 44px;
+  left: 0;
+  right: 0;
+  margin: 0 13px;
 }
 
 .chatTextWrapper {
