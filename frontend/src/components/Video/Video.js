@@ -14,34 +14,43 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
   constructor(props){
     super(props)
     this.peerIndex = 0;
-
     this.state = {
       peers: [],
-      streamList: [],
-      video: {},
-      streamReady: false
+      peerStreamData: [],
+      localStream: {},
+      video: {}
     }
-
-    // Compatability
-    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-
   }
 
 
 
   // When Room component is mounted, create peerID for user by calling createPeer function and get the peers data from socket
   componentDidMount() {
-
     const video = document.querySelector('.local'); // for my own stream
     const testee = document.querySelector('.peer1'); // for peer stream
 
+    /*
+    * CONSTRAINTS: specify type of media to request
+    * properties can either be boolean or be objects for more specificity
+    * e.g. mandatory or optional, width, height, quality etc.
+    */
+    const constraints = {
+      audio: false,
+      video: {
+          width: 300,
+          height: 300
+      }
+    }
+    let streamList;
 
-    // HTML element array: [screen2, screen3, screen4]
-    const peerScreens = document.querySelectorAll('.peer');
-    console.log('peer screen src object', peerScreens[0].srcObject);
+      var peer = new Peer({key: 'z2urygfkdibe29'});
+      //this.props.storePeer(peer);
 
-    this.getStream = () => {
+      peer.on('open', function(id) {
+        socket.emit('add peer', id);
+      });
 
+      socket.on('get peers', (user) => {
 
       // specify video constraints
       const constraints = {
@@ -49,40 +58,43 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
         video: true
       }
 
-      // success: if video received, append to html element
-      this.handleSuccess = (stream) => {
-        video.srcObject = stream;
-        console.log('Other Peer ID: ', this.state.streamList);
+        console.log('this is my peers in the room ', this.state.peers);
 
+        streamList = this.state.peers.filter((peerUser) => {
+          return peerUser.peerID !== peer.id;
+        })
 
         this.setState({
-          video: stream,
-          streamReady: true
+          peerStreamData: streamList
         })
-      }
-      // failure: if video failed, log error
-      this.handleError = (error) => {
-          throw error.name;
-      }
 
-      // Get User Media
-      navigator.mediaDevices.getUserMedia(constraints)
-      .then(this.handleSuccess)
-      .catch(this.handleError);
-    }
+        console.log('peer id i am about to call::::::', this.state.peerStreamData);
+        console.log('my video stream to be sent out: ', this.state.video);
 
+        if (this.state.peerStreamData.length !== 0) {
+          var call = peer.call(this.state.peerStreamData[0].peerID, this.state.video);
+          console.log('this is the call', call);
 
-    this.updateStreamList = () => {
-
+          peer.on('call', (remoteCall) => {
+            remoteCall.answer(this.state.video);
+      
+      /*
+      ** Robyn, can you look at this const streamList?
+      ** It is also found above starting from line 63
+      */
       const streamList = this.state.peers.filter((peerUser) => {
         return peerUser.peerID !== peer.id;
       })
 
+          // no  log
+          call.on('error', (err) => {
+            console.log('there is an error', err);
+          })
 
-      this.setState({
-        streamList: streamList
-      })
-    }
+          // no log
+          peer.on('error', (err) => {
+            console.log('peer error detected', err);
+          })
 
     this.renderPeerVideo = (stream) => {
       for (var vid of peerScreens) {
@@ -93,7 +105,7 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
         }
       }
     }
-
+    
     this.clearPeerVideos = () => {
       for (var vid of peerScreens) {
         vid.srcObject = null;
@@ -151,12 +163,33 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
             }
           })
 
+      // success: if video received, append to html element
+      this.handleSuccess = (stream) => {
+        video.srcObject = stream;
+        console.log('Other Peer ID: ', this.state.peerStreamData);
 
+        this.setState({
+          video: stream
         })
       }
-    }) // end of socket on get peers
+      // failure: if video failed, log error
+      this.handleError = (error) => {
+          throw error.name;
+      }
 
+      // Get User Media (this has to be put below the this.handleSuccess and this.handleError)
+      navigator.mediaDevices.getUserMedia(constraints)
+      .then(this.handleSuccess)
+      .catch(this.handleError);
   }
+
+      // console.log('User Stream: ',this.state.localStream);
+      // // Send stream data to all other peers in the room
+      //   this.state.peerStreamData.forEach((id) => {
+      //     // send localStream to each available peer in room
+      //     console.log('sending stream to ', id);
+      //     var outCall = peer.call(id, stream);
+      //   })
 
       // // TOGGLE play and pause
       // toggle.addEventListener('click', () => {
@@ -174,6 +207,10 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
       // });
 
 
+
+  componentDidUpdate(){
+
+  }
   renderPeersList = () => {
 
     return this.state.peers.map((el) => {

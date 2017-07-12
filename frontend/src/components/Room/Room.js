@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
+
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 
@@ -129,6 +130,7 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
           <div className="col-md-2 leftCol">
             {/* UserList Grid Separated from room */}
             <Userlist/>
+
           </div>
           <div className="col-md-7 midCol">
           <div>
