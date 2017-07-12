@@ -121,7 +121,7 @@
  */
 .fetching {
   color: white;
-  font-size: 50px;
+  font-size: 40px;
 }
 
 .spinner {
@@ -129,7 +129,7 @@
 }
 
 .fetcherWrapper {
-  width: 200px;
+  width: 400px;
   height: 130px;
   position: absolute;
   top: 50%;
