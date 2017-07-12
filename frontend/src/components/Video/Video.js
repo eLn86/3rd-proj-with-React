@@ -42,16 +42,15 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
 
     this.getStream = () => {
 
-
       // specify video constraints
       const constraints = {
-        audio: false,
+        audio: true,
         video: true
       }
 
       // success: if video received, append to html element
       this.handleSuccess = (stream) => {
-        video.srcObject = stream;
+        video.srcObject = stream.getVideoTracks()[0];
         console.log('Other Peer ID: ', this.state.streamList);
 
 
