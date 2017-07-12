@@ -130,7 +130,7 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
           <div className="fetcherWrapper">
             {/* This is Wait! Screen for logout*/}
             <i className="fa fa-spinner fa-5x fa-spin spinner" aria-hidden="true"></i>
-            <div className="fetching">Wait...</div>
+            <div className="fetching">Logging you out...</div>
           </div>
         ) : (
           <div>
