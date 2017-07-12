@@ -1,14 +1,18 @@
-.footerRow {
+.footer {
   position: absolute;
-  bottom: 0;
   width: 100%;
-  color: black;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: white;
 }
 
-.footerLeftCol {
-
+.footer-content-left {
+  display: inline-block;
+  float: left;
 }
 
-.footerRightCol {
-  text-align: right;
+.footer-content-right {
+  display: inline-block;
+  float: right;
 }

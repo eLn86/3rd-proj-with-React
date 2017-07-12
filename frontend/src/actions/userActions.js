@@ -22,6 +22,7 @@ export const getUser = () => {
       .then( (response) => {
         const user = response.data;
         dispatch(updateUser(user));
+        dispatch(isFetching(false));        
       })
       .catch((error)=> {
         console.error("AJAX: Could not get user @ '/auth/user'")
