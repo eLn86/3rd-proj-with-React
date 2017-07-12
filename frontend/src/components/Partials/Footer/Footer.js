@@ -17,8 +17,12 @@ export class Footer extends Component { // eslint-disable-line react/prefer-stat
     return (
       <div className="row footerRow">
           <div className="col-md-6 footer">
-            <h5 className="footer-content-left">Teatime, All rights reserved 2017</h5>
-            <h5 className="footer-content-right">Terms and conditions</h5>
+            <h5 className="footer-content-left">
+              teaTime <span className='hearts'> &hearts;</span> Team Bukit Timah Hills,
+              All rights reserved 2017.</h5>
+            <h5 className="footer-content-right">
+              <a href="#">Git Hub</a>
+            </h5>
           </div>
       </div>
     );

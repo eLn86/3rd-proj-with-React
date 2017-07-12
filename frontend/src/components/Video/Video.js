@@ -14,20 +14,26 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
   constructor(props){
     super(props)
     this.peerIndex = 0;
+
     this.state = {
       peers: [],
-      peerStreamData: [],
-      localStream: {},
-      video: {}
+      streamList: [],
+      video: {},
+      streamReady: false
     }
+
+    // Compatability
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
   }
-
-
 
   // When Room component is mounted, create peerID for user by calling createPeer function and get the peers data from socket
   componentDidMount() {
     const video = document.querySelector('.local'); // for my own stream
     const testee = document.querySelector('.peer1'); // for peer stream
+
+    // HTML element array: [screen2, screen3, screen4]
+    const peerScreens = document.querySelectorAll('.peer');
 
     /*
     * CONSTRAINTS: specify type of media to request
@@ -41,70 +47,62 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
           height: 300
       }
     }
-    let streamList;
 
-      var peer = new Peer({key: 'z2urygfkdibe29'});
-      //this.props.storePeer(peer);
+    this.updateStreamList = () => {
 
-      peer.on('open', function(id) {
-        socket.emit('add peer', id);
-      });
+      const streamList = this.state.peers.filter((peerUser) => {
+        return peerUser.peerID !== peer.id;
+      })
 
-      socket.on('get peers', (user) => {
+      this.setState({
+        streamList: streamList
+      })
+    }
 
-        this.setState({
-          peers: user
-        })
+    // Init Peer Object
+    var peer = new Peer({key: 'z2urygfkdibe29'});
 
-        console.log('this is my peers in the room ', this.state.peers);
+    peer.on('open', (id) => {
+      socket.emit('add peer', id);
+    });
 
-        streamList = this.state.peers.filter((peerUser) => {
-          return peerUser.peerID !== peer.id;
-        })
+    // Peers Received
+    socket.on('get peers', (peers) => {
 
-        this.setState({
-          peerStreamData: streamList
-        })
+      this.setState({
+        peers: peers
+      })
 
-        console.log('peer id i am about to call::::::', this.state.peerStreamData);
+      this.updateStreamList();
+
+      // if video is ready, send out to each available peer
+      if (this.state.streamReady) {
         console.log('my video stream to be sent out: ', this.state.video);
 
-        if (this.state.peerStreamData.length !== 0) {
-          var call = peer.call(this.state.peerStreamData[0].peerID, this.state.video);
-          console.log('this is the call', call);
+        this.state.streamList.forEach((peerUser) => {
+          let call = peer.call(peerUser.peerID, this.state.video);
+        })
+      }
 
-          peer.on('call', (remoteCall) => {
-            remoteCall.answer(this.state.video);
+      peer.on('call', (remoteCall) => {
+        remoteCall.answer(this.state.video);
 
-            remoteCall.on('stream', (remoteStream) => {
-              // Show stream in some video/canvas element.
-              console.log('this is the other stream', remoteStream);
-              testee.srcObject = remoteStream;
-            });
+        remoteCall.on('stream', (remoteStream) => {
+          // Show stream in some video/canvas element.
+          console.log('this is the other stream', remoteStream);
+          testee.srcObject = remoteStream;
+        });
+      })
 
-          })
-
-          // no  log
-          call.on('error', (err) => {
-            console.log('there is an error', err);
-          })
-
-          // no log
-          peer.on('error', (err) => {
-            console.log('peer error detected', err);
-          })
-
-        }
-
-      });
+    }) // end of socket on get peers 
 
       // success: if video received, append to html element
       this.handleSuccess = (stream) => {
         video.srcObject = stream;
-        console.log('Other Peer ID: ', this.state.peerStreamData);
 
         this.setState({
-          video: stream
+          video: stream,
+          streamReady: true
         })
       }
       // failure: if video failed, log error
@@ -117,14 +115,6 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
       .then(this.handleSuccess)
       .catch(this.handleError);
   }
-
-      // console.log('User Stream: ',this.state.localStream);
-      // // Send stream data to all other peers in the room
-      //   this.state.peerStreamData.forEach((id) => {
-      //     // send localStream to each available peer in room
-      //     console.log('sending stream to ', id);
-      //     var outCall = peer.call(id, stream);
-      //   })
 
       // // TOGGLE play and pause
       // toggle.addEventListener('click', () => {
@@ -169,11 +159,17 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
         </div>
 
         <div className="row peerFirstRow">
-          <div className="col-md-6 selfCol">
+          <div className="col-md-6 self">
             <video className="local" autoPlay='true'/>
           </div>
-          <div className="col-md-6 firstPeer">
-            <video className="peer1" autoPlay='true'/>
+          <div className="col-md-6 peer1div">
+            <video className="peer peer1" autoPlay='true'/>
+          </div>
+          <div className="col-md-6 peer2div">
+            <video className="peer peer2" autoPlay='true'/>
+          </div>
+          <div className="col-md-6 peer3div">
+            <video className="peer peer3" autoPlay='true'/>
           </div>
         </div>
       </div>
