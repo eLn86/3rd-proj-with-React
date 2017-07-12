@@ -62,7 +62,7 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
           peerStreamData: streamList
         })
 
-        console.log('peer id i am about to call::::::', this.state.peerStreamData[0].peerID);
+        //console.log('peer id i am about to call::::::', this.state.peerStreamData[0].peerID);
         console.log('my video stream to be sent out: ', this.state.video);
 
         if (this.state.peerStreamData.length !== 0) {
