@@ -127,22 +127,28 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
       if (this.state.streamReady) {
         console.log('my video stream to be sent out: ', this.state.video);
 
+        console.log('streamlist', this.state.streamList);
+
         this.state.streamList.forEach((peerUser) => {
           let call = peer.call(peerUser.peerID, this.state.video);
+
+          // takes place everytime user receives a call
+          peer.on('call', (remoteCall) => {
+            if (this.state.streamReady) {
+              remoteCall.answer(this.state.video);
+              console.log('a call was just answered');
+
+              remoteCall.on('stream', (remoteStream) => {
+                // Show stream in some video/canvas element.
+                console.log('this is the other stream', remoteStream);
+                this.renderPeerVideo(remoteStream);
+              });
+            }
+          })
+
         })
       }
-      // takes place everytime user receives a call
-      peer.on('call', (remoteCall) => {
-        if (this.state.streamReady) {
-          remoteCall.answer(this.state.video);
-        }
 
-        remoteCall.on('stream', (remoteStream) => {
-          // Show stream in some video/canvas element.
-          console.log('this is the other stream', remoteStream);
-          this.renderPeerVideo(remoteStream);
-        });
-      })
 
     }) // end of socket on get peers
 
