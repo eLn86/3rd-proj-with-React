@@ -22,7 +22,7 @@ export class Login extends Component { // eslint-disable-line react/prefer-state
           <div className="fetcherWrapper">
             {/* This is Wait! Screen*/}
             <i className="fa fa-spinner fa-5x fa-spin spinner" aria-hidden="true"></i>
-            <div className="fetching">Wait...</div>
+            <div className="fetching">Preparing your tea...</div>
           </div>
         ) : (
           <div>
