@@ -4,6 +4,9 @@ import React, { Component, PropTypes, Image} from 'react';
 import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 
+import EmojiReact from 'react-emoji-react';
+import Emoji from 'react-emoji-render';
+
 // Import Static Files
 import './Chat.css';
 
@@ -19,6 +22,8 @@ export class Chat extends Component { // eslint-disable-line react/prefer-statel
     // Everything in react scope.
     this.index = 0;
     this.state = {
+      blank:[],
+      emojis: [],
       msg: '',
       chatTexts: []
     }
@@ -29,6 +34,18 @@ export class Chat extends Component { // eslint-disable-line react/prefer-statel
     this.messagesEnd.scrollIntoView();
   }
 
+  // Emojis
+
+  onReaction = (name) => {
+
+}
+
+
+onEmojiClick = (name) => {
+  this.setState({
+    msg: this.state.msg + ":" + name + ":"
+  });
+}
 
  // Helper function for generating chat text in jsx.
   chatText = (msg, user) => {
@@ -53,7 +70,7 @@ export class Chat extends Component { // eslint-disable-line react/prefer-statel
                 <img src={image} className= "userPicLeft"/>
               </div>
                 <div className="messageLeft">
-                  {msg}
+                  <Emoji text={msg}/>
                   <br/>
                   <span className="userNameDisplay">{'@' + user.name}</span>
                 </div>
@@ -64,7 +81,7 @@ export class Chat extends Component { // eslint-disable-line react/prefer-statel
                 <img src={image} className= "userPicRight"/>
               </div>
               <div className="messageRight">
-                {msg}
+                <Emoji text={msg}/>
               </div>
             </div>
           )}
@@ -80,11 +97,11 @@ export class Chat extends Component { // eslint-disable-line react/prefer-statel
 
 
 
-        const newMsg = this.chatText(msg, user);
+    const newMsg = this.chatText(msg, user);
 
-              this.setState({
-                chatTexts: this.state.chatTexts.concat(newMsg)
-              })
+    this.setState({
+      chatTexts: this.state.chatTexts.concat(newMsg)
+    })
       // recieve realtime msg and update state.
     //  const newMsg = this.chatText(msg, user);
     });
@@ -129,25 +146,38 @@ export class Chat extends Component { // eslint-disable-line react/prefer-statel
         <div className="chatTextWrapper">
           {this.state.chatTexts}
           {/* Auto scroll to the last */}
+
           <div id="messagesEnd"
                ref={(el) => this.messagesEnd = el} />
+
         </div>
         {/* Chat Input Group here*/}
+
+
         <div className="input-group chatInput row">
-          <input id="btn-input"
-                 type="text"
-                 className="form-control input"
-                 placeholder="Type your message here..."
-                 onChange={this.onChange}
-                 value={this.state.msg}
-                 onKeyPress={this.onKeypress}/>
-          <span className="input-group-btn">
-            <button className="btn btn-warning"
-                    id="btn-chat"
-                    onClick={this.onClick}>
-                    Send
-            </button>
-          </span>
+        <Emoji text=":smile:" onClick={this.openEmoji}/>
+          <EmojiReact
+            id="emojiMenu"
+            reactions={this.state.blank}
+            onReaction={(name) => this.onReaction(name)}
+            onEmojiClick={(name) => this.onEmojiClick(name)}/>
+          <div className="inputGroup">
+            <input id="btn-input"
+                   type="text"
+                   className="form-control input"
+                   placeholder="Type your message here..."
+                   onChange={this.onChange}
+                   value={this.state.msg}
+                   onKeyPress={this.onKeypress}/>
+
+            <span className="input-group-btn">
+              <button className="btn btn-warning"
+                      id="btn-chat"
+                      onClick={this.onClick}>
+                      Send
+              </button>
+            </span>
+          </div>
         </div>
       </div>
     );
