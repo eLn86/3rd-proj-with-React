@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import { socket } from '../../../API/socket';
 import axios from 'axios';
+import { isFetching } from '../../../actions/fetchingActions';
 
 import './Header.css';
 
@@ -63,14 +64,12 @@ export class Header extends Component { // eslint-disable-line react/prefer-stat
   render() {
 
     return (
-      <nav className="navbar navbar-inverse row">
+      <nav className="navbar navbar-default navbar-inverse">
         <div className="container-fluid">
 
-          <ul className="nav navbar-nav">
-            <li><a href="#">Preferences</a></li>
-          </ul>
           <div className="navbar-header">
-            <a className="navbar-brand" href="#">Tea Time</a>
+            <a className="navbar-brand" id="teaTimeHeader" href="/">
+             teaTime<span className='hearts'> &hearts;</span></a>
 
             {/* This is the modal section */}
 
@@ -101,7 +100,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
+    isFetching: (result) => {
+      dispatch(isFetching(result))
+    }
   }
 }
 

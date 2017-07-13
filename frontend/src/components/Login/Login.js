@@ -18,14 +18,23 @@ export class Login extends Component { // eslint-disable-line react/prefer-state
   render() {
     return (
       <div className="container-fluid loginpage">
-        <div className="title row"> teaTime
-        </div>
-        <div className="subtitle row"> live video chat that keeps getting better
-        </div>
-        <div className="login row">
-          <LoginBtn/>
-        </div>
-        <Footer/>
+       { this.props.isFetching[0] ? (
+          <div className="fetcherWrapper">
+            {/* This is Wait! Screen*/}
+            <i className="fa fa-spinner fa-5x fa-spin spinner" aria-hidden="true"></i>
+            <div className="fetching">Preparing your tea...</div>
+          </div>
+        ) : (
+          <div>
+          {/* This is Login Screen*/}
+           <div className="title row"> teaTime</div>
+           <div className="subtitle row"> live video chat that keeps getting better</div>
+           <div className="login row">
+             <LoginBtn/>
+           </div>
+           <Footer/>
+           </div>
+       )}
       </div>
     );
   }
@@ -33,7 +42,8 @@ export class Login extends Component { // eslint-disable-line react/prefer-state
 
 const mapStateToProps = (state) => {
     return {
-
+      user: state.user,
+      isFetching: state.isFetching
     }
 }
 

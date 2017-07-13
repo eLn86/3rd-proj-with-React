@@ -1,25 +1,20 @@
 .navbar {
-  display: flex;
-  width: 110vw;
-  height: 5vh;
-}
-
-.navbar-right{
-  text-align: right;
-}
-
-.navbar-nav{
-  text-align: left;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: vw;
 }
 
 .navbar-header{
-
-  width:78vw;
+  text-align: center;
+  width: 150px;
+  margin-left: 20px;
 }
 
-.navbar-brand {
+#teaTimeHeader {
   text-align: center;
-  width:100%;
+  color: white;
 }
 
 .closeBtn{

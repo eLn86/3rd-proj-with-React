@@ -1,52 +1,30 @@
 .lobbyContainer{
   width:100vw;
   height:100vh;
+  background-color: black;
+  display: -webkit-flex;
+  display:         flex;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  margin: 0;
+  padding: 0;
 }
 
 .componentContainer {
-  display:flex;
-  height: 85vh;
-  flex-direction: column;
-}
-
-.startBtnContainer {
-
-  text-align:center;
-
-
+  height: 300px;
+  width: 70vw;
+  background: rgb(31, 30, 30);
+  border-radius: 10px;
 }
 
 /* Preferences */
 
 .preferenceContainer {
-  display:flex;
-  flex-direction: column;
-  border: 1px solid black;
-  height: 25vh;
-
-  margin-top:10%;
-}
-
-.preferenceBar {
-  padding:15px;
-}
-
-.preferenceTrending {
-  display:flex;
-  border: 1px solid black;
-  padding:15px;
-}
-
-
-/* Header and footer */
-
-.headerContainer{
-  display:flex;
-  width: 100%;
-  top:auto;
-}
-
-.footerContainer {
-  display:flex;
-  bottom: 0;
+  color: white;
+  width: 60vw;
+  height: 200px;
+  margin: auto;
+  padding-top: 50px;
 }

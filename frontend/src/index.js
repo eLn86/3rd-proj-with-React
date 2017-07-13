@@ -7,6 +7,7 @@ import registerServiceWorker from './registerServiceWorker';
 import { setPreferences, getPreferences } from './API/preferenceAPI';
 import { setUsers } from './API/userAPI';
 import { setRooms, getRooms } from './API/roomAPI';
+import { setFetching, getFetching } from './API/fetchingAPI';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -22,6 +23,7 @@ store.subscribe( () => {
   setPreferences(state.preferences);
   setRooms(state.rooms);
   setUsers(state.user);
+  setFetching(state.isFetching);
 })
 
 // This dispatcher is for the flow of storing user login status.
