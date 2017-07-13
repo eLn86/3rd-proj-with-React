@@ -83,16 +83,26 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
 
   // Event listener for mute button
   toggleMicOnOff = (e) => {
-    var clickedOnWhat = e.target.id;
-    this.state.micIsOn ? this.setState({micIsOn: false}) : this.setState({micIsOn: true})
-    socket.emit('toggle audio video', clickedOnWhat, this.state.micIsOn, this.state.cameraIsOn);
+    if (this.state.micIsOn) {
+      this.setState({micIsOn: false});
+      document.querySelector('.fa-microphone').style.color = "#E26A6A";
+    } else {
+      this.setState({micIsOn: true});
+      document.querySelector('.fa-microphone').style.color = "rgb(48, 48, 48)";
+    }
+
   }
 
-  // Event listener for on/off video button
+  // // Event listener for on/off video button
   toggleCameraOnOff = (e) => {
-    var clickedOnWhat = e.target.id;
-    this.state.cameraIsOn ? this.setState({cameraIsOn: false}) : this.setState({cameraIsOn: true})
-    socket.emit('toggle audio video', clickedOnWhat, this.state.micIsOn, this.state.cameraIsOn);
+    if (this.state.cameraIsOn) {
+      this.setState({cameraIsOn: false})
+        document.querySelector('.fa-video-camera').style.color = "#E26A6A";
+    } else {
+      this.setState({cameraIsOn: true})
+        document.querySelector('.fa-video-camera').style.color = "rgb(48, 48, 48)";
+    }
+
   }
 
   // When Room component is mounted, create peerID for user by calling createPeer function and get the peers data from socket
@@ -197,7 +207,7 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
               </Modal>
             </div>
             {/* Video Grid Separated from room */}
-            <Video/>
+            <Video cameraIsOn={this.state.cameraIsOn} micIsOn={this.state.micIsOn}/>
             {/* Function btn groups */}
             <div className="col-md-12 functionBtns">
               <div className="mic">

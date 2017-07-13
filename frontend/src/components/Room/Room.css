@@ -208,6 +208,6 @@
   right: 55%;
 }
 
-.functionBtnsRow {
-
+.fa-microphone, .fa-video-camera {
+  color: #E26A6A;
 }
