@@ -38,7 +38,8 @@ const modalStyles = {
     right: 'auto',
     bottom: 'auto',
     marginRight: '-50%',
-    transform: 'translate(-50%, -50%)'
+    transform: 'translate(-50%, -50%)',
+    borderRadius: '10px'
   }
 };
 
@@ -139,7 +140,7 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
   render() {
 
     return (
-      <div className="container-fluid room">
+      <div className="room container">
         {this.props.isFetching[0] ? (
           <div className="fetcherWrapper">
             {/* This is Wait! Screen for logout*/}
@@ -147,7 +148,7 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
             <div className="fetching">Logging you out...</div>
           </div>
         ) : (
-          <div>
+          <div className="mainBox">
           {/* This is room screen */}
           <Header/>
           <div className="row roomBody">
@@ -238,7 +239,7 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
 // grab current preferences from redux state
 const mapStateToProps = (state) => {
     return {
-      users: state.users,
+      user: state.user,
       preferences: state.preferences,
       roomName: state.rooms,
       isFetching: state.isFetching

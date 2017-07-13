@@ -73,6 +73,8 @@ onEmojiClick = (name) => {
                   <Emoji text={msg}/>
                   <br/>
                   <span className="userNameDisplay">{'@' + user.name}</span>
+                  <br/>
+                  {msg}
                 </div>
             </div>
           ) : (
@@ -153,15 +155,16 @@ onEmojiClick = (name) => {
         </div>
         {/* Chat Input Group here*/}
 
-
-        <div className="input-group chatInput row">
-        <Emoji text=":smile:" onClick={this.openEmoji}/>
+        <div className="emojiMenu">
           <EmojiReact
             id="emojiMenu"
             reactions={this.state.blank}
             onReaction={(name) => this.onReaction(name)}
             onEmojiClick={(name) => this.onEmojiClick(name)}/>
-          <div className="inputGroup">
+        </div>
+
+        <div className="row input-group chatInput">
+        <span className="input-group-addon" id="basic-addon1"></span>        
             <input id="btn-input"
                    type="text"
                    className="form-control input"
@@ -169,7 +172,6 @@ onEmojiClick = (name) => {
                    onChange={this.onChange}
                    value={this.state.msg}
                    onKeyPress={this.onKeypress}/>
-
             <span className="input-group-btn">
               <button className="btn btn-warning"
                       id="btn-chat"
@@ -177,8 +179,8 @@ onEmojiClick = (name) => {
                       Send
               </button>
             </span>
-          </div>
         </div>
+
       </div>
     );
   }

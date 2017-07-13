@@ -1,31 +1,37 @@
 .leftCol {
-  height: 100%;
+
 }
 
 .midCol {
   border: 5px solid rgba(48, 48, 48, 0.7);
-  height: 100%;
   border-radius: 10px;
 }
 
 .rightCol {
-  height: 100%;
 }
 
 .room {
   background: black;
   width: 100vw;
-  height: 100vh;
   padding: 0;
   margin: 0;
+  display: -webkit-flex;
+  display:         flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.mainBox {
 }
 
 .roomBody {
-  padding-top: 70px;
-  padding-bottom: 50px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  display: -webkit-flex;
+  display:         flex;
 
+  flex: 1 1 auto;
   width: 100vw;
-  height: 100vh;
 }
 
 /* CSS for Video display Column and Video panes */

@@ -92,6 +92,11 @@ export class Header extends Component { // eslint-disable-line react/prefer-stat
 
           </div>
           <ul className="nav navbar-nav navbar-right">
+            <li id="welcome">
+              <span>Hello, </span>
+              <img id="welcomeImg" src={this.props.user[0].profile.picture}/>
+              <span>{this.props.user[0].profile.name + '!'}</span>
+            </li>
             <li><a href="#" onClick={this.openModal}><span className="glyphicon glyphicon-log-out"></span> Logout</a></li>
           </ul>
         </div>
@@ -102,7 +107,7 @@ export class Header extends Component { // eslint-disable-line react/prefer-stat
 
 const mapStateToProps = (state) => {
     return {
-
+      user: state.user
     }
 }
 
