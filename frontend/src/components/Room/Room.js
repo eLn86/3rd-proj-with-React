@@ -162,6 +162,7 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
             <div>
               <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal}
                     onRequestClose={this.closeModal} style={modalStyles} contentLabel="roomExit">
+                    
                 <h1 className= "modalHeading"ref={subtitle => this.subtitle = subtitle}>Where Would You Like to Go?</h1>
                 <button className="closeBtn" onClick={this.closeModal}>X</button>
 

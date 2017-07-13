@@ -48,6 +48,7 @@ module.exports = (io) => {
           popularity */
 
       if(globalPreferenceArray.length > 1){
+
         for(var i = 1; i < globalPreferenceArray.length; i++){
           if(globalPreferences[globalPreferenceArray[i - 1]] > globalPreferences[globalPreferenceArray[i]]){
             trendingPreferences[i - 1] = globalPreferenceArray[i];
@@ -58,16 +59,15 @@ module.exports = (io) => {
           }
         }
 
-        for(var i = 1; i < trendingPreferences.length; i++){
-          if(globalPreferences[trendingPreferences[i - 1]] > globalPreferences[trendingPreferences[i]]){
-            var temp = trendingPreferences[i - 1];
-            trendingPreferences[i - 1] = trendingPreferences[i];
-            trendingPreferences[i] = temp;
-          }
-        }
       }else{
         trendingPreferences = globalPreferenceArray;
       }
+
+      /* Remove duplicate values */
+
+
+
+      console.log(trendingPreferences);
 
 
       io.emit('send trending', trendingPreferences);
