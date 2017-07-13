@@ -53,9 +53,9 @@ export class Chat extends Component { // eslint-disable-line react/prefer-statel
                 <img src={image} className= "userPicLeft"/>
               </div>
                 <div className="messageLeft">
-                  {msg}
-                  <br/>
                   <span className="userNameDisplay">{'@' + user.name}</span>
+                  <br/>
+                  {msg}
                 </div>
             </div>
           ) : (

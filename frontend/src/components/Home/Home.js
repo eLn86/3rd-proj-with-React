@@ -50,11 +50,11 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
 
           <div className= "col-xs-12 preferenceContainer">
             <div className="col-xs-12 prefBarLabel">
-              Your Interests
+              What Do You Like?
             </div>
             <PreferenceBar/>
             <div className="col-xs-12 trendingLabel">
-              Top 10 Trending Interests
+              What's Popular
             </div>
             <PreferenceTrending trendingPreferences= {this.state.trendingPreferences}/>
           </div>
