@@ -46,7 +46,7 @@ export class PreferenceBar extends Component { // eslint-disable-line react/pref
   render() {
 
     return (
-      <div>
+      <div className="preferenceBarContainer">
         <input className="preferenceBarInput form-control" type= "text"/>
       </div>
     );
