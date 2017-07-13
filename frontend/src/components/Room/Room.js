@@ -49,7 +49,9 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
     this.state = {
       trendingPreferences: [],
       modalIsOpen: false,
-      peers: []
+      peers: [],
+      micIsOn: true,
+      cameraIsOn: true
     }
   }
 
@@ -78,6 +80,20 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
     window.location.href= '/home';
     socket.emit('join room');
     socket.emit('getIDFromSocket');
+  }
+
+  // Event listener for mute button
+  toggleMicOnOff = (e) => {
+    var clickedOnWhat = e.target.id;
+    this.state.micIsOn ? this.setState({micIsOn: false}) : this.setState({micIsOn: true})
+    socket.emit('toggle audio video', clickedOnWhat, this.state.micIsOn, this.state.cameraIsOn);
+  }
+
+  // Event listener for on/off video button
+  toggleCameraOnOff = (e) => {
+    var clickedOnWhat = e.target.id;
+    this.state.cameraIsOn ? this.setState({cameraIsOn: false}) : this.setState({cameraIsOn: true})
+    socket.emit('toggle audio video', clickedOnWhat, this.state.micIsOn, this.state.cameraIsOn);
   }
 
   // When Room component is mounted, create peerID for user by calling createPeer function and get the peers data from socket
@@ -173,7 +189,10 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
             {/* Function btn groups */}
             <div className="col-md-12 functionBtns">
               <div className="mic">
-                <i className="fa fa-microphone fa-2x" aria-hidden="true"></i>
+                <i className="fa fa-microphone fa-2x"
+                   aria-hidden="true"
+                   id="mic"
+                   onClick={this.toggleMicOnOff}></i>
               </div>
               <div className="leaveRoomWrapper"
                    onClick={this.openModal}>
@@ -182,7 +201,10 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
                 <span className="sideText">SHUFFLE</span>
               </div>
               <div className="video">
-                <i className="fa fa-video-camera fa-2x" aria-hidden="true"></i>
+                <i className="fa fa-video-camera fa-2x"
+                   aria-hidden="true"
+                   id="camera"
+                   onClick={this.toggleCameraOnOff}></i>
               </div>
             </div>
           </div>
