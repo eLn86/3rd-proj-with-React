@@ -35,11 +35,11 @@ export class Chat extends Component { // eslint-disable-line react/prefer-statel
     const video = document.querySelector('.local'); // for my own stream
     var canvas = document.createElement('canvas');
 
-    canvas.width = 300;
-    canvas.height = 300;
+    canvas.width = 660;
+    canvas.height = 540;
 
     var context = canvas.getContext('2d');
-    context.drawImage(video, 0, 0, 300, 300, 0, 0, 300, 300);
+    context.drawImage(video, 0, 0, 660, 660, 0, 0, 660, 660);
 
     var image = canvas.toDataURL("image/png");
 
@@ -49,7 +49,9 @@ export class Chat extends Component { // eslint-disable-line react/prefer-statel
         {/* Conditional Rendering: Me(right), others(left) */}
         {user.socketId !== socket.id ? (
             <div className="chatTextLeft">
-              <img src={image} className= "userPicLeft"/>
+              <div className= "imgContainer">
+                <img src={image} className= "userPicLeft"/>
+              </div>
               <span className="userNameDisplay">{'@' + user.name}</span>
                 <div className="messageLeft">
                   {msg}
@@ -60,7 +62,9 @@ export class Chat extends Component { // eslint-disable-line react/prefer-statel
               <div className="messageRight">
                 {msg}
               </div>
-              <img src={image} className= "userPicRight"/>
+              <div className= "imgContainer">
+                <img src={image} className= "userPicRight"/>
+              </div>
             </div>
           )}
       </div>
