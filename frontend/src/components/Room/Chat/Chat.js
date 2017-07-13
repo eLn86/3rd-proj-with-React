@@ -36,7 +36,7 @@ export class Chat extends Component { // eslint-disable-line react/prefer-statel
     var canvas = document.createElement('canvas');
 
     canvas.width = 660;
-    canvas.height = 540;
+    canvas.height = 580;
 
     var context = canvas.getContext('2d');
     context.drawImage(video, 0, 0, 660, 660, 0, 0, 660, 660);
@@ -52,18 +52,19 @@ export class Chat extends Component { // eslint-disable-line react/prefer-statel
               <div className= "imgContainer">
                 <img src={image} className= "userPicLeft"/>
               </div>
-              <span className="userNameDisplay">{'@' + user.name}</span>
                 <div className="messageLeft">
                   {msg}
+                  <br/>
+                  <span className="userNameDisplay">{'@' + user.name}</span>
                 </div>
             </div>
           ) : (
             <div className="chatTextRight">
-              <div className="messageRight">
-                {msg}
-              </div>
               <div className= "imgContainer">
                 <img src={image} className= "userPicRight"/>
+              </div>
+              <div className="messageRight">
+                {msg}
               </div>
             </div>
           )}

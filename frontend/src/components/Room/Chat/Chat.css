@@ -39,13 +39,13 @@
   margin-left: 40px;
   margin-bottom: 10px;
   padding-right: 10px;
+   display:block;
 }
 
 .messageRight {
-  display: inline-block;
   font-size: 18px;
   margin-left: 10px;
-  margin-right: 35px;
+  margin-right: 45px;
   padding-top: 2px;
 }
 
@@ -78,8 +78,8 @@
 }
 
 .userPicLeft, .userPicRight {
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 32px;
 }
 
 .userPicLeft {
