@@ -1,10 +1,7 @@
 .footer {
-  position: absolute;
   width: 100%;
-  bottom: 0;
-  left: 0;
-  right: 0;
   color: white;
+  flex: 0 0 auto;
 }
 
 .footer-content-left {

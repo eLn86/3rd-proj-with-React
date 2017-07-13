@@ -17,7 +17,7 @@ export class Login extends Component { // eslint-disable-line react/prefer-state
 
   render() {
     return (
-      <div className="container-fluid loginpage">
+      <div className="loginpage">
        { this.props.isFetching[0] ? (
           <div className="fetcherWrapper">
             {/* This is Wait! Screen*/}
@@ -25,15 +25,17 @@ export class Login extends Component { // eslint-disable-line react/prefer-state
             <div className="fetching">Preparing your tea...</div>
           </div>
         ) : (
-          <div>
+          <div className="flexWrapper">
           {/* This is Login Screen*/}
-           <div className="title row"> teaTime</div>
-           <div className="subtitle row"> live video chat that keeps getting better</div>
-           <div className="login row">
-             <LoginBtn/>
-           </div>
-           <Footer/>
-           </div>
+          <div className="flexBody">
+             <div className="title row"> teaTime</div>
+             <div className="subtitle row"> live video chat that keeps getting better</div>
+             <div className="login row">
+               <LoginBtn/>
+             </div>
+          </div>
+          <Footer/>
+          </div>
        )}
       </div>
     );
