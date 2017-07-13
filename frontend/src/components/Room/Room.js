@@ -84,14 +84,16 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
 
   // Event listener for mute button
   toggleMicOnOff = (e) => {
+    var clickedOnWhat = e.target.id;
     this.state.micIsOn ? this.setState({micIsOn: false}) : this.setState({micIsOn: true})
-    socket.emit('toggle mic', this.state.micIsOn);
+    socket.emit('toggle audio video', clickedOnWhat, this.state.micIsOn, this.state.cameraIsOn);
   }
 
   // Event listener for on/off video button
   toggleCameraOnOff = (e) => {
+    var clickedOnWhat = e.target.id;
     this.state.cameraIsOn ? this.setState({cameraIsOn: false}) : this.setState({cameraIsOn: true})
-    socket.emit('toggle camera', this.state.cameraIsOn);
+    socket.emit('toggle audio video', clickedOnWhat, this.state.micIsOn, this.state.cameraIsOn);
   }
 
   // When Room component is mounted, create peerID for user by calling createPeer function and get the peers data from socket
@@ -188,6 +190,7 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
               <div className="mic">
                 <i className="fa fa-microphone fa-2x"
                    aria-hidden="true"
+                   id="mic"
                    onClick={this.toggleMicOnOff}></i>
               </div>
               <div className="leaveRoomWrapper"
@@ -199,6 +202,7 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
               <div className="video">
                 <i className="fa fa-video-camera fa-2x"
                    aria-hidden="true"
+                   id="camera"
                    onClick={this.toggleCameraOnOff}></i>
               </div>
             </div>

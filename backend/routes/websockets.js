@@ -323,16 +323,18 @@ module.exports = (io) => {
       io.to(user.roomName).emit('update userList', currentRoomObject[0].currentUsers);
     })
 
-    socket.on('toggle mic', (isMicOn) => {
-      isMicOn === true ? isMicOn = false : isMicOn = true
-      console.log('Is the Mic On????? ', isMicOn);
-      io.to(user).emit('get mic constraint', isMicOn);
-    })
+    socket.on('toggle audio video', (clickedOnWhat, isMicOn, isCameraOn) => {
+      console.log('Websockets received -> Clicked On: ', clickedOnWhat)
+      if(clickedOnWhat === 'mic') {
+        isMicOn === true ? isMicOn = false : isMicOn = true
+        console.log('Is the Mic On????? ', isMicOn);
+      }
+      if(clickedOnWhat === 'camera') {
+        isCameraOn === true ? isCameraOn = false : isCameraOn = true
+        console.log('Is the Camera On????? ', isCameraOn);
+      }
+      io.to(user.roomName).emit('get constraints',isMicOn, isCameraOn);
 
-    socket.on('toggle camera', (isCameraOn) => {
-      isCameraOn === true ? isCameraOn = false : isCameraOn = true
-      console.log('Is the Camera On????? ', isCameraOn);
-      io.to(user).emit('get camera constraint', isCameraOn);
     })
 
 /* Commented out for later use
