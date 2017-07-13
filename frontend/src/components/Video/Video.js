@@ -24,7 +24,7 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
   }
 
-  
+
 
 
   // When Room component is mounted, create peerID for user by calling createPeer function and get the peers data from socket
@@ -42,7 +42,7 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
         audio: false,
         video: {
           mandatory: {
-            minAspectRatio: 1.334
+            minAspectRatio: 1.4
           }
         }
       }

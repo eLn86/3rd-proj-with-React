@@ -7,7 +7,6 @@
   padding-left: 7px;
   padding-right: 7px;
   padding-top: 7px;
-  border: 1px solid white;
 }
 
 .vidcol.self, .vidcol.peer1div {
@@ -16,8 +15,8 @@
 
 .vidcol.peer2div, .vidcol.peer3div {
   padding-bottom: 7px;
-
 }
+
 
 video {
   width: 100%;
