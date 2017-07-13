@@ -127,7 +127,9 @@
   clear: "both"
 }
 
-
-.imgContainer {
-
+#btn-input{
+  width:70%;
+}
+#emojiMenu {
+  color:red;
 }
