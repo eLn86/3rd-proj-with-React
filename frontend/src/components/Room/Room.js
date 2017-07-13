@@ -138,7 +138,7 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
   render() {
 
     return (
-      <div className="room">
+      <div className="room container">
         {this.props.isFetching[0] ? (
           <div className="fetcherWrapper">
             {/* This is Wait! Screen for logout*/}
