@@ -9,6 +9,7 @@
   left: 0;
   right: 0;
   margin: 0 13px;
+  width:100%;
 }
 
 .chatTextWrapper {
@@ -126,7 +127,9 @@
   clear: "both"
 }
 
-
-.imgContainer {
-
+#btn-input{
+  width:70%;
+}
+#emojiMenu {
+  color:red;
 }
