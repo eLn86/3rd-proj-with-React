@@ -17,15 +17,28 @@
   color: white;
 }
 
-.closeBtn{
-  float:right;
-  margin-top:-70px;
+.modalHeading{
+  text-align:center;
+  font-weight:bold;
+  color: #E26A6A;
+}
+.headingContainer{
+  padding:20px;
 }
 
-.cnfmBtm{
+.cnclBtn{
+  float:right;
+}
+
+.cnfmBtn{
   float:center;
 }
 
 .modalHeading{
   text-align:left;
+
+}
+
+.logoutModal {
+  background-color: #262424;
 }

@@ -1,21 +1,27 @@
+
 .tokenfield {
-  position: relative; }
+  position: relative;
+
+}
   .tokenfield:before, .tokenfield:after {
     content: " ";
-    display: table; }
+    display: table;
+  }
   .tokenfield:after {
-    clear: both; }
+    clear: both;
+    color: white;
+  }
   .tokenfield.tokenfield-mode-tokens {
     display: block;
     width: 100%;
     min-height: 34px;
-    padding: 6px 12px 0;
-    font-size: 14px;
-    line-height: 1.42857;
-    color: #555555;
-    background-color: #fff;
+    padding: 15px;
+    font-size: 16px;
+    line-height: 1.62857;
+    color: white;
+    background-color: black;
     background-image: none;
-    border: 1px solid #ccc;
+    /* BORDER */
     border-radius: 4px;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
@@ -44,12 +50,15 @@
       cursor: not-allowed; }
     .tokenfield.tokenfield-mode-tokens .focused {
       box-shadow: 0 0 0 1px #337ab7 inset; }
-    .tokenfield.tokenfield-mode-tokens .selected {
+    .tokenfield.tokenfield-mode-tokens .selected
+    {
       background: rgba(0, 0, 0, 0.1); }
   .tokenfield .tokenfield-set > ul {
     margin: 0;
-    padding: 0;
-    list-style-type: none; }
+    padding: 5px;
+    list-style-type: none;
+
+  }
     .tokenfield .tokenfield-set > ul > li {
       float: left;
       margin-right: 5px;
@@ -58,22 +67,26 @@
       border-radius: 4px;
       line-height: 1.5;
       cursor: pointer;
-      color: rgba(0, 0, 0, 0.6);
-      background: rgba(0, 0, 0, 0.08); }
+      color: white; /* THE TEXT */
+      font-weight: bold;
+      background-color: #E26A6A; }
       .tokenfield .tokenfield-set > ul > li:hover {
-        color: black;
+        color: white;
         background: rgba(0, 0, 0, 0.16); }
       .tokenfield .tokenfield-set > ul > li .item-remove {
         display: inline-block;
-        font-weight: bold;
-        font-size: 0.9285em;
+        font-weight: bold; /* THE Xs */
+        font-size: 1.5em;
+        color: white;
         cursor: pointer;
-        color: rgba(0, 0, 0, 0.4); }
+         }
   .tokenfield .tokenfield-input {
     margin-bottom: 5px;
     border: none;
     outline: none;
-    float: left; }
+    float: left;
+    background-color: black; /* INPUT BAR */
+  }
   .tokenfield .tokenfield-suggest {
     position: absolute;
     left: -1px;

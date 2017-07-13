@@ -31,6 +31,7 @@ import axios from 'axios';
 
 const modalStyles = {
   content : {
+    backgroundColor: "#232222",
     top: '50%',
     left: '50%',
     right: 'auto',
@@ -62,10 +63,6 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
     this.setState({modalIsOpen: false});
   }
 
-  afterOpenModal = () => {
-    // references are now sync'd and can be accessed.
-    this.subtitle.style.color = '#f00';
-  }
 
 
   sendHome = (e) => {
@@ -144,28 +141,41 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
             <div className="col-md-7 midCol">
             {/* This is the modal section */}
             <div>
-              <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal}
-                    onRequestClose={this.closeModal} style={modalStyles} contentLabel="roomExit">
-                    
-                <h1 className= "modalHeading"ref={subtitle => this.subtitle = subtitle}>Where Would You Like to Go?</h1>
-                <button className="closeBtn" onClick={this.closeModal}>X</button>
+              <Modal isOpen={this.state.modalIsOpen}
+                    onRequestClose={this.closeModal} style={modalStyles} contentLabel="roomExit" >
 
-                <div className= "preferenceBar">
+                  <h1 className= "modalHeading">Where Would You Like to Go?</h1>
 
-                  <div className= "preferenceText"> Edit Your Preferences </div>
-                  <PreferenceBar/>
+                  <button className="btn btn-default closeBtn"
+                          onClick={this.closeModal}>
+                          X
+                  </button>
 
-                  <div className= "preferenceTrendingBar">
-                    <div className= "preferenceText"> Preferences Currently Trending </div>
-                    <PreferenceTrending trendingPreferences= {this.state.trendingPreferences}/>
+                  <div className= "preferenceBar">
+
+                    <div className= "preferenceText"> Edit Your Preferences </div>
+                    <PreferenceBar/>
+
+                    <div className= "preferenceTrendingBar">
+                      <div className= "preferenceText"> Preferences Currently Trending </div>
+                      <PreferenceTrending trendingPreferences= {this.state.trendingPreferences}/>
+                    </div>
+
                   </div>
 
-                </div>
+                  <form>
+                    <button className="btn btn-default homeBtn"
+                            onClick={this.sendHome}>
+                            Return to Lobby
+                    </button>
 
-                <form>
-                  <button className= "homeBtn" onClick={this.sendHome}>Return to Lobby</button>
-                  <button className= "nextBtn" onClick={this.nextRoom}>Next Room</button>
-                </form>
+                    <button className="btn btn-default nextBtn"
+                            onClick={this.nextRoom}>
+                            Next Room
+                    </button>
+                  </form>
+
+
               </Modal>
             </div>
             {/* Video Grid Separated from room */}
