@@ -30,7 +30,23 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
   }
 
 
+  componentWillReceiveProps(nextProps) {
 
+    if (nextProps.cameraIsOn) {
+        console.log('video on');
+        this.state.video.getVideoTracks()[0].enabled = true;
+      } else {
+        console.log('video off');
+        this.state.video.getVideoTracks()[0].enabled = false;
+      }
+
+    if (nextProps.micIsOn) {
+      this.state.video.getAudioTracks()[0].enabled = true;
+    } else {
+      this.state.video.getAudioTracks()[0].enabled = false;
+    }
+
+  }
 
   // When Room component is mounted, create peerID for user by calling createPeer function and get the peers data from socket
   componentDidMount() {
@@ -41,16 +57,11 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
     // HTML element array: [screen2, screen3, screen4]
     const peerScreens = document.querySelectorAll('.peer');
     console.log('peer screen src object', peerScreens[0].srcObject);
-
     // grab user stream to cast on personal screen. for personal video, audio is off
     this.getStreamForLocal = () => {
       const constraints = {
         audio: false,
-        video: {
-          mandatory: {
-            minAspectRatio: 1.4
-          }
-        }
+        video: true
       }
 
       this.handleSuccess = (stream) => {
@@ -80,7 +91,7 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
       // success: if video received, append to html element
       this.handleSuccess = (stream) => {
         console.log('Other Peer ID: ', this.state.streamList);
-         myStream = stream; // Assign the local stream to myStream to be used for toggle audio and video on/off
+        myStream = stream; // Assign the local stream to myStream to be used for toggle audio and video on/off
 
         this.setState({
           video: stream,
@@ -98,39 +109,31 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
       .catch(this.handleError);
     }
 
-        // Updates the stream whenever the user clicks on mute button for both video or audio
-        this.updateStream = (audio, video) => {
-          myStream.getVideoTracks()[0].enabled = !(myStream.getVideoTracks()[0].enabled);
-          myStream.getAudioTracks()[0].enabled = !(myStream.getAudioTracks()[0].enabled);
-        }
+    // filter out current user from room peer list to get stream list
+    this.updateStreamList = () => {
 
-        socket.on('get constraints', (audio, video) => {
-          this.updateStream(audio, video);
-        })
+      const streamList = this.state.peers.filter((peerUser) => {
+        return peerUser.peerID !== peer.id;
+      })
 
-        // filter out current user from room peer list to get stream list
-        this.updateStreamList = () => {
+      this.setState({
+        streamList: streamList
+      })
+    }
 
-          const streamList = this.state.peers.filter((peerUser) => {
-            return peerUser.peerID !== peer.id;
-          })
-
-          this.setState({
-            streamList: streamList
-          })
-        }
-
-    this.renderPeerVideo = (stream) => {
+    this.renderPeerVideo = (remote) => {
+      console.log('this is the remote ',remote);
       for (var vid of peerScreens) {
-        if (vid.srcObject === null || vid.srcObject.active === false) {
-          vid.srcObject = stream;
-          console.log('assigning stream');
+        if (vid.srcObject === null) {
+          vid.srcObject = remote;
+          console.log('assigning stream', vid.srcObject);
           break;
         }
       }
     }
 
     this.clearPeerVideos = () => {
+      console.log('clearing screens...');
       for (var vid of peerScreens) {
         vid.srcObject = null;
       }
@@ -194,21 +197,6 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
     }) // end of socket on get peers
 
   } // end of componentDidMount
-
-          // // TOGGLE play and pause
-          // toggle.addEventListener('click', () => {
-          //   if (toggle.dataset.toggle === 'on') {
-          //     // Pause the video
-          //     video.pause();
-          //     window.stream.getVideoTracks()[0].enabled = false;
-          //     toggle.dataset.toggle = 'off'
-          //   } else {
-          //     // play the video
-          //     video.play();
-          //     window.stream.getVideoTracks()[0].enabled = true;
-          //     toggle.dataset.toggle = 'on';
-          //   }
-          // });
 
 
   renderPeersList = () => {
