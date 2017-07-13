@@ -170,18 +170,20 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
             {/* Video Grid Separated from room */}
             <Video/>
             {/* Function btn groups */}
-            <div className="col-md-12 functionBtns">
-              <div className="mic">
-                <i className="fa fa-microphone fa-2x" aria-hidden="true"></i>
-              </div>
-              <div className="leaveRoomWrapper"
-                   onClick={this.openModal}>
-                <i className="fa fa-coffee fa-3x LeaveRoom"
-                   aria-hidden="true"></i>
-                <span className="sideText">SHUFFLE</span>
-              </div>
-              <div className="video">
-                <i className="fa fa-video-camera fa-2x" aria-hidden="true"></i>
+            <div className="row functionBtnsRow">
+              <div className="col-md-12 functionBtns">
+                <div className="mic">
+                  <i className="fa fa-microphone fa-2x" aria-hidden="true"></i>
+                </div>
+                <div className="leaveRoomWrapper"
+                     onClick={this.openModal}>
+                  <i className="fa fa-coffee fa-3x LeaveRoom"
+                     aria-hidden="true"></i>
+                  <span className="sideText">SHUFFLE</span>
+                </div>
+                <div className="video">
+                  <i className="fa fa-video-camera fa-2x" aria-hidden="true"></i>
+                </div>
               </div>
             </div>
           </div>

@@ -39,10 +39,15 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
     this.getStreamForLocal = () => {
       const constraints = {
         audio: false,
-        video: true
+        video: {
+          mandatory: {
+            minAspectRatio: 1.334
+          }
+        }
       }
 
       this.handleSuccess = (stream) => {
+        console.log('this is the stream', stream.getVideoTracks()[0]);
         video.srcObject = stream;
       }
 
@@ -57,7 +62,7 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
 
     }
 
-    // grab user stream for sending to peers. turn on audio 
+    // grab user stream for sending to peers. turn on audio
     this.getStreamForSending = () => {
 
       // specify video constraints
@@ -89,33 +94,33 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
 
 
 
-        this.updateStreamList = () => {
+      this.updateStreamList = () => {
 
-          const streamList = this.state.peers.filter((peerUser) => {
-            return peerUser.peerID !== peer.id;
-          })
+        const streamList = this.state.peers.filter((peerUser) => {
+          return peerUser.peerID !== peer.id;
+        })
 
 
-          this.setState({
-            streamList: streamList
-          })
-        }
+        this.setState({
+          streamList: streamList
+        })
+      }
 
-        this.renderPeerVideo = (stream) => {
-          for (var vid of peerScreens) {
-            if (vid.srcObject === null || vid.srcObject.active === false) {
-              vid.srcObject = stream;
-              console.log('assigning stream');
-              break;
-            }
+      this.renderPeerVideo = (stream) => {
+        for (var vid of peerScreens) {
+          if (vid.srcObject === null || vid.srcObject.active === false) {
+            vid.srcObject = stream;
+            console.log('assigning stream');
+            break;
           }
         }
+      }
 
-        this.clearPeerVideos = () => {
-          for (var vid of peerScreens) {
-            vid.srcObject = null;
-          }
+      this.clearPeerVideos = () => {
+        for (var vid of peerScreens) {
+          vid.srcObject = null;
         }
+      }
 
 
         /*
@@ -212,12 +217,8 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
   render() {
 
     return (
-      <div className="container-fluid">
-        <div className="row peerRow">
 
-        </div>
-
-        <div className="row peerFirstRow">
+        <div className="row videoRow">
           <div className="col-md-6 vidcol self">
             <video className="local" autoPlay='true'/>
           </div>
@@ -231,7 +232,6 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
             <video className="peer peer3" autoPlay='true'/>
           </div>
         </div>
-      </div>
     );
   }
 }
