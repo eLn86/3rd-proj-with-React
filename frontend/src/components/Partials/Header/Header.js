@@ -11,6 +11,7 @@ import './Header.css';
 
 const modalStyles = {
   content : {
+    backgroundColor: "#232222",
     top: '50%',
     left: '50%',
     right: 'auto',
@@ -73,12 +74,18 @@ export class Header extends Component { // eslint-disable-line react/prefer-stat
 
             {/* This is the modal section */}
 
-            <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal}
-                  onRequestClose={this.closeModal} style={modalStyles} contentLabel="logoutModal">
-                <h1 className= "modalHeading"ref={subtitle => this.subtitle = subtitle}>Confirm Logout?</h1>
-                <button className="closeBtn" onClick={this.closeModal}>X</button>
-                <button className= "cnfmBtn" onClick={this.logout}>Confirm</button>
+            <Modal isOpen={this.state.modalIsOpen}
+                  onRequestClose={this.closeModal} style={modalStyles} contentLabel="logoutModal">\
+
+                <div className="headingContainer">
+
+                  <h1 className= "modalHeading">Confirm Logout?</h1>
+                </div>
+
+                <button className= "btn btn-default cnfmBtn" onClick={this.logout}>Confirm</button>
+                <button className="btn btn-default cnclBtn" onClick={this.closeModal}>Cancel</button>
             </Modal>
+
 
             {/* This is the modal section */}
 

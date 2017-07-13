@@ -31,6 +31,7 @@ import axios from 'axios';
 
 const modalStyles = {
   content : {
+    backgroundColor: "#232222",
     top: '50%',
     left: '50%',
     right: 'auto',
@@ -49,7 +50,9 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
     this.state = {
       trendingPreferences: [],
       modalIsOpen: false,
-      peers: []
+      peers: [],
+      micIsOn: true,
+      cameraIsOn: true
     }
   }
 
@@ -62,10 +65,6 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
     this.setState({modalIsOpen: false});
   }
 
-  afterOpenModal = () => {
-    // references are now sync'd and can be accessed.
-    this.subtitle.style.color = '#f00';
-  }
 
 
   sendHome = (e) => {
@@ -78,6 +77,20 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
     window.location.href= '/home';
     socket.emit('join room');
     socket.emit('getIDFromSocket');
+  }
+
+  // Event listener for mute button
+  toggleMicOnOff = (e) => {
+    var clickedOnWhat = e.target.id;
+    this.state.micIsOn ? this.setState({micIsOn: false}) : this.setState({micIsOn: true})
+    socket.emit('toggle audio video', clickedOnWhat, this.state.micIsOn, this.state.cameraIsOn);
+  }
+
+  // Event listener for on/off video button
+  toggleCameraOnOff = (e) => {
+    var clickedOnWhat = e.target.id;
+    this.state.cameraIsOn ? this.setState({cameraIsOn: false}) : this.setState({cameraIsOn: true})
+    socket.emit('toggle audio video', clickedOnWhat, this.state.micIsOn, this.state.cameraIsOn);
   }
 
   // When Room component is mounted, create peerID for user by calling createPeer function and get the peers data from socket
@@ -144,27 +157,41 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
             <div className="col-md-7 midCol">
             {/* This is the modal section */}
             <div>
-              <Modal isOpen={this.state.modalIsOpen} onAfterOpen={this.afterOpenModal}
-                    onRequestClose={this.closeModal} style={modalStyles} contentLabel="roomExit">
-                <h1 className= "modalHeading"ref={subtitle => this.subtitle = subtitle}>Where Would You Like to Go?</h1>
-                <button className="closeBtn" onClick={this.closeModal}>X</button>
+              <Modal isOpen={this.state.modalIsOpen}
+                    onRequestClose={this.closeModal} style={modalStyles} contentLabel="roomExit" >
 
-                <div className= "preferenceBar">
+                  <h1 className= "modalHeading">Where Would You Like to Go?</h1>
 
-                  <div className= "preferenceText"> Edit Your Preferences </div>
-                  <PreferenceBar/>
+                  <button className="btn btn-default closeBtn"
+                          onClick={this.closeModal}>
+                          X
+                  </button>
 
-                  <div className= "preferenceTrendingBar">
-                    <div className= "preferenceText"> Preferences Currently Trending </div>
-                    <PreferenceTrending trendingPreferences= {this.state.trendingPreferences}/>
+                  <div className= "preferenceBar">
+
+                    <div className= "preferenceText"> Edit Your Preferences </div>
+                    <PreferenceBar/>
+
+                    <div className= "preferenceTrendingBar">
+                      <div className= "preferenceText"> Preferences Currently Trending </div>
+                      <PreferenceTrending trendingPreferences= {this.state.trendingPreferences}/>
+                    </div>
+
                   </div>
 
-                </div>
+                  <form>
+                    <button className="btn btn-default homeBtn"
+                            onClick={this.sendHome}>
+                            Return to Lobby
+                    </button>
 
-                <form>
-                  <button className= "homeBtn" onClick={this.sendHome}>Return to Lobby</button>
-                  <button className= "nextBtn" onClick={this.nextRoom}>Next Room</button>
-                </form>
+                    <button className="btn btn-default nextBtn"
+                            onClick={this.nextRoom}>
+                            Next Room
+                    </button>
+                  </form>
+
+
               </Modal>
             </div>
             {/* Video Grid Separated from room */}
@@ -172,7 +199,10 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
             {/* Function btn groups */}
             <div className="col-md-12 functionBtns">
               <div className="mic">
-                <i className="fa fa-microphone fa-2x" aria-hidden="true"></i>
+                <i className="fa fa-microphone fa-2x"
+                   aria-hidden="true"
+                   id="mic"
+                   onClick={this.toggleMicOnOff}></i>
               </div>
               <div className="leaveRoomWrapper"
                    onClick={this.openModal}>
@@ -181,7 +211,10 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
                 <span className="sideText">SHUFFLE</span>
               </div>
               <div className="video">
-                <i className="fa fa-video-camera fa-2x" aria-hidden="true"></i>
+                <i className="fa fa-video-camera fa-2x"
+                   aria-hidden="true"
+                   id="camera"
+                   onClick={this.toggleCameraOnOff}></i>
               </div>
             </div>
           </div>

@@ -97,15 +97,18 @@
 
 .closeBtn{
   float:right;
-  margin-top:-70px;
+  margin-top:-76px;
+  padding:5px;
 }
 
 .nextBtn{
   float:right;
+  padding:5px;
 }
 
 .homeBtn{
   float:left;
+  padding:5px;
 }
 
 .preferenceTrendingBar{
@@ -115,13 +118,22 @@
 
 .modalHeading{
   text-align:center;
+  font-weight:bold;
+  color: #E26A6A;
 }
 
 .preferenceText{
   text-align:center;
-  padding:5px;
+  padding:10px;
+  margin-bottom: 10px;
+  border-bottom: solid 1px #4c4949;
+  font-weight:900;
+  color: #E26A6A;
 }
 
+.roomExit {
+  background-color: #262424;
+}
 /*
  Fetcher
  */
@@ -194,4 +206,8 @@
 
 .mic {
   right: 55%;
+}
+
+.functionBtnsRow {
+
 }
