@@ -122,7 +122,11 @@ module.exports = (io) => {
       user.socketId = socket.id;
       user.picture = socket.request.user.profile.picture;
       user.roomName = 'global';
-      user.preferenceScore = (userPreferenceScore / userPreferences.length);
+      if(userPreferences.length == 0){
+        user.preferenceScore = 0;
+      }else{
+        user.preferenceScore = (userPreferenceScore / userPreferences.length);
+      }
       // Push the user object to usersList array.
       usersList.push(user);
 

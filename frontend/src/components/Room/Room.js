@@ -32,6 +32,7 @@ import axios from 'axios';
 const modalStyles = {
   content : {
     backgroundColor: "#232222",
+    border: "2px solid #E26A6A",
     top: '50%',
     left: '50%',
     right: 'auto',
