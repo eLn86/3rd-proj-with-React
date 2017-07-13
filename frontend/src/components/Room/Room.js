@@ -85,10 +85,10 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
   toggleMicOnOff = (e) => {
     if (this.state.micIsOn) {
       this.setState({micIsOn: false});
-      document.querySelector('.fa-microphone').style.color = "#E26A6A";
+      document.querySelector('.fa-microphone').style.color = "rgb(48, 48, 48)";
     } else {
       this.setState({micIsOn: true});
-      document.querySelector('.fa-microphone').style.color = "rgb(48, 48, 48)";
+      document.querySelector('.fa-microphone').style.color = "#E26A6A";
     }
 
   }
@@ -97,10 +97,10 @@ export class Room extends Component { // eslint-disable-line react/prefer-statel
   toggleCameraOnOff = (e) => {
     if (this.state.cameraIsOn) {
       this.setState({cameraIsOn: false})
-        document.querySelector('.fa-video-camera').style.color = "#E26A6A";
+        document.querySelector('.fa-video-camera').style.color = "rgb(48, 48, 48)";
     } else {
       this.setState({cameraIsOn: true})
-        document.querySelector('.fa-video-camera').style.color = "rgb(48, 48, 48)";
+        document.querySelector('.fa-video-camera').style.color = "#E26A6A";
     }
 
   }
