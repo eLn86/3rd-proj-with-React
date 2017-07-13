@@ -70,11 +70,9 @@ onEmojiClick = (name) => {
                 <img src={image} className= "userPicLeft"/>
               </div>
                 <div className="messageLeft">
-                  <Emoji text={msg}/>
-                  <br/>
                   <span className="userNameDisplay">{'@' + user.name}</span>
                   <br/>
-                  {msg}
+                  <Emoji text={msg}/>
                 </div>
             </div>
           ) : (
@@ -164,7 +162,7 @@ onEmojiClick = (name) => {
         </div>
 
         <div className="row input-group chatInput">
-        <span className="input-group-addon" id="basic-addon1"></span>        
+        <span className="input-group-addon" id="basic-addon1"></span>
             <input id="btn-input"
                    type="text"
                    className="form-control input"
