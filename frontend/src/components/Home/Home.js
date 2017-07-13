@@ -42,20 +42,27 @@ export class Home extends Component { // eslint-disable-line react/prefer-statel
   render() {
     return (
 
-      <div className="container-fluid lobbyContainer">
-
+      <div className='mainBox'>
         <Header/>
+        <div className="container lobbyContainer">
 
-        <div className= "componentContainer">
+        <div className= "row componentContainer">
 
-          <div className= "preferenceContainer">
+          <div className= "col-xs-12 preferenceContainer">
+            <div className="col-xs-12 prefBarLabel">
+              Your Interests
+            </div>
             <PreferenceBar/>
+            <div className="col-xs-12 trendingLabel">
+              Top 10 Trending Interests
+            </div>
             <PreferenceTrending trendingPreferences= {this.state.trendingPreferences}/>
           </div>
           <StartBtn/>
 
         </div>
 
+        </div>
         <Footer/>
 
       </div>

@@ -46,8 +46,10 @@ export class PreferenceBar extends Component { // eslint-disable-line react/pref
   render() {
 
     return (
-      <div>
-        <input className="preferenceBarInput form-control" type= "text"/>
+      <div className="col-xs-12 ">
+        <input className="preferenceBarInput form-control"
+               type= "text"
+               placeholder="You can add your interests here as hashtags which will match you to fellow tea timers with similar interests"/>
       </div>
     );
   }
