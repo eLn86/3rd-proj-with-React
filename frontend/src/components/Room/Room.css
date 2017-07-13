@@ -18,7 +18,7 @@
   display: -webkit-flex;
   display:         flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 .mainBox {
@@ -29,7 +29,7 @@
   padding-bottom: 50px;
   display: -webkit-flex;
   display:         flex;
-  position: relative;
+
   flex: 1 1 auto;
   width: 100vw;
 }
