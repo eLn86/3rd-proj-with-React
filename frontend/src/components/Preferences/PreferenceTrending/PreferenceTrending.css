@@ -1,0 +1,10 @@
+.trending {
+  background: #E26A6A;
+  word-break: break-all;
+  text-align: center;
+  display: inline-block;
+  margin: 0 10px;
+  margin-bottom: 3px;
+  padding: 3px 7px;
+  border-radius: 5px;
+}

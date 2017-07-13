@@ -1,22 +1,33 @@
 .lobbyContainer{
   width:100vw;
-  height:100vh;
   background-color: black;
+  margin: 0;
+  padding: 0;
   display: -webkit-flex;
   display:         flex;
   -webkit-align-items: center;
           align-items: center;
   -webkit-justify-content: center;
           justify-content: center;
-  margin: 0;
-  padding: 0;
+  flex: 1 1 auto;
+}
+
+.mainBox {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
 .componentContainer {
-  height: 300px;
-  width: 70vw;
+  width: 65vw;
   background: rgb(31, 30, 30);
   border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  .componentContainer {
+
+  }
 }
 
 /* Preferences */
@@ -24,7 +35,20 @@
 .preferenceContainer {
   color: white;
   width: 60vw;
-  height: 200px;
-  margin: auto;
-  padding-top: 50px;
+
+  margin: 0 auto;
+  padding-top: 25px;
+}
+
+.prefBarLabel, .trendingLabel {
+  font-size: 24px;
+}
+
+.prefBarLabel {
+  margin-bottom: 10px;
+ }
+
+.trendingLabel {
+  margin-top: 25px;
+  margin-bottom: 10px;
 }

@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import { socket } from '../../../API/socket';
 
+import './PreferenceTrending.css'
+
 export class PreferenceTrending extends Component { // eslint-disable-line react/prefer-stateless-function
 
   constructor(props){
@@ -41,42 +43,16 @@ export class PreferenceTrending extends Component { // eslint-disable-line react
     return (
 
       <div className='col-md-12'>
-        <div className='col-xs-1'>
-          <div>{this.state.trendingPreferences[0]}</div>
-        </div>
-        <div className='col-xs-1'>
-          <div>{this.state.trendingPreferences[1]}</div>
-        </div>
-        <div className='col-xs-1'>
-          <div>{this.state.trendingPreferences[2]}</div>
-        </div>
-        <div className='col-xs-1'>
-          <div>{this.state.trendingPreferences[3]}</div>
-        </div>
-        <div className='col-xs-1'>
-          <div>{this.state.trendingPreferences[4]}</div>
-        </div>
-        <div className='col-xs-1'>
-          <div>{this.state.trendingPreferences[5]}</div>
-        </div>
-        <div className='col-xs-1'>
-          <div>{this.state.trendingPreferences[6]}</div>
-        </div>
-        <div className='col-xs-1'>
-          <div>{this.state.trendingPreferences[7]}</div>
-        </div>
-        <div className='col-xs-1'>
-          <div>{this.state.trendingPreferences[8]}</div>
-        </div>
-        <div className='col-xs-1'>
-          <div>{this.state.trendingPreferences[9]}</div>
-        </div>
-        <div className='col-xs-1'>
-          <div>{this.state.trendingPreferences[10]}</div>
-        </div>
-        <div className='col-xs-1'>
-          <div>{this.state.trendingPreferences[11]}</div>
-        </div>
+        <div className='trending'>{this.state.trendingPreferences[0]}</div>
+        <div className='trending'>{this.state.trendingPreferences[1]}</div>
+        <div className='trending'>{this.state.trendingPreferences[2]}</div>
+        <div className='trending'>{this.state.trendingPreferences[3]}</div>
+        <div className='trending'>{this.state.trendingPreferences[4]}</div>
+        <div className='trending'>{this.state.trendingPreferences[5]}</div>
+        <div className='trending'>{this.state.trendingPreferences[6]}</div>
+        <div className='trending'>{this.state.trendingPreferences[7]}</div>
+        <div className='trending'>{this.state.trendingPreferences[8]}</div>
+        <div className='trending'>{this.state.trendingPreferences[9]}</div>
       </div>
 
     );
