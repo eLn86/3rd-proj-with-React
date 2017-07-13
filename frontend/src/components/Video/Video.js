@@ -18,8 +18,13 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
       peers: [],
       streamList: [],
       localStream: {},
-      video: {}
+      video: {},
+      constraints: {
+        audio: true,
+        video: true
+      }
     }
+
     // Compatability
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
   }
@@ -29,6 +34,7 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
 
   // When Room component is mounted, create peerID for user by calling createPeer function and get the peers data from socket
   componentDidMount() {
+    var myStream;
     const video = document.querySelector('.local'); // for my own stream
     const testee = document.querySelector('.peer1'); // for peer stream
 
@@ -48,7 +54,6 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
       }
 
       this.handleSuccess = (stream) => {
-        console.log('this is the stream', stream.getVideoTracks()[0]);
         video.srcObject = stream;
       }
 
@@ -75,7 +80,7 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
       // success: if video received, append to html element
       this.handleSuccess = (stream) => {
         console.log('Other Peer ID: ', this.state.streamList);
-
+         myStream = stream; // Assign the local stream to myStream to be used for toggle audio and video on/off
 
         this.setState({
           video: stream,
@@ -93,18 +98,27 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
       .catch(this.handleError);
     }
 
+        // Updates the stream whenever the user clicks on mute button for both video or audio
+        this.updateStream = (audio, video) => {
+          myStream.getVideoTracks()[0].enabled = !(myStream.getVideoTracks()[0].enabled);
+          myStream.getAudioTracks()[0].enabled = !(myStream.getAudioTracks()[0].enabled);
+        }
 
-    // filter out current user from room peer list to get stream list
-    this.updateStreamList = () => {
-      const streamList = this.state.peers.filter((peerUser) => {
-        return peerUser.peerID !== peer.id;
-      })
+        socket.on('get constraints', (audio, video) => {
+          this.updateStream(audio, video);
+        })
 
-      this.setState({
-        streamList: streamList
-      })
-    }
+        // filter out current user from room peer list to get stream list
+        this.updateStreamList = () => {
 
+          const streamList = this.state.peers.filter((peerUser) => {
+            return peerUser.peerID !== peer.id;
+          })
+
+          this.setState({
+            streamList: streamList
+          })
+        }
 
     this.renderPeerVideo = (stream) => {
       for (var vid of peerScreens) {
@@ -195,6 +209,7 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
           //     toggle.dataset.toggle = 'on';
           //   }
           // });
+
 
   renderPeersList = () => {
 

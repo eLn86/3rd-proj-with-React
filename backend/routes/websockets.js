@@ -48,6 +48,7 @@ module.exports = (io) => {
           popularity */
 
       if(globalPreferenceArray.length > 1){
+
         for(var i = 1; i < globalPreferenceArray.length; i++){
           if(globalPreferences[globalPreferenceArray[i - 1]] > globalPreferences[globalPreferenceArray[i]]){
             trendingPreferences[i - 1] = globalPreferenceArray[i];
@@ -58,16 +59,15 @@ module.exports = (io) => {
           }
         }
 
-        for(var i = 1; i < trendingPreferences.length; i++){
-          if(globalPreferences[trendingPreferences[i - 1]] > globalPreferences[trendingPreferences[i]]){
-            var temp = trendingPreferences[i - 1];
-            trendingPreferences[i - 1] = trendingPreferences[i];
-            trendingPreferences[i] = temp;
-          }
-        }
       }else{
         trendingPreferences = globalPreferenceArray;
       }
+
+      /* Remove duplicate values */
+
+
+
+      console.log(trendingPreferences);
 
 
       io.emit('send trending', trendingPreferences);
@@ -323,6 +323,19 @@ module.exports = (io) => {
       io.to(user.roomName).emit('update userList', currentRoomObject[0].currentUsers);
     })
 
+    socket.on('toggle audio video', (clickedOnWhat, isMicOn, isCameraOn) => {
+      console.log('Websockets received -> Clicked On: ', clickedOnWhat)
+      if(clickedOnWhat === 'mic') {
+        isMicOn === true ? isMicOn = false : isMicOn = true
+        console.log('Is the Mic On????? ', isMicOn);
+      }
+      if(clickedOnWhat === 'camera') {
+        isCameraOn === true ? isCameraOn = false : isCameraOn = true
+        console.log('Is the Camera On????? ', isCameraOn);
+      }
+      io.to(user.roomName).emit('get constraints',isMicOn, isCameraOn);
+
+    })
 
 /* Commented out for later use
     socket.on('delete peer', (peerID) => {
