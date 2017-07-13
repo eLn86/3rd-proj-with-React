@@ -36,6 +36,7 @@ export class Userlist extends Component { // eslint-disable-line react/prefer-st
         <div className="userListComponent"
              key={this.userIndex++}>
           <img src={e.picture} className="userPic"/>
+          <br/>
           <div className="userName">{e.name}</div>
         </div>
       )
