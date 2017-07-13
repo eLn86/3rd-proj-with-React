@@ -32,39 +32,61 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
     const testee = document.querySelector('.peer1'); // for peer stream
 
     // HTML element array: [screen2, screen3, screen4]
-        const peerScreens = document.querySelectorAll('.peer');
-        console.log('peer screen src object', peerScreens[0].srcObject);
+    const peerScreens = document.querySelectorAll('.peer');
+    console.log('peer screen src object', peerScreens[0].srcObject);
 
-        this.getStream = () => {
+    // grab user stream to cast on personal screen. for personal video, audio is off
+    this.getStreamForLocal = () => {
+      const constraints = {
+        audio: false,
+        video: true
+      }
+
+      this.handleSuccess = (stream) => {
+        video.srcObject = stream;
+      }
+
+      this.handleError = (error) => {
+        throw error.name;
+      }
+
+      // Get User Media
+      navigator.mediaDevices.getUserMedia(constraints)
+      .then(this.handleSuccess)
+      .catch(this.handleError);
+
+    }
+
+    // grab user stream for sending to peers. turn on audio 
+    this.getStreamForSending = () => {
+
+      // specify video constraints
+      const constraints = {
+        audio: true,
+        video: true
+      }
+
+      // success: if video received, append to html element
+      this.handleSuccess = (stream) => {
+        console.log('Other Peer ID: ', this.state.streamList);
 
 
-          // specify video constraints
-          const constraints = {
-            audio: false,
-            video: true
-          }
+        this.setState({
+          video: stream,
+          streamReady: true
+        })
+      }
+      // failure: if video failed, log error
+      this.handleError = (error) => {
+          throw error.name;
+      }
 
-          // success: if video received, append to html element
-          this.handleSuccess = (stream) => {
-            video.srcObject = stream;
-            console.log('Other Peer ID: ', this.state.streamList);
+      // Get User Media
+      navigator.mediaDevices.getUserMedia(constraints)
+      .then(this.handleSuccess)
+      .catch(this.handleError);
+    }
 
-
-            this.setState({
-              video: stream,
-              streamReady: true
-            })
-          }
-          // failure: if video failed, log error
-          this.handleError = (error) => {
-              throw error.name;
-          }
-
-          // Get User Media
-          navigator.mediaDevices.getUserMedia(constraints)
-          .then(this.handleSuccess)
-          .catch(this.handleError);
-        }
 
 
         this.updateStreamList = () => {
@@ -101,7 +123,8 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
         */
 
         // Get Local Stream from Camera
-        this.getStream();
+        this.getStreamForLocal();
+        this.getStreamForSending();
 
 
         // Init Peer Object
@@ -140,7 +163,9 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
                   remoteCall.on('stream', (remoteStream) => {
                     // Show stream in some video/canvas element.
                     console.log('this is the other stream', remoteStream);
+                    // set all video src to null
                     this.clearPeerVideos();
+                    // set the newly received stream to a video element
                     this.renderPeerVideo(remoteStream);
                   });
                 }
