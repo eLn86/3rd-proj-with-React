@@ -8,6 +8,7 @@ import { setPreferences, getPreferences } from './API/preferenceAPI';
 import { setUsers } from './API/userAPI';
 import { setRooms, getRooms } from './API/roomAPI';
 import { setFetching, getFetching } from './API/fetchingAPI';
+import { setRender } from './API/renderAPI';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -24,14 +25,15 @@ store.subscribe( () => {
   setRooms(state.rooms);
   setUsers(state.user);
   setFetching(state.isFetching);
+  setRender(state.renderWait)
 })
 
 // This dispatcher is for the flow of storing user login status.
-store.dispatch(getUser());
+store.dispatch(getUser())
 
 
 ReactDOM.render(<Provider store={store}>
-                <App />
+                  <App />
                 </Provider>,
                 document.getElementById('root'));
 registerServiceWorker();

@@ -1,3 +1,9 @@
+.mainBox {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
 .lobbyContainer{
   width:100vw;
   background-color: black;
@@ -10,12 +16,6 @@
   -webkit-justify-content: center;
           justify-content: center;
   flex: 1 1 auto;
-}
-
-.mainBox {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
 }
 
 .componentContainer {
@@ -51,4 +51,16 @@
 .trendingLabel {
   margin-top: 25px;
   margin-bottom: 10px;
+}
+
+
+/* Animation */
+
+.homeAni-appear {
+   opacity: 0.01;
+}
+
+.homeAni-appear.homeAni-appear-active {
+   opacity: 1;
+   transition: opacity 300ms ease-in;
 }

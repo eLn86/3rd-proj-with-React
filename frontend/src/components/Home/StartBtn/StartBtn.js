@@ -1,20 +1,18 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
 // Import Static files
 import './StartBtn.css';
 
 // Import API
 import { getUser } from '../../../API/userAPI';
+import { socket } from '../../../API/socket';
 
 // Import Actions
 import { addPeerIdToUser } from '../../../actions/userActions';
 import { addRoom } from '../../../actions/socketActions';
 
-// Import Socket Client
-import {socket} from '../../../API/socket';
-
-import axios from 'axios';
 
 
 /**
@@ -22,28 +20,18 @@ import axios from 'axios';
  */
 export class StartBtn extends Component { // eslint-disable-line react/prefer-stateless-function
 
-  constructor(props){
-    super(props)
-    this.state = {
-    }
-  }
-
-
-
   onClick = (e) => {
     // Fire the latest preference to Socket in backend.
     socket.emit('join room');
     socket.emit('getIDFromSocket');
   }
 
-
-
-
   componentDidMount() {
+
     socket.on('get roomInfo', (roomName) => {
-      // need to store roomName into redux.
+      // store roomName into redux.
       this.props.storeRoomName(roomName);
-      // Redirection
+      // Redirection to the room
       window.location.href = '/room/' + roomName;
     })
 
