@@ -52,6 +52,12 @@ export class LoginBtn extends Component { // eslint-disable-line react/prefer-st
   }
 }
 
+const mapStateToProps = (state) => {
+    return {
+    }
+}
+
+
 const mapDispatchToProps = (dispatch) => {
   return {
     isFetching: (result) => {
@@ -60,4 +66,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapDispatchToProps)(LoginBtn);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginBtn);
