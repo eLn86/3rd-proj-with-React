@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-// Import static files
-import './App.css';
-
-
 import {
   BrowserRouter as Router,
   Route,
   Switch,
 } from 'react-router-dom';
+
+// Import static files
+import './App.css';
 
 // Import components
 import Login from '../Login/Login';
@@ -17,20 +15,15 @@ import Home from '../Home/Home';
 import Room from '../Room/Room';
 import Video from '../Video/Video';
 
-
-// Import Socket API
+// Import API
 import { socket } from '../../API/socket';
-
 import { setUsers, getUsers } from '../../API/userAPI';
 
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   conditionalRender = () => {
-    const checker = getUsers()[0];
+    const checker = getUsers()[0]; // Check user login info at redux.
     return(
       <Router>
         <Switch>
@@ -42,23 +35,11 @@ class App extends Component {
     )
   };
 
-
   render() {
-
-    return(
-      <div>
-        {this.conditionalRender()}
-      </div>
-    )
-
+    return( <div>{ this.conditionalRender() }</div> )
   }
 }
 
-// <Route exact path="/home" component={Home}/>
-// <Route exact path="/room/:id" component={Room}/>
-// <Route exact path="/exit" component={Exit}/>
-// <Route exact path="/profile" component={Profile}/>
-// <Route exact path="/logout" component={Logout}/>
 
 const mapStateToProps = (state) => {
     return {
@@ -66,9 +47,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);
