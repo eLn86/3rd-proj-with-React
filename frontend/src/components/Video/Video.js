@@ -150,7 +150,7 @@ export class Video extends Component { // eslint-disable-line react/prefer-state
 
 
     // Init Peer Object
-    var peer = new Peer({key: 'z2urygfkdibe29'});
+    var peer = new Peer({key: 'auoq85n7882rzfr'});
 
     peer.on('open', (id) => {
       socket.emit('add peer', id);
